@@ -5,4 +5,4 @@ The `antelope` package is a stand-alone client tool for accessing an Antelope ca
 
 ### See Also
 
-[https://github.com/AntelopeLCA/antelope_interface] The interface and reference implementation described in JIE submitted.
+[antelope_interface](https://github.com/AntelopeLCA/antelope_interface) The interface and reference implementation described in JIE submitted.
