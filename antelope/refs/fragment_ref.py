@@ -1,5 +1,9 @@
 from .base import EntityRef
-from ..fragment_flows import group_ios
+# from ..fragment_flows import group_ios
+"""
+Not sure what to do about Fragment Refs, whether they belong in the main interface. I'd like to think no, but
+for now we will just deprecate them and remove functionality,
+"""
 
 
 class FragmentRef(EntityRef):
@@ -79,7 +83,10 @@ class FragmentRef(EntityRef):
         :param observed: ignored; supplied only for signature consistency
         :return:
         """
+        '''
         if observed is False:
             print('Ignoring false observed flag')
         ffs = self.traverse(scenario=scenario)  # in the future, may want to cache this
         return group_ios(self, ffs)
+        '''
+        return NotImplemented

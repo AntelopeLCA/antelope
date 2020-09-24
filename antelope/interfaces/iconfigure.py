@@ -23,6 +23,7 @@ class ConfigureInterface(AbstractQuery):
         return self._perform_query(_interface, 'check_config', ConfigRequired,
                                    config, c_args, **kwargs)
 
+    '''
     def add_terms(self, term_type, *terms, **kwargs):
         """
         This is currently de-implemented in favor of context_hint. until a clear [testable] use case is identified.
@@ -34,6 +35,7 @@ class ConfigureInterface(AbstractQuery):
         """
         return self._perform_query(_interface, 'add_terms', NotImplementedError,
                                    term_type, *terms, **kwargs)
+    '''
 
     def context_hint(self, local_term, canonical_context, **kwargs):
         """

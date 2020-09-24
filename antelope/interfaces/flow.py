@@ -1,4 +1,4 @@
-from .interfaces.flow_interface import FlowInterface
+from .flow_interface import FlowInterface
 
 from synonym_dict import SynonymSet
 

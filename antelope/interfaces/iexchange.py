@@ -1,5 +1,5 @@
 from .abstract_query import AbstractQuery
-from .iindex import check_direction
+# from .iindex import check_direction
 
 
 class ExchangeRequired(Exception):
