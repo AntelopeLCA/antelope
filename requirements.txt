@@ -1,0 +1,1 @@
+synonym_dict>=0.1.1
