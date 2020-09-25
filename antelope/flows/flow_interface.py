@@ -53,6 +53,10 @@ class FlowInterface(EntityInterface):
      - synonyms - iterable
     """
     @property
+    def entity_type(self):
+        return 'flow'
+
+    @property
     def unit(self):
         return self.reference_entity.unit
 
@@ -63,6 +67,9 @@ class FlowInterface(EntityInterface):
     @property
     def synonyms(self):
         return NotImplemented
+
+    def _add_synonym(self, synonym):
+        raise NotImplementedError
 
     @property
     def context(self):

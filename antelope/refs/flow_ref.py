@@ -1,6 +1,6 @@
 from .base import EntityRef
 
-from ..interfaces import Flow
+from ..flows import Flow
 
 
 '''

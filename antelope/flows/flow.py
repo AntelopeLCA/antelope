@@ -37,7 +37,7 @@ class Flow(FlowInterface):
             self._context_set_level = min([level, 3])  # always allow context spec to override
             self._context = tuple(filter(None, value))
 
-    def _add_flowable_term(self, term, set_name=False):
+    def _add_synonym(self, term, set_name=False):
         if set_name:
             tm = term.translate(self._filt).strip()  # have to put strip after because \u00a0 turns to space
             self._flowable.add_term(tm)
@@ -46,15 +46,15 @@ class Flow(FlowInterface):
 
     def _catch_flowable(self, key, value):
         if key == 'name':
-            self._add_flowable_term(value, set_name=True)
+            self._add_synonym(value, set_name=True)
         elif key == 'casnumber':
-            self._add_flowable_term(value)
+            self._add_synonym(value)
         elif key == 'synonyms':
             if isinstance(value, str):
-                self._add_flowable_term(value)
+                self._add_synonym(value)
             else:
                 for v in value:
-                    self._add_flowable_term(v)
+                    self._add_synonym(v)
 
     __flowable = None
 

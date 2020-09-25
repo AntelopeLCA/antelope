@@ -15,8 +15,7 @@ from .interfaces.iquantity import QuantityInterface, QuantityRequired, NoFactors
 
 from .interfaces.iforeground import ForegroundInterface, ForegroundRequired
 
-from .interfaces.flow_interface import EntityInterface, FlowInterface
-from .interfaces.flow import Flow
+from .flows import EntityInterface, FlowInterface, Flow
 
 from .refs.catalog_ref import CatalogRef, QuantityRef
 from .refs.quantity_ref import convert, NoUnitConversionTable

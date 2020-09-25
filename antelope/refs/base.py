@@ -19,7 +19,7 @@ The classes in this file get imported elsewhere; the CatalogRef class imports al
 """
 from synonym_dict import LowerDict
 
-from ..interfaces import EntityInterface
+from ..flows import EntityInterface
 
 
 class NoCatalog(Exception):
