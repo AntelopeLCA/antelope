@@ -5,7 +5,7 @@ Data sources used in life cycle assessment provide a variety of different types 
  1. To identify separate types of data according to a consistent specification;
  2. To develop tools that make use of that specification to simplify the tasks of publishing and accessing data.
 
-This package `antelope` contains the minimal interface specification.  It is accompanied by a separate, reference implementation ([antelope core](https://github.com/AntelopeLCA/antelope_core) that can be used for research purposes.
+This package `antelope` contains the minimal interface specification.  It is accompanied by a separate, reference implementation ([antelope core](https://github.com/AntelopeLCA/antelope_core)) that can be used for research purposes.
 
 # Contents of this repository
 
@@ -15,7 +15,7 @@ The repository contains three main elements.
 
 A `flow` is the defining concept of life cycle assessment.  A flow can represent any accountable element of a product model, including a physical substance, an economic payment, a service delivery, an event such as transformation of area or occupation of space, or a record of a conceptual occurrence.  Flows are the "swiss army knife" of LCA, and they are used in every LCA-related data publication.
 
-For that reason, this interface must assume a [core definition of a flow](blob/master/antelope/flows/flow_interface.py).
+For that reason, this interface must assume a [core definition of a flow](antelope/flows/flow_interface.py).
 
 ### Flow Interface
 
@@ -40,6 +40,6 @@ An object satisfying this interface is easy to work with in an LCA setting.
 
 ### Flow
 
-The Antelope interface provides a [flow implementation](blob/master/antelope/flows/flow.py).  The implementation uses a [synonym set](https://pypi.org/project/synonym-dict/) to implement the flow name, synonyms, and matching.  This is the package's only dependency.
+The Antelope interface provides a [flow implementation](antelope/flows/flow.py).  The implementation uses a [synonym set](https://pypi.org/project/synonym-dict/) to implement the flow name, synonyms, and matching.  This is the package's only dependency.
 
 
