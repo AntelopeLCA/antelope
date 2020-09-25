@@ -87,7 +87,7 @@ class AbstractQuery(object):
                     result = getattr(iface, attrname)(*args, **kwargs)
                 except exc:  # allow nonimplementations to pass silently
                     continue
-                if result is not None:
+                if result is not None:  #successful query must return something
                     return result
         except NotImplementedError:
             pass

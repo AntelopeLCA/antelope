@@ -16,11 +16,29 @@ class EntityInterface(object):
         return NotImplemented
 
     @property
-    def link(self):
+    def origin(self):
         """
         Must return a resolvable unique ID, nominally 'origin/external_ref'
         :return:
         """
+        return NotImplemented
+
+    @property
+    def external_ref(self):
+        """
+        Must return a resolvable unique ID, nominally 'origin/external_ref'
+        :return:
+        """
+        return NotImplemented
+
+    @property
+    def link(self):
+        return '%s/%s' % (self.origin, self.external_ref)
+
+    def properties(self):
+        raise NotImplementedError
+
+    def get(self, item):
         return NotImplemented
 
     @property
@@ -40,6 +58,17 @@ class EntityInterface(object):
         return NotImplemented
 
 
+class QuantityInterface(EntityInterface):
+    """
+    An abstract class that establishes common functionality for QUANTITIES OF MEASURE.  A Quantity consists of
+     - a fixed unit of measure
+
+    """
+    @property
+    def unit(self):
+        return NotImplemented
+
+
 class FlowInterface(EntityInterface):
     """
     An abstract class that establishes common functionality for OBSERVATIONS OF FLOWS.  A Flow consists of:
@@ -52,10 +81,6 @@ class FlowInterface(EntityInterface):
      - link - string
      - synonyms - iterable
     """
-    @property
-    def entity_type(self):
-        return 'flow'
-
     @property
     def unit(self):
         return self.reference_entity.unit
