@@ -58,10 +58,18 @@ class ExchangeRef(object):
         return self._unit
 
     def __getitem__(self, item):
-        if isinstance(self._val, dict):
-            return self._val[item]
-        else:
-            return 0.0
+        return self.args[item]
+
+    @property
+    def type(self):
+        if self.is_reference:
+            return 'reference'
+        elif self.termination is not None:
+            if self.termination == self.process.external_ref:
+                return 'self'
+            else:
+                return 'node'
+        return 'cutoff'
 
     def __str__(self):
         ds = {'Input': '<--',

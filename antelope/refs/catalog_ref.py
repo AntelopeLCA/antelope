@@ -6,9 +6,13 @@ The main import.
 from ..interfaces import EntityNotFound
 from .base import BaseRef
 from .flow_ref import FlowRef
-from .fragment_ref import FragmentRef
+# from .fragment_ref import FragmentRef
 from .process_ref import ProcessRef
 from .quantity_ref import QuantityRef
+
+
+class UnknownOrigin(Exception):
+    pass
 
 
 class CatalogRef(BaseRef):
@@ -65,8 +69,8 @@ class CatalogRef(BaseRef):
                 return FlowRef(external_ref, query, reference_entity, **kwargs)
             elif etype == 'quantity':
                 return QuantityRef(external_ref, query, reference_entity, **kwargs)
-            elif etype == 'fragment':
-                return FragmentRef(external_ref, query, reference_entity, **kwargs)
+        # elif etype == 'fragment':
+        #     return FragmentRef(external_ref, query, reference_entity, **kwargs)
         return cls(query.origin, external_ref, entity_type=etype, reference_entity=reference_entity, **kwargs)
 
     def lookup(self, catalog, **kwargs):

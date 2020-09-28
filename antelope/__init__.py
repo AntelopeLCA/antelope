@@ -13,11 +13,9 @@ from .interfaces.iindex import IndexInterface, IndexRequired, directions, comp_d
 from .interfaces.ibackground import BackgroundInterface, BackgroundRequired
 from .interfaces.iquantity import QuantityInterface, QuantityRequired, NoFactorsFound, ConversionReferenceMismatch, FlowableMismatch
 
-from .interfaces.iforeground import ForegroundInterface, ForegroundRequired
-
 from .flows import EntityInterface, FlowInterface, Flow
 
-from .refs.catalog_ref import CatalogRef, QuantityRef
+from .refs.catalog_ref import CatalogRef, QuantityRef, UnknownOrigin
 from .refs.quantity_ref import convert, NoUnitConversionTable
 from .refs.base import NoCatalog, EntityRefMergeError
 from .refs.exchange_ref import ExchangeRef
@@ -128,3 +126,10 @@ ExteriorFlow = namedtuple('ExteriorFlow', ('origin', 'flow', 'direction', 'termi
 ProductFlow = namedtuple('ProductFlow', ('origin', 'flow', 'direction', 'termination', 'component_id'))
 
 EntitySpec = namedtuple('EntitySpec', ('link', 'ref', 'name', 'group'), defaults=(None,))
+
+# packages that contain 'providers'
+antelope_herd = [
+    'antelope_background',
+    'antelope_catalog',
+    'antelope_foreground'
+]

@@ -14,10 +14,6 @@ class EntityNotFound(Exception):
     pass
 
 
-class BackgroundSetup(Exception):
-    pass
-
-
 class AbstractQuery(object):
     """
     Abstract base class for executing queries
@@ -76,12 +72,6 @@ class AbstractQuery(object):
         self._debug('Performing %s query, iface %s' % (attrname, itype))
         try:
             for iface in self._iface(itype, strict=strict):
-                if itype == 'background':
-                    self._debug('Setting up background interface')
-                    try:
-                        iface.setup_bm(self)
-                    except StopIteration:
-                        raise BackgroundSetup('Failed to configure background')
                 try:
                     self._debug('Attempting %s query on iface %s' % (attrname, iface))
                     result = getattr(iface, attrname)(*args, **kwargs)
