@@ -20,6 +20,7 @@ The classes in this file get imported elsewhere; the CatalogRef class imports al
 from synonym_dict import LowerDict
 
 from ..flows import EntityInterface
+from ..interfaces.abstract_query import NoAccessToEntity
 
 
 class NoCatalog(Exception):
@@ -331,7 +332,7 @@ class EntityRef(BaseRef):
         """
         try:
             self.get_item(item)
-        except KeyError:
+        except (KeyError, NoAccessToEntity):
             return False
         return True
 

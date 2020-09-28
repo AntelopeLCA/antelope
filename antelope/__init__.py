@@ -5,13 +5,14 @@ The abstract classes in this sub-package define what information is made availab
 resource of some kind.  The interfaces must be instantiated in order to be used.  In the core package
 """
 
-from .interfaces.abstract_query import PrivateArchive, EntityNotFound
+from .interfaces.abstract_query import PrivateArchive, EntityNotFound, NoAccessToEntity
 
 from .interfaces.iconfigure import ConfigureInterface
 from .interfaces.iexchange import ExchangeInterface, ExchangeRequired
 from .interfaces.iindex import IndexInterface, IndexRequired, directions, comp_dir, check_direction, valid_sense
 from .interfaces.ibackground import BackgroundInterface, BackgroundRequired
 from .interfaces.iquantity import QuantityInterface, QuantityRequired, NoFactorsFound, ConversionReferenceMismatch, FlowableMismatch
+from .interfaces.iforeground import ForegroundInterface
 
 from .flows import EntityInterface, FlowInterface, Flow
 

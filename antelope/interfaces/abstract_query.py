@@ -14,6 +14,13 @@ class EntityNotFound(Exception):
     pass
 
 
+class NoAccessToEntity(Exception):
+    """
+    Used when the actual entity is not accessible, i.e. when a ref cannot dereference itself
+    """
+    pass
+
+
 class AbstractQuery(object):
     """
     Abstract base class for executing queries
