@@ -227,7 +227,7 @@ class EntityRef(BaseRef):
     def make_ref(self, *args):
         return self
 
-    def __init__(self, external_ref, query, reference_entity, masquerade=None, **kwargs):
+    def __init__(self, external_ref, query, reference_entity=None, masquerade=None, **kwargs):
         """
 
         :param external_ref:
@@ -250,7 +250,7 @@ class EntityRef(BaseRef):
 
 
     def get_reference(self):
-        return self._reference_entity
+        return self.reference_entity
 
     def _check_query(self, message=''):
         if self._query is None:
@@ -259,6 +259,8 @@ class EntityRef(BaseRef):
 
     @property
     def reference_entity(self):
+        if self._reference_entity is None:
+            self._reference_entity = self._query.get_reference(self.external_ref)
         return self._reference_entity
 
     @property
@@ -277,6 +279,8 @@ class EntityRef(BaseRef):
         for i in ('Name', 'Comment'):
             try:
                 print('%7s: %s' % (i, self.get_item(i)))
+            except NoAccessToEntity:
+                print('%7s: NoAccessToEntity' % i)
             except KeyError:
                 pass
 

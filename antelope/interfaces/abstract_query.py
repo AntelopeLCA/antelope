@@ -23,7 +23,7 @@ class NoAccessToEntity(Exception):
 
 class AbstractQuery(object):
     """
-    Abstract base class for executing queries
+    Not-qute-abstract base class for executing queries
 
     Query implementation must provide:
      - origin (property)
@@ -52,9 +52,9 @@ class AbstractQuery(object):
 
     def make_ref(self, entity):
         """
-        Query subclasses can return abstracted versions of query results
+        Query subclasses can return abstracted versions of query results.
         :param entity:
-        :return:
+        :return: an entity that could have a reference to a grounded query
         """
         if entity is None:
             return None
@@ -104,6 +104,19 @@ class AbstractQuery(object):
         """
         return self
 
+    """
+    Basic "Documentary" interface implementation
+    From JIE submitted:
+     - get(id)
+     - properties(id)
+     - get item(id, item)
+     - get reference(id)
+     - synonyms(id-or-string)
+    provided but not spec'd:
+     - validate
+     - get_uuid
+    """
+
     def validate(self):
         if self._validated is None:
             try:
@@ -130,7 +143,7 @@ class AbstractQuery(object):
         :param item:
         :return:
         """
-        if hasattr(external_ref, 'external_ref'):
+        if hasattr(external_ref, 'external_ref'):  # debounce
             err_str = external_ref.external_ref
         else:
             err_str = external_ref
@@ -142,9 +155,15 @@ class AbstractQuery(object):
         return self._perform_query('basic', 'get_uuid', EntityNotFound,
                                    external_ref)
 
-'''# maybe we don't need these?!
     def get_reference(self, external_ref):
         return self._perform_query(None, 'get_reference', EntityNotFound,
                                    external_ref)
 
-'''
+    def synonyms(self, item, **kwargs):
+        """
+        Return a list of synonyms for the object -- quantity, flowable, or compartment
+        :param item:
+        :return: list of strings
+        """
+        return self._perform_query(None, 'synonyms', EntityNotFound, item,
+                                   **kwargs)

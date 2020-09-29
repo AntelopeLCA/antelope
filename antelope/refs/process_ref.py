@@ -6,6 +6,10 @@ class MultipleReferences(Exception):
     pass
 
 
+class NoReference(Exception):
+    pass
+
+
 class ProcessRef(EntityRef):
     """
     Processes can lookup:
@@ -17,17 +21,17 @@ class ProcessRef(EntityRef):
     def _addl(self):
         return self.__getitem__('SpatialScope')
 
-    def __init__(self, external_ref, query, reference_entity, **kwargs):
-        if reference_entity is None:
-            reference_entity = []
-        for rx in reference_entity:
-            rx.process = self
-        reference_entity = tuple(reference_entity)  # non mutable
-        super(ProcessRef, self).__init__(external_ref, query, reference_entity, **kwargs)
+    def __init__(self, external_ref, query, **kwargs):
         self._default_rx = None
-        rxs = [rx for rx in self.references()]
-        if len(rxs) == 1:
-            self._default_rx = rxs[0].flow.external_ref
+        super(ProcessRef, self).__init__(external_ref, query, **kwargs)
+
+    @property
+    def reference_entity(self):
+        if self._reference_entity is None:
+            self._reference_entity = self._query.get_reference(self.external_ref)
+            if len(self._reference_entity) == 1:
+                self._default_rx = self._reference_entity[0].flow.external_ref
+        return self._reference_entity
 
     def _show_ref(self):
         for i in self.references():
@@ -66,30 +70,28 @@ class ProcessRef(EntityRef):
         :param flow:
         :return:
         """
+        if len(self.reference_entity) == 0:
+            raise NoReference
         if flow is None:
             if len(self.reference_entity) > 1:
                 raise MultipleReferences('You must specify a reference flow')
+            return self.reference_entity[0]
         if hasattr(flow, 'entity_type'):
             if flow.entity_type == 'exchange':
                 flow = flow.flow
         try:
-            return next(self.references(flow=flow))
+            return next(x for x in self.reference_entity if x.flow == flow or x.flow.external_ref == flow)
         except StopIteration:
-            print('references:')
-            for x in self.reference_entity:
-                print(x)
-            raise KeyError(flow)
+            try:
+                return next(x for x in self.reference_entity if x.flow.match(flow))
+            except StopIteration:
+                print('references:')
+                self._show_ref()
+                raise KeyError(flow)
 
-    def references(self, flow=None):
+    def references(self):
         for x in self.reference_entity:
-            if flow is None:
-                yield x
-            elif isinstance(flow, str) or isinstance(flow, int):
-                if x.flow.external_ref == flow:
-                    yield x
-            else:
-                if x.flow == flow:
-                    yield x
+            yield x
 
     '''
     def is_allocated(self, rx):

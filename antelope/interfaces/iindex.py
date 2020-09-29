@@ -89,15 +89,6 @@ class IndexInterface(AbstractQuery):
         for i in self._perform_query(_interface, 'flows', IndexRequired, **kwargs):
             yield self.make_ref(i)
 
-    def synonyms(self, item, **kwargs):
-        """
-        Return a list of synonyms for the object -- quantity, flowable, or compartment
-        :param item:
-        :return: list of strings
-        """
-        return self._perform_query(_interface, 'synonyms', IndexRequired, item,
-                                   ** kwargs)
-
     def flowables(self, **kwargs):
         """
         Generate known flowables by their canonical name

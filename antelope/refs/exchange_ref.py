@@ -6,10 +6,13 @@ class ExchangeRef(object):
     Codifies the information required to define an exchange.  The supplied information could be either object or
     reference/link; it isn't specified.
     """
-    is_reference = False
+    is_reference = None
+    entity_type = 'exchange'
+    is_entity = False
 
-    def __init__(self, process, flow, direction, value=0, unit=None, termination=None, reference=None, **kwargs):
+    def __init__(self, process, flow, direction, value=0.0, unit=None, termination=None, is_reference=False, **kwargs):
         """
+        Process, flow, must be entity refs; termination can be entity or external_ref
 
         :param process:
         :param flow:
@@ -17,6 +20,7 @@ class ExchangeRef(object):
         :param value:
         :param unit:
         :param termination:
+        :param is_reference:
         """
         self._node = process
         self._flow = flow
@@ -30,8 +34,9 @@ class ExchangeRef(object):
         self._unit = unit
         self._term = termination
         self.args = kwargs
-        if reference is not None:
-            self.is_reference = bool(reference)
+        self.is_reference = bool(is_reference)
+
+        self._hash = hash((process.origin, process.external_ref, flow.external_ref, direction, self.term_ref))
 
     @property
     def process(self):
@@ -54,6 +59,14 @@ class ExchangeRef(object):
         return self._term
 
     @property
+    def term_ref(self):
+        if self._term is None:
+            return None
+        elif hasattr(self._term, 'external_ref'):
+            return self._term.external_ref
+        return self._term
+
+    @property
     def unit(self):
         return self._unit
 
@@ -72,6 +85,16 @@ class ExchangeRef(object):
         return 'cutoff'
 
     def __str__(self):
+        """
+
+        :return:
+        """
+        '''
+        old RxRef:
+        ref = '(*)'
+        return '%6.6s: %s [%s %s] %s' % (self.direction, ref, self._value_string, self.flow.unit, self.flow)
+        (value string was ' --- ')
+        '''
         ds = {'Input': '<--',
               'Output': '==>'}[self._dir]
         if self._term is None:
@@ -83,3 +106,51 @@ class ExchangeRef(object):
         else:
             v = '%.3g' % self.value
         return '[ %s ] %s %s (%s) %s%s' % (self.process, ds, v, self.flow, self.unit, tt)
+
+    def __hash__(self):
+        return self._hash
+
+    def __eq__(self, other):
+        if other is None:
+            return False
+        '''
+        if not hasattr(other, 'entity_type'):
+            return False
+        if other.entity_type != 'exchange':
+            return False
+        # if self.key == other.key and self.lkey != other.lkey:
+        #     raise DuplicateExchangeError('Hash collision!')
+        return self.key == other.key
+        '''
+        try:
+            return self.key == other.key
+        except AttributeError:
+            return False
+
+    @property
+    def key(self):
+        return self._hash
+
+    @property
+    def lkey(self):
+        """
+        Used for local comparisons
+        :return:
+        """
+        return self.flow.external_ref, self.direction, self.term_ref
+
+
+class RxRef(ExchangeRef):
+    """
+    Class for process reference exchanges
+
+    """
+    def __init__(self, process, flow, direction, comment=None, **kwargs):
+        if comment is not None:
+            kwargs['comment'] = comment
+        super(RxRef, self).__init__(process, flow, direction, value=1.0, is_reference=True, **kwargs)
+
+    def __str__(self):
+        ref = '(*)'
+        val = ' --- '
+        return '%6.6s: %s [%s %s] %s' % (self.direction, ref, val, self.flow.unit, self.flow)

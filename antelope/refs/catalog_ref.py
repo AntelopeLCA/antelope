@@ -61,17 +61,17 @@ class CatalogRef(BaseRef):
         return ref
 
     @classmethod
-    def from_query(cls, external_ref, query, etype, reference_entity, **kwargs):
+    def from_query(cls, external_ref, query, etype, **kwargs):
         if query is not None:
             if etype == 'process':
-                return ProcessRef(external_ref, query, reference_entity, **kwargs)
+                return ProcessRef(external_ref, query, **kwargs)
             elif etype == 'flow':
-                return FlowRef(external_ref, query, reference_entity, **kwargs)
+                return FlowRef(external_ref, query, **kwargs)
             elif etype == 'quantity':
-                return QuantityRef(external_ref, query, reference_entity, **kwargs)
+                return QuantityRef(external_ref, query, **kwargs)
         # elif etype == 'fragment':
         #     return FragmentRef(external_ref, query, reference_entity, **kwargs)
-        return cls(query.origin, external_ref, entity_type=etype, reference_entity=reference_entity, **kwargs)
+        return cls(query.origin, external_ref, entity_type=etype, **kwargs)
 
     def lookup(self, catalog, **kwargs):
         """
