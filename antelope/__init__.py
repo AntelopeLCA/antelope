@@ -16,11 +16,13 @@ from .interfaces.iforeground import ForegroundInterface
 
 from .flows import EntityInterface, FlowInterface, Flow
 
+from .refs.process_ref import MultipleReferences
 from .refs.catalog_ref import CatalogRef, QuantityRef, UnknownOrigin
 from .refs.quantity_ref import convert, NoUnitConversionTable
 from .refs.base import NoCatalog, EntityRefMergeError
 from .refs.exchange_ref import ExchangeRef
 
+import re
 
 from os.path import splitext
 
@@ -101,6 +103,28 @@ def q_node_activity(fg):
         return fg.get_canonical('node activity')
 
 
+def enum(iterable, filt=None, invert=True):
+    """
+    Enumerate an iterable for interactive use. return it as a list. Optional negative filter supplied as regex
+    :param iterable:
+    :param filt:
+    :param invert: [True] sense of filter. note default is negative i.e. to screen *out* matches
+     (the thinking is that the input is already positive-filtered)
+    :return:
+    """
+    ret = []
+    if filt is not None:
+        if invert:
+            _iter = filter(lambda x: not bool(re.search(filt, str(x), flags=re.I)), iterable)
+        else:
+            _iter = filter(lambda x: bool(re.search(filt, str(x), flags=re.I)), iterable)
+    else:
+        _iter = iterable
+    for k, v in enumerate(_iter):
+        print(' [%02d] %s' % (k, v))
+        ret.append(v)
+    return ret
+
 """
 In most LCA software, including the current operational version of lca-tools, a 'flow' is a composite entity
 that is made up of a 'flowable' (substance, product, intervention, or service) and a 'context', which is 
@@ -131,6 +155,5 @@ EntitySpec = namedtuple('EntitySpec', ('link', 'ref', 'name', 'group'), defaults
 # packages that contain 'providers'
 antelope_herd = [
     'antelope_background',
-    'antelope_catalog',
     'antelope_foreground'
 ]
