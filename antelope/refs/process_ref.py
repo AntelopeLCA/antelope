@@ -44,7 +44,8 @@ class ProcessRef(EntityRef):
     @property
     def default_rx(self):
         """
-        The 'primary' reference exchange of a process CatalogRef.  This is an external_ref for a flow
+        The 'primary' reference exchange of a process CatalogRef.  This is an external_ref for a flow.
+        This can be set by a user for convenience for multi-reference processes.
 
         (- which is req. unique among references)
         :return:
@@ -132,6 +133,15 @@ class ProcessRef(EntityRef):
                               comment=x.comment)
 
     def exchange_values(self, flow, direction=None, termination=None, reference=None, **kwargs):
+        """
+        This should get replaced by ev()
+        :param flow:
+        :param direction:
+        :param termination:
+        :param reference:
+        :param kwargs:
+        :return:
+        """
         if hasattr(flow, 'entity_type'):
             if flow.entity_type == 'exchange':
                 flow = flow.flow.external_ref

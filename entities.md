@@ -23,7 +23,7 @@ In Antelope, contexts are a hierarchical class of Synonym Sets, which are expres
 
 ## Three Fundamental Entity Classes
 
-This schema recognizes three fundamental entity classes.  Each entity class has a shared set of characteristics, defined by the `EntityInterface` (see below).  
+This schema recognizes three fundamental entity classes.  Each entity class has a shared set of characteristics, defined by the `BaseEntity` (see below).  
 
  * **Quantities** are used to measure extensive values.  Different quantities are generally not commensurable with one another.  A quantity's defining characteristic is its fixed unit of measure.
 
@@ -31,7 +31,7 @@ This schema recognizes three fundamental entity classes.  Each entity class has 
 
  * **Processes** are concrete descriptions of the inter-relationships of several flows within a specific activity.  A process is characterized by one or more *reference exchanges* and zero or more *dependent exchanges*.  As is consistent with ISO 14040-44-48, A process must have a designated quantitative reference.
 
-Each entity can be described programmatically in terms of the `EntityInterface`:
+Each entity can be described programmatically in terms of the `BaseEntity`:
 
  * `type`, a string describing the type of entity
  * `reference_entity` - a type-specific object that defines a reference
@@ -47,7 +47,7 @@ The Quantity and Flow datatypes each have subclasses defined that support their 
 
 ### Quantity Interface
 
-A Quantity is an `entity` whose reference entity must be a unit in some form.  The entity inherits the `EntityInterface` plus adds the following:
+A Quantity is an `entity` whose reference entity must be a unit in some form.  The entity inherits the `BaseEntity` plus adds the following:
 
  * `unit`: a unit string that is derived from the reference_entity
 

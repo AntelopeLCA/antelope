@@ -1,6 +1,6 @@
 """
 The Background interface is a hybrid interface that can be produced from the combination of  a complete index and
-inventory interface for a self-contained database (terminate() and inventory() are required, and the resulting matrix
+exchange interface for a self-contained database (terminate() and inventory() are required, and the resulting matrix
 must be invertible)
 
 The default implementation is a dumb proxy, for use when archives provide LCI information over an inventory interface.
@@ -32,14 +32,6 @@ class BackgroundInterface(AbstractQuery):
     """
     BackgroundInterface core methods
     """
-    def setup_bm(self, index=None):
-        """
-        allows a background implementation to obtain an index interface from the archive / catalog
-        :param index:
-        :return:
-        """
-        pass
-
     def check_bg(self, reset=False, **kwargs):
         """
         Trivial method to force creation of background / check if it exists.  Also provides a way to reset / pass
@@ -50,28 +42,6 @@ class BackgroundInterface(AbstractQuery):
         """
         return self._perform_query(_interface, 'check_bg', BackgroundRequired,
                                    reset=reset, **kwargs)
-
-    def foreground_flows(self, search=None, **kwargs):
-        """
-        Yield a list of Reference Exchanges that make up the foreground (e.g. rows/columns of Af).
-        Serialization should include origin, process external ref, flow external ref, direction.
-
-        :param search:
-        :return: ProductFlows (should be ref-ized somehow)
-        """
-        return self._perform_query(_interface, 'foreground_flows', BackgroundRequired,
-                                   search=search, **kwargs)
-
-    def background_flows(self, search=None, **kwargs):
-        """
-        Yield a list of Reference Exchanges that make up the background (e.g. rows/columns of Ad)
-        Serialization should include origin, process external ref, flow external ref, direction.
-
-        :param search:
-        :return: ProductFlows (should be ref-ized somehow)
-        """
-        return self._perform_query(_interface, 'background_flows', BackgroundRequired,
-                                   search=search, **kwargs)
 
     def exterior_flows(self, direction=None, search=None, **kwargs):
         """
@@ -131,6 +101,54 @@ class BackgroundInterface(AbstractQuery):
         return self._perform_query(_interface, 'emissions', BackgroundRequired,
                                    process, ref_flow=ref_flow, **kwargs)
 
+    def lci(self, process, ref_flow=None, **kwargs):
+        """
+        returns aggregated LCI as a list of exchanges (privacy permitting)
+        :param process:
+        :param ref_flow:
+        :return:
+        """
+        return self._perform_query(_interface, 'lci', BackgroundRequired,
+                                   process, ref_flow=ref_flow, **kwargs)
+
+    def bg_lcia(self, process, query_qty, ref_flow=None, **kwargs):
+        """
+        returns an LciaResult object, aggregated as appropriate depending on the interface's privacy level.
+        :param process:
+        :param query_qty: if this is a catalog ref, the Qdb will auto-load characterization factors.  If the
+        characterization factors are already loaded, a string reference will suffice.
+        :param ref_flow:
+        :param kwargs:
+        :return:
+        """
+        return self._perform_query(_interface, 'bg_lcia', BackgroundRequired,
+                                   process, query_qty, ref_flow=ref_flow, **kwargs)
+
+    '''
+    Methods requiring a partial ordering (implemented by antelope_background)
+    '''
+    def foreground_flows(self, search=None, **kwargs):
+        """
+        Yield a list of Reference Exchanges that make up the foreground (e.g. rows/columns of Af).
+        Serialization should include origin, process external ref, flow external ref, direction.
+
+        :param search:
+        :return: ProductFlows (should be ref-ized somehow)
+        """
+        return self._perform_query(_interface, 'foreground_flows', BackgroundRequired,
+                                   search=search, **kwargs)
+
+    def background_flows(self, search=None, **kwargs):
+        """
+        Yield a list of Reference Exchanges that make up the background (e.g. rows/columns of Ad)
+        Serialization should include origin, process external ref, flow external ref, direction.
+
+        :param search:
+        :return: ProductFlows (should be ref-ized somehow)
+        """
+        return self._perform_query(_interface, 'background_flows', BackgroundRequired,
+                                   search=search, **kwargs)
+
     def foreground(self, process, ref_flow=None, **kwargs):
         """
         Returns an ordered list of exchanges for the foreground matrix Af for the given process and reference flow-
@@ -167,7 +185,7 @@ class BackgroundInterface(AbstractQuery):
 
     def ad(self, process, ref_flow=None, **kwargs):
         """
-        returns background dependencies as a list of exchanges
+        returns foreground-aggregated dependencies on the background as a list of exchanges
         :param process:
         :param ref_flow:
         :return:
@@ -177,33 +195,10 @@ class BackgroundInterface(AbstractQuery):
 
     def bf(self, process, ref_flow=None, **kwargs):
         """
-        returns foreground emissions as a list of exchanges
+        returns foreground-aggregated emissions as a list of exchanges
         :param process:
         :param ref_flow:
         :return:
         """
         return self._perform_query(_interface, 'bf', BackgroundRequired,
                                    process, ref_flow=ref_flow, **kwargs)
-
-    def lci(self, process, ref_flow=None, **kwargs):
-        """
-        returns aggregated LCI as a list of exchanges (privacy permitting)
-        :param process:
-        :param ref_flow:
-        :return:
-        """
-        return self._perform_query(_interface, 'lci', BackgroundRequired,
-                                   process, ref_flow=ref_flow, **kwargs)
-
-    def bg_lcia(self, process, query_qty, ref_flow=None, **kwargs):
-        """
-        returns an LciaResult object, aggregated as appropriate depending on the interface's privacy level.
-        :param process:
-        :param query_qty: if this is a catalog ref, the Qdb will auto-load characterization factors.  If the
-        characterization factors are already loaded, a string reference will suffice.
-        :param ref_flow:
-        :param kwargs:
-        :return:
-        """
-        return self._perform_query(_interface, 'bg_lcia', BackgroundRequired,
-                                   process, query_qty, ref_flow=ref_flow, **kwargs)

@@ -14,7 +14,7 @@ from .interfaces.ibackground import BackgroundInterface, BackgroundRequired
 from .interfaces.iquantity import QuantityInterface, QuantityRequired, NoFactorsFound, ConversionReferenceMismatch, FlowableMismatch
 from .interfaces.iforeground import ForegroundInterface
 
-from .flows import EntityInterface, FlowInterface, Flow
+from .flows import BaseEntity, FlowInterface, Flow
 
 from .refs.process_ref import MultipleReferences
 from .refs.catalog_ref import CatalogRef, QuantityRef, UnknownOrigin

@@ -4,6 +4,9 @@ from synonym_dict import SynonymSet
 
 
 class Flow(FlowInterface):
+    """
+    A partly-abstract class that implements the flow specification but not the entity specification.
+    """
 
     _context = ()
     _context_set_level = 0

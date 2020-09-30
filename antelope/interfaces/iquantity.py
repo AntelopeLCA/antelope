@@ -185,7 +185,7 @@ class QuantityInterface(AbstractQuery):
         """
         Perform fragment LCIA by first traversing the fragment to determine node weights, and then combining with
         unit scores.
-        Not sure whether this belongs in Quantity or Foreground.
+        Not sure whether this belongs in Quantity or Foreground. but probably foreground.
         :param fragment:
         :param quantity_ref:
         :param scenario:

@@ -29,7 +29,7 @@ class ExchangeInterface(AbstractQuery):
         """
         Retrieve process's full exchange list, without values
         :param process:
-        :return:
+        :return: list of exchanges without values
         """
         return self._perform_query(_interface, 'exchanges',
                                    ExchangeRequired, process, **kwargs)
@@ -58,7 +58,7 @@ class ExchangeInterface(AbstractQuery):
         :param direction: [None] if none,
         :param termination: [None] if none, return all terminations
         :param reference: [None] if True, only find reference exchanges. If false- maybe omit reference exchanges?
-        :return:
+        :return: list of exchanges with values matching the specification
         """
         return self._perform_query(_interface, 'exchange_values',
                                    ExchangeRequired,
@@ -77,7 +77,7 @@ class ExchangeInterface(AbstractQuery):
          - If the supplied reference flow is not part of the reference entity, NO allocation should be performed.
          Instead, the inventory should return ALL exchanges except for the specified flow, un-allocated, normalized to
          a unit of the specified flow.  This query is only valid if the specified flow is a cut-off (i.e. un-terminated)
-         exchange.
+         exchange (i.e. it could be treated as a "silent reference" or effective co-product)
          - If the supplied reference flow is a non-reference, non-cutoff flow (i.e. it is a terminated exchange), then
          the appropriate behavior is undefined. The default implementation raises an ExchangeError.
 
@@ -85,15 +85,15 @@ class ExchangeInterface(AbstractQuery):
         the alternative 'scenario' kwarg is accepted
         :param process:
         :param ref_flow: used only for processes
-        :param scenario: used only for fragments
-        :return:
+        :param scenario: used only for fragments (antelope_foreground)
+        :return: a list of unallocated or allocated exchange refs
         """
         return self._perform_query(_interface, 'inventory', ExchangeRequired,
                                    process, ref_flow=ref_flow, scenario=scenario, **kwargs)
 
     def exchange_relation(self, process, ref_flow, exch_flow, direction, termination=None, **kwargs):
         """
-        Always returns a single float.
+        should return some sort of exchange relation result, analogous to quantity.quantity_relation
 
         :param process:
         :param ref_flow:

@@ -14,13 +14,14 @@ def convert(quantity, from_unit=None, to=None):
     quantity.convert('lb', to='ton') should return 0.0005
 
     This function requires that the quantity have a 'UnitConversion' property that works as a dict, with
-    the unit names being keys. The requirement is that the values for every key all correspond to the same
-    amount.  For instance, if the quantity was mass, then the following would be equivalent:
+    the unit names being keys.  The format of the dict is that all entries should equal the same amount as each other.
+    For instance, if the quantity was mass, then the following would be equivalent:
 
     quantity['UnitConversion'] = { 'kg': 1, 'lb': 2.204622, 'ton': 0.0011023, 't': 0.001 }
     quantity['UnitConversion'] = { 'kg': 907.2, 'lb': 2000.0, 'ton': 1, 't': 0.9072 }
 
-    If the quantity's reference unit is missing from the dict, it is assumed to be 1 implicitly.
+    If the quantity's reference unit is missing from the dict, it is set to 1, but it is not
+    strictly required that the reference unit equals 1 in the dict.
 
     If the quantity is missing a unit conversion property, raises NoUnitConversionTable.  If the quantity does
     have such a table but one of the specified units is missing from it, raises KeyError
@@ -116,7 +117,7 @@ class QuantityRef(EntityRef):
 
     def quantity_terms(self):
         """
-        Code repetition! for portability of Term Manager
+        This is a little kludgey-- but requires agreement on what terms are considered synonymous.
         :return:
         """
         yield self['Name']
@@ -158,26 +159,3 @@ class QuantityRef(EntityRef):
 
     def quantity_relation(self, ref_quantity, flowable, context, locale='GLO', **kwargs):
         return self._query.quantity_relation(flowable, ref_quantity, self, context, locale=locale, **kwargs)
-    '''
-=======
-    def convert(self, from_unit=None, to=None):
-        """
-        Reports the number of 'to' units equal to a 'from_unit'.  Uses the quantity's 'UnitConversion' property.
-        Simply supplying a unit string will report the unit in terms of the quantity's reference [display] unit.
-        :param from_unit: [defaults to reference unit]
-        :param to: [defaults to reference unit]
-        :return:
-        """
-        uc = self.get_item('UnitConversion')
-        if from_unit is None:
-            inbound = 1.0
-        else:
-            inbound = uc[from_unit]
-
-        if to is None:
-            outbound = 1.0
-        else:
-            outbound = uc[to]
-        return outbound / inbound
->>>>>>> master
-    '''

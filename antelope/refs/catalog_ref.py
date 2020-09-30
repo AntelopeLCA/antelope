@@ -3,7 +3,6 @@ The main import.
 """
 
 
-from ..interfaces import EntityNotFound
 from .base import BaseRef
 from .flow_ref import FlowRef
 # from .fragment_ref import FragmentRef
@@ -22,17 +21,8 @@ class CatalogRef(BaseRef):
     CatalogRef.from_json(j, catalog=None)
 
     A catalog ref is defined by an entity's origin and external reference, which are all that is necessary to
-    identify and/or recreate the entity.  A ref can be linked to a catalog, which may be able to resolve the
-    reference and retrieve the entity.
-
-    If the reference is linked to a catalog, then the catalog can be used to retrieve the entity and return its
-    attributes.  Certain attributes require the entity to be known in a basic ('catalog') sense, while others
-    require it to be known in a foreground or background sense.  The catalog can also supply information about
-    the entity using a standard interface.  The Catalog Ref can re-implement methods that belong to entities,
-    acting as an abstraction layer between the client code and the catalog.
-
-    Implication of this is that the query interface methods should have the same names and signatures as the
-    entities' own direct methods.  Finally, a design constraint that dictates my class structures!
+    identify and/or recreate the entity.  A ref can be "grounded" by being provided with a query that can
+    resolve the reference and access the entity.
 
     :param origin: semantic reference to data source (catalog must resolve to a physical data source)
     :param ref: external reference of entity in semantic data source
@@ -55,9 +45,14 @@ class CatalogRef(BaseRef):
             origin = j['source']
         else:
             origin = 'foreground'  # generic fallback origin
-        ref = cls(origin, external_ref, entity_type=etype, **j)
         if catalog is not None:
-            ref = ref.lookup(catalog)
+            try:
+                query = catalog.query(origin)
+                ref = cls.from_query(external_ref, query, etype, **j)
+            except UnknownOrigin:
+                ref = cls(origin, external_ref, entity_type=etype, **j)
+        else:
+            ref = cls(origin, external_ref, entity_type=etype, **j)
         return ref
 
     @classmethod
@@ -72,26 +67,6 @@ class CatalogRef(BaseRef):
         # elif etype == 'fragment':
         #     return FragmentRef(external_ref, query, reference_entity, **kwargs)
         return cls(query.origin, external_ref, entity_type=etype, **kwargs)
-
-    def lookup(self, catalog, **kwargs):
-        """
-        RETURNS a grounded catalogRef matching the current item.  Note that the current item cannot be transformed
-        into a grounded ref.
-        :param catalog:
-        :param kwargs:
-        :return: typed EntityRef
-        """
-        try:
-            org = catalog.lookup(self.origin, self.external_ref)
-        except EntityNotFound:
-            print('Not found: %s/%s' % (self.origin, self.external_ref))
-            return None
-        query = catalog.query(org, **kwargs)
-        ref = query.get(self.external_ref)
-        for k, v in self._d.items():
-            if not ref.has_property(k):
-                ref[k] = v  # copy local items
-        return ref
 
     def __init__(self, origin, external_ref, entity_type=None, **kwargs):
         """

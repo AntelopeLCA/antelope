@@ -1,4 +1,4 @@
-class EntityInterface(object):
+class BaseEntity(object):
     """
     The very most basic characteristics of entities and entity refs
     """
@@ -58,18 +58,7 @@ class EntityInterface(object):
         return NotImplemented
 
 
-class QuantityInterface(EntityInterface):
-    """
-    An abstract class that establishes common functionality for QUANTITIES OF MEASURE.  A Quantity consists of
-     - a fixed unit of measure
-
-    """
-    @property
-    def unit(self):
-        return NotImplemented
-
-
-class FlowInterface(EntityInterface):
+class FlowInterface(BaseEntity):
     """
     An abstract class that establishes common functionality for OBSERVATIONS OF FLOWS.  A Flow consists of:
      - a reference quantity with a fixed unit
@@ -99,7 +88,8 @@ class FlowInterface(EntityInterface):
     @property
     def context(self):
         """
-        A flow's context is any hierarchical tuple of strings (generic, intermediate, specific).
+        A flow's context is any hierarchical tuple of strings (generic, intermediate, ..., specific)
+        0-length default for flows with no specific context
         :return:
         """
         return NotImplemented

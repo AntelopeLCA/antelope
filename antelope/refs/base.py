@@ -1,9 +1,12 @@
 """
 Motivation:
-The creation of catalog references is borne out of the idea that I can perform operations on entities without
-possessing the actual entities themselves, as long as I have a pointer to a resource that DOES possess them.
-All I need to do is specify the entity's origin and name, and find a catalog that knows that origin, and then
-I can use the reference as a proxy for the entity itself.
+The main idea is that one can manipulate entities by reference without possessing the actual source data.
+Each entity is identified as a string 'origin/external_ref', where an origin is a hierarchical specification
+with semantic significance (e.g. ecoinvent.3.4.cutoff) and the 'external_ref' is the unique id of the entity
+in that source.
+
+A catalog can resolve a catalog reference by locating the appropriate source and retrieving the entity, or asking
+other questions about it.  To that end, the origins and their mapping to source data must be curated.
 
 Design principles:
 1. References should be lightweight and should not require importing anything. Of course, references are useless
@@ -14,12 +17,22 @@ without access to a query object that can implement the various methods.
 3. Grounded references should behave equivalently to the entities themselves. (except the remote catalogs can act
 as gatekeepers to decide what information can be disclosed)
 
-The classes in this file get imported elsewhere; the CatalogRef class imports all the others because it
-*instantiates* all the others.
+The inheritance pattern is:
+
+BaseRef
+|    |
+|    EntityRef (grounded by a catalog query)
+|      | \ \
+|    ProcessRef, FlowRef, QuantityRef [...]
+|
+CatalogRef (un-grounded)
+
+The CatalogRef can instantiate a grounded reference if supplied with a query object that implements the interface.
+
 """
 from synonym_dict import LowerDict
 
-from ..flows import EntityInterface
+from ..flows import BaseEntity
 from ..interfaces.abstract_query import NoAccessToEntity
 
 
@@ -35,7 +48,7 @@ class EntityRefMergeError(Exception):
     pass
 
 
-class BaseRef(EntityInterface):
+class BaseRef(BaseEntity):
     """
     A base class for defining entity references.  The base class can also store information, such as properties
     """
@@ -101,8 +114,7 @@ class BaseRef(EntityInterface):
         return self._localitem(item) is not None
 
     def __setitem__(self, key, value):
-        key = key.lower()
-        if not key.startswith('local_'):
+        if not key.lower().startswith('local_'):
             key = 'local_%s' % key
         self._d[key] = value
 
@@ -214,9 +226,6 @@ class EntityRef(BaseRef):
     """
     An EntityRef is a CatalogRef that has been provided a valid catalog query.  the EntityRef is still semi-abstract
     since there is no meaningful reference to an entity that is not typed.
-
-    UUID is looked up when queried, but not all entities have uuids and I don't want to import the interface just for
-    exception checking
     """
     _ref_field = 'referenceEntity'
 
@@ -286,6 +295,7 @@ class EntityRef(BaseRef):
 
     def validate(self):
         """
+        This is required by certain implementations to be added to archives (born legacy...)
         There should be no way to get through the instantiation without a valid query, so this should probably just
         return True (or be made more useful)
         :return:
