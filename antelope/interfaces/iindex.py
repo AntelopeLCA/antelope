@@ -150,14 +150,14 @@ class IndexInterface(AbstractQuery):
         return self._perform_query(_interface, 'unmatched_flows', IndexRequired,
                                    flows, **kwargs)
 
-    def terminate(self, flow, direction=None, **kwargs):
+    def targets(self, flow, direction=None, **kwargs):
         """
         Find processes that match the given flow and have a complementary direction
         :param flow:
         :param direction: if omitted, return all processes having the given flow as reference, regardless of direction
         :return:
         """
-        for i in self._perform_query(_interface, 'terminate', IndexRequired,
+        for i in self._perform_query(_interface, 'targets', IndexRequired,
                                      flow, direction=direction, **kwargs):
             yield self.make_ref(i)
 
@@ -173,7 +173,7 @@ class IndexInterface(AbstractQuery):
                                      flow, direction=direction, **kwargs):
             yield self.make_ref(i)
         '''
-        for i in self.terminate(flow, comp_dir(direction), **kwargs):  # just gets flipped back again in terminate()
+        for i in self.targets(flow, comp_dir(direction), **kwargs):  # just gets flipped back again in terminate()
             yield i
     '''
     def mix(self, flow, direction, **kwargs):
