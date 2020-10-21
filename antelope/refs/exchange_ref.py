@@ -105,7 +105,7 @@ class ExchangeRef(object):
             v = '{ #%d# }' % len(self._val)
         else:
             v = '%.3g' % self.value
-        return '[ %s ] %s %s (%s) %s%s' % (self.process, ds, v, self.flow, self.unit, tt)
+        return '[ %s ] %s %s (%s) %s%s' % (self.process.name, ds, v, self.flow.name, self.unit, tt)
 
     def __hash__(self):
         return self._hash
@@ -148,6 +148,7 @@ class RxRef(ExchangeRef):
     def __init__(self, process, flow, direction, comment=None, **kwargs):
         if comment is not None:
             kwargs['comment'] = comment
+        kwargs.pop('termination', None)
         super(RxRef, self).__init__(process, flow, direction, value=1.0, is_reference=True, **kwargs)
 
     def __str__(self):

@@ -23,6 +23,7 @@ class ProcessRef(EntityRef):
 
     def __init__(self, external_ref, query, **kwargs):
         self._default_rx = None
+        self._lci = None
         super(ProcessRef, self).__init__(external_ref, query, **kwargs)
 
     @property
@@ -225,9 +226,19 @@ class ProcessRef(EntityRef):
         ref_flow = self._use_ref_exch(ref_flow)
         return self._query.bf(self.external_ref, ref_flow, **kwargs)
 
-    def lci(self, ref_flow=None, **kwargs):
-        ref_flow = self._use_ref_exch(ref_flow)
-        return self._query.lci(self.external_ref, ref_flow, **kwargs)
+    def lci(self, ref_flow=None, refresh=False, **kwargs):
+        """
+        Caches LCI results
+        :param ref_flow:
+        :param refresh:
+        :param kwargs:
+        :return:
+        """
+        if self._lci is None or refresh:
+            ref_flow = self._use_ref_exch(ref_flow)
+            self._lci = list(self._query.lci(self.external_ref, ref_flow, **kwargs))
+        for i in self._lci:
+            yield i
 
     def bg_lcia(self, lcia_qty, ref_flow=None, **kwargs):
         """
