@@ -78,8 +78,12 @@ class Flow(FlowInterface):
         :param name:
         :return:
         """
-        if name is not None and name in self.synonyms:
+        if name is None:
+            raise TypeError('None is not a valid name')
+        elif name in self.synonyms:
             self._flowable.set_name(name)
+        else:
+            raise ValueError('name %s not a recognized synonym for %s' % (name, self.name))
 
     @property
     def synonyms(self):
