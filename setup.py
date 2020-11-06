@@ -1,4 +1,4 @@
-from setuptools import setup
+from setuptools import setup, find_packages
 
 requires = [
     "synonym_dict"
@@ -14,5 +14,5 @@ setup(
     url="https://github.com/AntelopeLCA/antelope",
     summary="An interface specification for accessing LCA data",
     long_description=open('README.md').read(),
-    packages=['antelope']
+    packages=find_packages()
 )
