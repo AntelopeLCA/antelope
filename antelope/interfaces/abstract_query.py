@@ -136,6 +136,15 @@ class AbstractQuery(object):
         return self._perform_query('basic', 'get', EntityNotFound, eid,
                                    **kwargs)
 
+    def properties(self, external_ref, **kwargs):
+        """
+        Get an entity's list of properties
+        :param external_ref:
+        :param kwargs:
+        :return:
+        """
+        return self._perform_query(None, 'properties', EntityNotFound, external_ref, **kwargs)
+
     def get_item(self, external_ref, item):
         """
         access an entity's dictionary items
@@ -143,11 +152,12 @@ class AbstractQuery(object):
         :param item:
         :return:
         """
+        '''
         if hasattr(external_ref, 'external_ref'):  # debounce
             err_str = external_ref.external_ref
         else:
             err_str = external_ref
-
+        '''
         return self._perform_query('basic', 'get_item', EntityNotFound,
                                    external_ref, item)
 

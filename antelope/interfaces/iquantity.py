@@ -194,3 +194,14 @@ class QuantityInterface(AbstractQuery):
         """
         return self._perform_query(_interface, 'fragment_lcia', QuantityRequired,
                                    fragment, quantity_ref, scenario, **kwargs)
+
+    def norm(self, quantity_ref, region=None, **kwargs):
+        """
+        Return a normalization factor for the named quantity ref, as a single number.
+        :param quantity_ref:
+        :param region: not well supported
+        :param kwargs:
+        :return: a floating-point number, which is 0.0 if no normalisationFactors (OpenLCA spec) are available.
+        """
+        return self._perform_query(_interface, 'norm', QuantityRequired,
+                                   quantity_ref, region=region, **kwargs)

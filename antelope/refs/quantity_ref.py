@@ -159,3 +159,6 @@ class QuantityRef(EntityRef):
 
     def quantity_relation(self, ref_quantity, flowable, context, locale='GLO', **kwargs):
         return self._query.quantity_relation(flowable, ref_quantity, self, context, locale=locale, **kwargs)
+
+    def norm(self, **kwargs):
+        return self._query.norm(self.external_ref, **kwargs)

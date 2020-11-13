@@ -257,6 +257,13 @@ class EntityRef(BaseRef):
             self._uuid = self._query.get_uuid(self.external_ref)
         return self._uuid
 
+    def query_synonyms(self, term):
+        """
+        Provide access to root archive's synonyms
+        :param term:
+        :return:
+        """
+        return self._query.synonyms(term)
 
     def get_reference(self):
         return self.reference_entity
@@ -303,6 +310,14 @@ class EntityRef(BaseRef):
         if self._query is None:
             return False
         return True
+
+    def properties(self):
+        try:
+            for k in self._query.properties(self.external_ref):
+                yield k
+        except NoAccessToEntity:
+            for k in self._d.keys():
+                yield k
 
     def get_item(self, item, force_query=True):
         """

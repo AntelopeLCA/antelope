@@ -23,6 +23,7 @@ class FlowRef(EntityRef, Flow):
             if self.has_property(t):
                 self._flowable.add_term(self._localitem(t))
         self._flowable.add_term(self.link)
+        self._chars_seen = dict()
 
     @property
     def _addl(self):
@@ -103,3 +104,13 @@ class FlowRef(EntityRef, Flow):
 
     def cf(self, quantity, **kwargs):
         return quantity.cf(self, **kwargs)
+
+    '''
+    Characterization caching
+    '''
+    def see_char(self, qq, cx, loc, qrr):
+        self._chars_seen[qq, cx, loc] = qrr
+
+    def chk_char(self, qq, cx, loc):
+        return self._chars_seen[qq, cx, loc]
+
