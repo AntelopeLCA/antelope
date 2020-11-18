@@ -19,9 +19,12 @@ class FlowRef(EntityRef, Flow):
 
     def __init__(self, *args, **kwargs):
         super(FlowRef, self).__init__(*args, **kwargs)
-        for t in ('name', 'casnumber'):  # have to do this bc we use _d.update() and this seems least crunchy
-            if self.has_property(t):
-                self._flowable.add_term(self._localitem(t))
+        try:
+            self._add_synonym(self._localitem('name'), set_name=True)
+        except KeyError:
+            pass
+        if self.has_property('casnumber'):
+            self._add_synonym(self._localitem('casnumber'))
         self._flowable.add_term(self.link)
         self._chars_seen = dict()
 

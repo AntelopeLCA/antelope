@@ -52,6 +52,8 @@ class ExchangeRef(object):
 
     @property
     def value(self):
+        if self.is_reference:
+            return self.process.reference_value(self.flow)
         return self._val
 
     @property
@@ -149,7 +151,7 @@ class RxRef(ExchangeRef):
         if comment is not None:
             kwargs['comment'] = comment
         kwargs.pop('termination', None)
-        super(RxRef, self).__init__(process, flow, direction, value=1.0, is_reference=True, **kwargs)
+        super(RxRef, self).__init__(process, flow, direction, value=0.0, is_reference=True, **kwargs)
 
     def __str__(self):
         ref = '(*)'

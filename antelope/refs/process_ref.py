@@ -157,7 +157,7 @@ class ProcessRef(EntityRef):
         # ref_flow = self._use_ref_exch(ref_flow)  # ref_flow=None returns unallocated inventory
         for x in self._query.inventory(self.external_ref, ref_flow=ref_flow, **kwargs):
             yield ExchangeRef(self, self._query.make_ref(x.flow), x.direction, value=x.value, termination=x.termination,
-                              comment=x.comment)
+                              comment=x.comment, is_reference=x.is_reference)
 
     def exchange_relation(self, ref_flow, exch_flow, direction, termination=None, **kwargs):
         ref_flow = self._use_ref_exch(ref_flow)
