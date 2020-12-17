@@ -1,4 +1,5 @@
 from ..interfaces import check_direction
+from .. import ExchangeRequired
 
 
 class ExchangeRef(object):
@@ -53,7 +54,12 @@ class ExchangeRef(object):
     @property
     def value(self):
         if self.is_reference:
-            return self.process.reference_value(self.flow)
+            try:
+                return self.process.reference_value(self.flow)
+            except (AttributeError, ExchangeRequired):
+                if self._val != 0.0:
+                    return self._val
+                raise ExchangeRequired('Inoperable process ref %s' % self.process.link)
         return self._val
 
     @property
