@@ -69,7 +69,7 @@ class BackgroundInterface(AbstractQuery):
 
     def dependencies(self, process, ref_flow=None, **kwargs):
         """
-        Interior background exchanges for a given node
+        Interior exchanges for a given node
 
         :param process:
         :param ref_flow:
@@ -91,7 +91,7 @@ class BackgroundInterface(AbstractQuery):
 
     def cutoffs(self, process, ref_flow=None, **kwargs):
         """
-        Exterior Intermediate Flows- origin, flow ref, direction, with null context or with non-elementary context
+        Exterior Intermediate Flows- exchanges with null termination or terminated to non-elementary context
 
         :param process:
         :param ref_flow:
@@ -109,6 +109,26 @@ class BackgroundInterface(AbstractQuery):
         """
         return self._perform_query(_interface, 'lci', BackgroundRequired,
                                    process, ref_flow=ref_flow, **kwargs)
+
+    def sys_lci(self, node, demand, **kwargs):
+        """
+        Perform LCI on an arbitrary demand vector, which should be supplied as an iterable of exchanges whose
+        terminations can be found in the background database.
+
+        Terminations to foreground, background, and exterior flows are allowed.
+
+        sys_lci(process_ref.dependencies()) + process_ref.emissions() should equal process_ref.lci()
+        (although the sum of iterables would not be straightforward to compute)
+
+        sys_lci(process_ref.inventory()) should equal process_ref.lci() directly, up to a normalization.
+        :param node: the node that should appear as the parent/process of the returned exchanges- not used in
+         computation
+        :param demand: an iterable of exchanges with terminations that can be found in the background database.
+        :param kwargs:
+        :return:
+        """
+        return self._perform_query(_interface, 'sys_lci', BackgroundRequired,
+                                   node, demand, **kwargs)
 
     def bg_lcia(self, process, query_qty, ref_flow=None, **kwargs):
         """
