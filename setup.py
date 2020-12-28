@@ -1,4 +1,5 @@
 from setuptools import setup, find_packages
+from antelope import ANTELOPE_VERSION
 
 requires = [
     "synonym_dict"
@@ -6,6 +7,8 @@ requires = [
 
 """
 Version History:
+0.1.2 2020/12/28 - Background interface- re-specify cutoffs to be process-specific; create sys_lci;
+
 0.1.1 2020/11/12 - Bug fixes and boundary setting
                    add synonyms() route and grant a ref access to synonyms from its origin
                    terminate() is now called targets()
@@ -14,11 +17,9 @@ Version History:
 0.1.0 2020/07/31 - Initial release - JIE paper 
 """
 
-VERSION = "0.1.1"
-
 setup(
     name="antelope",
-    version=VERSION,
+    version=ANTELOPE_VERSION,
     author="Brandon Kuczenski",
     author_email="bkuczenski@ucsb.edu",
     license=open('LICENSE').read(),
