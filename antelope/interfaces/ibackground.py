@@ -55,18 +55,6 @@ class BackgroundInterface(AbstractQuery):
         return self._perform_query(_interface, 'exterior_flows', BackgroundRequired,
                                    search=search, **kwargs)
 
-    def cutoffs(self, direction=None, search=None, **kwargs):
-        """
-        Exterior Intermediate Flows- origin, flow ref, direction, with null context
-
-        :param direction:
-        :param search:
-        :return:
-        """
-        for i in self.exterior_flows(direction=direction, search=search, **kwargs):
-            if i.termination is None:
-                yield i
-
     def consumers(self, process, ref_flow=None, **kwargs):
         """
         Generate Reference Exchanges which consume the query process, i.e. columns in Af / Ad having nonzero entries
@@ -92,13 +80,24 @@ class BackgroundInterface(AbstractQuery):
 
     def emissions(self, process, ref_flow=None, **kwargs):
         """
-        Exterior exchanges for a given node
+        Exterior exchanges for a given node that are terminated to elementary exchanges
 
         :param process:
         :param ref_flow:
         :return:
         """
         return self._perform_query(_interface, 'emissions', BackgroundRequired,
+                                   process, ref_flow=ref_flow, **kwargs)
+
+    def cutoffs(self, process, ref_flow=None, **kwargs):
+        """
+        Exterior Intermediate Flows- origin, flow ref, direction, with null context or with non-elementary context
+
+        :param process:
+        :param ref_flow:
+        :return:
+        """
+        return self._perform_query(_interface, 'cutoffs', BackgroundRequired,
                                    process, ref_flow=ref_flow, **kwargs)
 
     def lci(self, process, ref_flow=None, **kwargs):

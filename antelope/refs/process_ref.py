@@ -87,7 +87,7 @@ class ProcessRef(EntityRef):
             try:
                 return next(x for x in self.reference_entity if x.flow.match(flow))
             except StopIteration:
-                print('references:')
+                print('%s: references:' % self.link)
                 self._show_ref()
                 raise KeyError(flow)
 
@@ -155,7 +155,8 @@ class ProcessRef(EntityRef):
 
     def inventory(self, ref_flow=None, **kwargs):
         # ref_flow = self._use_ref_exch(ref_flow)  # ref_flow=None returns unallocated inventory
-        for x in self._query.inventory(self.external_ref, ref_flow=ref_flow, **kwargs):
+        for x in sorted(self._query.inventory(self.external_ref, ref_flow=ref_flow, **kwargs),
+                        key=lambda t: (not t.is_reference, t.type == 'elementary', t.type == 'context', t.type == 'cutoff', t.direction)):
             yield ExchangeRef(self, self._query.make_ref(x.flow), x.direction, value=x.value, termination=x.termination,
                               comment=x.comment, is_reference=x.is_reference)
 
@@ -211,6 +212,10 @@ class ProcessRef(EntityRef):
     def emissions(self, ref_flow=None, **kwargs):
         ref_flow = self._use_ref_exch(ref_flow)
         return self._query.emissions(self.external_ref, ref_flow=ref_flow, **kwargs)
+
+    def cutoffs(self, ref_flow=None, **kwargs):
+        ref_flow = self._use_ref_exch(ref_flow)
+        return self._query.cutoffs(self.external_ref, ref_flow=ref_flow, **kwargs)
 
     def is_in_background(self, termination=None, ref_flow=None, **kwargs):
         if termination is None:

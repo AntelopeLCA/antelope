@@ -88,8 +88,10 @@ class ExchangeRef(object):
         elif self.termination is not None:
             if self.termination == self.process.external_ref:
                 return 'self'
-            else:
+            elif isinstance(self.termination, str):
                 return 'node'
+            else:
+                return 'context'
         return 'cutoff'
 
     def __str__(self):
@@ -103,17 +105,29 @@ class ExchangeRef(object):
         return '%6.6s: %s [%s %s] %s' % (self.direction, ref, self._value_string, self.flow.unit, self.flow)
         (value string was ' --- ')
         '''
+
         ds = {'Input': '<--',
               'Output': '==>'}[self._dir]
-        if self._term is None:
-            tt = ''
+        s = d = ' '
+        tt = ''
+        if self.type == 'reference':
+            s = '*'
+        elif self.type == 'self':
+            d = 'o'
+        elif self.type == 'node':
+            d = '#'
+        elif self.type == 'context':
+            tt = ' (%s)' % self._term
         else:
-            tt = ' %s' % self._term
+            tt = ' (cutoff)'
+
         if isinstance(self._val, dict):
             v = '{ #%d# }' % len(self._val)
+        elif self._val is None:
+            v = '   '
         else:
             v = '%.3g' % self.value
-        return '[ %s ] %s %s (%s) %s%s' % (self.process.name, ds, v, self.flow.name, self.unit, tt)
+        return '[ %s ]%s%s%s %s (%s) %s %s' % (self.process.name, s, ds, d, v, self.unit, self.flow.name, tt)
 
     def __hash__(self):
         return self._hash
@@ -159,7 +173,9 @@ class RxRef(ExchangeRef):
         kwargs.pop('termination', None)
         super(RxRef, self).__init__(process, flow, direction, value=0.0, is_reference=True, **kwargs)
 
+    '''
     def __str__(self):
         ref = '(*)'
         val = ' --- '
         return '%6.6s: %s [%s %s] %s' % (self.direction, ref, val, self.flow.unit, self.flow)
+    '''
