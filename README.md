@@ -14,4 +14,6 @@ See the following articles:
 
 ### See Also
 
- * [antelope_interface](https://github.com/AntelopeLCA/antelope_core) The reference implementation including local data source management.
+ * [antelope_interface](https://github.com/AntelopeLCA/core) The reference implementation including local data source management.
+ * [antelope_background](https://github.com/AntelopeLCA/background) Used for partial ordering of databases and construction and inversion of matrices
+ * [antelope_foreground](https://github.com/AntelopeLCA/foreground) Used for building foreground models

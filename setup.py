@@ -18,7 +18,7 @@ Version History:
 """
 
 setup(
-    name="antelope",
+    name="antelope_interface",
     version=ANTELOPE_VERSION,
     author="Brandon Kuczenski",
     author_email="bkuczenski@ucsb.edu",
@@ -27,5 +27,15 @@ setup(
     url="https://github.com/AntelopeLCA/antelope",
     summary="An interface specification for accessing LCA data",
     long_description=open('README.md').read(),
+    classifiers=[
+        "Development Status :: 4 - Beta",
+        "Intended Audience :: Science/Research",
+        "License :: OSI Approved :: BSD License",
+        "Natural Language :: English",
+        "Operating System :: OS Independent",
+        "Programming Language :: Python :: 3",
+        "Topic :: Scientific/Engineering"
+    ],
+    python_requires='>=3.6',
     packages=find_packages()
 )
