@@ -1,5 +1,5 @@
 from setuptools import setup, find_packages
-from antelope import ANTELOPE_VERSION
+from antelope_interface import ANTELOPE_VERSION
 
 requires = [
     "synonym_dict"
