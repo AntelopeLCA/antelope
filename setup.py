@@ -1,5 +1,4 @@
 from setuptools import setup, find_packages
-from antelope import ANTELOPE_VERSION
 
 requires = [
     "synonym_dict"
@@ -7,6 +6,7 @@ requires = [
 
 """
 Version History:
+0.1.2b 2020/12/29 - fix last edit
 0.1.2a 2020/12/29 - fix last edit
 
 0.1.2 2020/12/28 - Background interface- re-specify cutoffs to be process-specific; create sys_lci;
@@ -18,6 +18,7 @@ Version History:
                    
 0.1.0 2020/07/31 - Initial release - JIE paper 
 """
+ANTELOPE_VERSION = '0.1.2b'
 
 setup(
     name="antelope_interface",

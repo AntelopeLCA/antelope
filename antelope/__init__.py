@@ -29,7 +29,7 @@ from os.path import splitext
 from collections import namedtuple
 
 
-ANTELOPE_VERSION = '0.1.2a'
+ANTELOPE_VERSION = '0.1.2b'
 
 
 class PropertyExists(Exception):
