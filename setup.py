@@ -1,5 +1,5 @@
 from setuptools import setup, find_packages
-from antelope_interface import ANTELOPE_VERSION
+from antelope import ANTELOPE_VERSION
 
 requires = [
     "synonym_dict"
@@ -7,6 +7,8 @@ requires = [
 
 """
 Version History:
+0.1.2a 2020/12/29 - fix last edit
+
 0.1.2 2020/12/28 - Background interface- re-specify cutoffs to be process-specific; create sys_lci;
 
 0.1.1 2020/11/12 - Bug fixes and boundary setting
@@ -26,6 +28,7 @@ setup(
     install_requires=requires,
     url="https://github.com/AntelopeLCA/antelope",
     summary="An interface specification for accessing LCA data",
+    long_description_content_type='text/markdown',
     long_description=open('README.md').read(),
     classifiers=[
         "Development Status :: 4 - Beta",

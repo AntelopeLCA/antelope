@@ -1,4 +1,4 @@
-from antelope_interface.interfaces.abstract_query import AbstractQuery
+from antelope.interfaces.abstract_query import AbstractQuery
 
 
 class ForegroundRequired(Exception):
