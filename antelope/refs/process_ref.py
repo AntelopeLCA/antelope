@@ -76,7 +76,7 @@ class ProcessRef(EntityRef):
             raise NoReference
         if flow is None:
             if len(self.reference_entity) > 1:
-                raise MultipleReferences('You must specify a reference flow')
+                raise MultipleReferences('%s: You must specify a reference flow' % self.link)
             return self.reference_entity[0]
         if hasattr(flow, 'entity_type'):
             if flow.entity_type == 'exchange':
