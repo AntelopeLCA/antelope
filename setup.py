@@ -1,11 +1,13 @@
 from setuptools import setup, find_packages
 
 requires = [
-    "synonym_dict"
+    "synonym_dict>=0.1.3"
 ]
 
 """
 Version History:
+0.1.3 2020/12/30 - upstream change in synonym_dict- bump requirements
+
 0.1.2b 2020/12/29 - fix last edit
 0.1.2a 2020/12/29 - fix last edit
 
@@ -18,14 +20,14 @@ Version History:
                    
 0.1.0 2020/07/31 - Initial release - JIE paper 
 """
-ANTELOPE_VERSION = '0.1.2b'
+ANTELOPE_VERSION = '0.1.3'
 
 setup(
     name="antelope_interface",
     version=ANTELOPE_VERSION,
     author="Brandon Kuczenski",
     author_email="bkuczenski@ucsb.edu",
-    license=open('LICENSE').read(),
+    license="BSD 3-Clause",
     install_requires=requires,
     url="https://github.com/AntelopeLCA/antelope",
     summary="An interface specification for accessing LCA data",

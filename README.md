@@ -10,10 +10,9 @@ See the following articles:
  * [Antelope Design Principles](principles.md) for documentation of this repository.
  * [Entity Specification](entities.md) and nomenclature.
  * [Return Types](types.md) which are *references* to entities.
- * [Interface Specification](interface.md), the actual interface.
 
 ### See Also
 
- * [antelope_interface](https://github.com/AntelopeLCA/core) The reference implementation including local data source management.
+ * [antelope_core](https://github.com/AntelopeLCA/core) The reference implementation including local data source management.
  * [antelope_background](https://github.com/AntelopeLCA/background) Used for partial ordering of databases and construction and inversion of matrices
  * [antelope_foreground](https://github.com/AntelopeLCA/foreground) Used for building foreground models
