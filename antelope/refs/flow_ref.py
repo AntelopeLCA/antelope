@@ -117,3 +117,5 @@ class FlowRef(EntityRef, Flow):
     def chk_char(self, qq, cx, loc):
         return self._chars_seen[qq, cx, loc]
 
+    def pop_char(self, qq, cx, loc):
+        return self._chars_seen.pop((qq, cx, loc), None)
