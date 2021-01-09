@@ -248,6 +248,23 @@ class ProcessRef(EntityRef):
         for i in self._lci[ref_flow]:
             yield i
 
+    def unobserved_lci(self, observed, ref_flow=None, **kwargs):
+        """
+        Performs a sys_lci of the process's unobserved exchanges. derived by excluding observed exchanges from the
+        process's inventory and passing the result to sys_lci.  Note that terminations are ignored-- if a process
+        has an observed Electricity flow, all the process's electricity exchanges are assumed to be accounted for
+        by the observation.  (flow.external_ref, direction) is the filter.
+
+        :param observed: iterable of exchanges or child flows, having a flow (with external_ref) and direction
+        :param ref_flow:
+        :param kwargs:
+        :return:
+        """
+        excl = set((k.flow.external_ref, k.direction) for k in observed)
+        ref_flow = self._use_ref_exch(ref_flow)
+        incl = (k for k in self.inventory(ref_flow) if (k.flow.external_ref, k.direction) not in excl)
+        return self._query.sys_lci(self, incl, **kwargs)
+
     def bg_lcia(self, lcia_qty, ref_flow=None, **kwargs):
         """
         :param lcia_qty: should be a quantity ref (or qty), not an external ID
