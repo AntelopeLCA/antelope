@@ -32,7 +32,7 @@ def _popanykey(dct, *keys, strict=False):
     return None
 
 
-def _exchange_params(rowdict):
+def _exchange_params(origin, rowdict):
     """
     This is the excel file parser that specifies how to create an exchange ref heuristically from a varied list of
     potentially valid column namings.  This could be used equally well with JSON
@@ -40,7 +40,8 @@ def _exchange_params(rowdict):
     :return:
     """
     rowdict.pop('process', None)
-    flow = _popanykey(rowdict, 'flow', 'flowref', 'flow_ref', 'external_ref', strict=True)
+    flow_ref = _popanykey(rowdict, 'flow', 'flowref', 'flow_ref', 'external_ref', strict=True)
+    flow = CatalogRef(origin, flow_ref, entity_type='flow')
     dirn = check_direction(_popanykey(rowdict, 'direction', 'flowdir', strict=True))
     try:
         value = float(_popanykey(rowdict, 'value', 'amount', strict=True))
@@ -82,6 +83,8 @@ def exchanges_from_spreadsheet(sheetlike, term_dict, node=None, origin=None):
     'flow', 'flowref', 'flow_ref', 'external_ref' - in that order, used to specify flow
     'direction', 'flowdir' - in that order, used to specify direction w.r.t. parent node
     'value', 'amount' - in that order
+    This method returns unresolved catalog refs- in order for client code to use them, the flow refs must resolve (bc
+    reference quantity must be known and is not required to be specified)
 
     Optional
     'unit', 'units' - unit of measure for the flow
@@ -91,7 +94,7 @@ def exchanges_from_spreadsheet(sheetlike, term_dict, node=None, origin=None):
     'process' - ignored
 
     :param sheetlike: an Xlrd-like object with name, nrows, and row() 
-    :param term_dict: a dict mapping context / category / flow to termination
+    :param term_dict: a dict mapping context / category / flow external_ref to termination
     :param node: [None] if present, use as exchange parent node for all exchanges
     :param origin: ['local.spreadsheet'] Should be provided by caller if 'node' is omitted, to give identifying 
       information to the created process
@@ -103,29 +106,29 @@ def exchanges_from_spreadsheet(sheetlike, term_dict, node=None, origin=None):
     term_dict: a dictionary mapping strings found in "context", "compartment", or "flow" columns (in that order) to
      terminations.
     """
+    if origin is None:
+        origin = 'local.spreadsheet'
     if node is None:
-        if origin is None:
-            origin = 'local.spreadsheet'
         proc_ref = CatalogRef(origin, sheetlike.name, entity_type='process')
     else:
         proc_ref = node
     ref_flow = _row_dict(sheetlike, 1)
-    flow, dirn, value, units, term = _exchange_params(ref_flow)
+    flow_ref, dirn, value, units, term = _exchange_params(origin, ref_flow)
     if term is not None:
         raise ValueError('(%s) Reference flow cannot have specified termination: %s' % (sheetlike.name, term))
     # reference flow is unterminated
-    yield ExchangeRef(proc_ref, flow, dirn, value=value, unit=units, is_reference=True, **ref_flow)
+    yield ExchangeRef(proc_ref, flow_ref, dirn, value=value, unit=units, is_reference=True, **ref_flow)
 
     for row in range(2, sheetlike.nrows):
         c_flow = _row_dict(sheetlike, row)
         try:
-            flow, dirn, value, units, term = _exchange_params(c_flow)
+            flow_ref, dirn, value, units, term = _exchange_params(origin, c_flow)
         except KeyError:
             print('Skipping poorly defined row %d\n%s' % (row, c_flow))
             continue
         if term in term_dict:
             term = term_dict[term]
         elif term is None:
-            if flow in term_dict:
-                term = term_dict[flow]
-        yield ExchangeRef(proc_ref, flow, dirn, value=value, unit=units, termination=term, **c_flow)
+            if flow_ref.external_ref in term_dict:
+                term = term_dict[flow_ref.external_ref]
+        yield ExchangeRef(proc_ref, flow_ref, dirn, value=value, unit=units, termination=term, **c_flow)
