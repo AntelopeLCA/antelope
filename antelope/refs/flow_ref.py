@@ -98,12 +98,13 @@ class FlowRef(EntityRef, Flow):
     def profile(self, **kwargs):
         return self._query.profile(self.external_ref, **kwargs)
 
-    def characterize(self, quantity, value, context=None, **kwargs):
+    def characterize(self, quantity, value, context=None, location='GLO', **kwargs):
         if context is None:
             context = self.context
         flowable = self.name
+        self.pop_char(quantity, context, location)
         return self._query.characterize(flowable, self.reference_entity, quantity, value, context=context,
-                                        origin=self.origin, **kwargs)
+                                        origin=self.origin, location=location, **kwargs)
 
     def cf(self, quantity, **kwargs):
         return quantity.cf(self, **kwargs)
