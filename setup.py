@@ -1,11 +1,13 @@
 from setuptools import setup, find_packages
 
 requires = [
-    "synonym_dict>=0.1.3"
+    "synonym_dict>=0.1.4"
 ]
 
 """
 Version History:
+0.1.4 2021/01/29 - unobserved_lci; fix result caching on flow refs and process refs
+
 0.1.3 2020/12/30 - upstream change in synonym_dict- bump requirements
 
 0.1.2b 2020/12/29 - fix last edit
@@ -20,7 +22,7 @@ Version History:
                    
 0.1.0 2020/07/31 - Initial release - JIE paper 
 """
-ANTELOPE_VERSION = '0.1.3'
+ANTELOPE_VERSION = '0.1.4'
 
 setup(
     name="antelope_interface",
