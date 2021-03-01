@@ -48,16 +48,26 @@ class Flow(FlowInterface):
         self._flowable.add_term(term.strip())
 
     def _catch_flowable(self, key, value):
+        """
+        Returns True or None- allow to chain to avoid redundant _catch_context
+        :param key:
+        :param value:
+        :return:
+        """
         if key == 'name':
             self._add_synonym(value, set_name=True)
+            return True
         elif key == 'casnumber':
             self._add_synonym(value)
+            return True
         elif key == 'synonyms':
             if isinstance(value, str):
                 self._add_synonym(value)
+                return True
             else:
                 for v in value:
                     self._add_synonym(v)
+                return True
 
     __flowable = None
 
