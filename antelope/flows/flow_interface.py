@@ -94,10 +94,13 @@ class FlowInterface(BaseEntity):
         """
         return NotImplemented
 
+    def get_context(self):
+        raise NotImplementedError
+
     def match(self, other):
         """
         match if any synonyms match
         :param other:
         :return:
         """
-        return NotImplemented
+        raise NotImplementedError

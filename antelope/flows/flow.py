@@ -103,7 +103,7 @@ class Flow(FlowInterface):
     @property
     def context(self):
         """
-        A flow's context is any hierarchical tuple of strings (generic, intermediate, specific).
+        A flow's context is any hierarchical tuple of strings (generic, intermediate, ..., specific).
         :return:
         """
         return self._context

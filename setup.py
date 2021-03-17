@@ -1,11 +1,15 @@
 from setuptools import setup, find_packages
 
+ANTELOPE_VERSION = '0.1.6'
+
 requires = [
     "synonym_dict>=0.2.0"
 ]
 
 """
 Version History:
+0.1.6 2021/03/16 - get_context() into flow interface spec- returns an implementation-specific context entity
+
 0.1.5 2021/03/09 - remove unnecessary dependence on Py>=3.7 in namedtuple use
 
 0.1.4 2021/01/29 - unobserved_lci; fix result caching on flow refs and process refs
@@ -24,7 +28,6 @@ Version History:
                    
 0.1.0 2020/07/31 - Initial release - JIE paper 
 """
-ANTELOPE_VERSION = '0.1.5'
 
 setup(
     name="antelope_interface",
