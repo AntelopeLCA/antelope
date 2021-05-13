@@ -161,6 +161,13 @@ class ExchangeRef(object):
         """
         return self.flow.external_ref, self.direction, self.term_ref
 
+    @property
+    def comment(self):
+        try:
+            return self.args['comment']
+        except KeyError:
+            return ''
+
 
 class RxRef(ExchangeRef):
     """
