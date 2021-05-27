@@ -80,7 +80,7 @@ class BackgroundInterface(AbstractQuery):
 
     def emissions(self, process, ref_flow=None, **kwargs):
         """
-        Exterior exchanges for a given node that are terminated to elementary exchanges
+        Exterior exchanges for a given node that are terminated to elementary context
 
         :param process:
         :param ref_flow:

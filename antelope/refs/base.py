@@ -347,7 +347,7 @@ class EntityRef(BaseRef):
 
     def __getitem__(self, item):
         if item == self._ref_field:
-            return self._reference_entity
+            return self.reference_entity
         val = self.get_item(item)
         if val is None:
             raise KeyError(item)
