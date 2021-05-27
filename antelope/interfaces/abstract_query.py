@@ -30,18 +30,7 @@ class AbstractQuery(object):
      - _iface (generator: itype)
      - _tm (property) a TermManager
     """
-    _dbg = False
     _validated = None
-
-    def on_debug(self):
-        self._dbg = True
-
-    def off_debug(self):
-        self._dbg = False
-
-    def _debug(self, *args):
-        if self._dbg:
-            print(*args)
 
     '''
     Overridde these methods
@@ -51,46 +40,14 @@ class AbstractQuery(object):
         return NotImplemented
 
     def make_ref(self, entity):
-        """
-        Query subclasses can return abstracted versions of query results.
-        :param entity:
-        :return: an entity that could have a reference to a grounded query
-        """
-        if entity is None:
-            return None
-        if entity.is_entity:
-            return entity.make_ref(self)
-        else:
-            return entity  # already a ref
+        raise NotImplementedError
 
-    def _iface(self, itype, **kwargs):
-        """
-        Pseudo-abstract method to generate interfaces of the specified type upon demand.  Must be implemented
-        :param itype: 'basic', 'index', 'exchange' (nee 'inventory'), 'quantity', 'background', 'foreground'
-        :param kwargs: for use by subclasses
-        :return: generate interfaces of the given type
-        """
-        return NotImplemented
+    def _perform_query(self, itype, attrname, exc, *args, strict=False, **kwargs):
+        raise NotImplementedError
 
     '''
     Internal workings
     '''
-    def _perform_query(self, itype, attrname, exc, *args, strict=False, **kwargs):
-        self._debug('Performing %s query, iface %s' % (attrname, itype))
-        try:
-            for iface in self._iface(itype, strict=strict):
-                try:
-                    self._debug('Attempting %s query on iface %s' % (attrname, iface))
-                    result = getattr(iface, attrname)(*args, **kwargs)
-                except exc:  # allow nonimplementations to pass silently
-                    continue
-                if result is not None:  #successful query must return something
-                    return result
-        except NotImplementedError:
-            pass
-
-        raise exc('itype %s required for attribute %s | %s' % (itype, attrname, args))
-
     '''
     Can be overridden
     '''
@@ -143,7 +100,7 @@ class AbstractQuery(object):
         :param kwargs:
         :return:
         """
-        return self._perform_query(None, 'properties', EntityNotFound, external_ref, **kwargs)
+        return self._perform_query('basic', 'properties', EntityNotFound, external_ref, **kwargs)
 
     def get_item(self, external_ref, item):
         """
@@ -166,7 +123,7 @@ class AbstractQuery(object):
                                    external_ref)
 
     def get_reference(self, external_ref):
-        return self._perform_query(None, 'get_reference', EntityNotFound,
+        return self._perform_query('basic', 'get_reference', EntityNotFound,
                                    external_ref)
 
     def synonyms(self, item, **kwargs):
@@ -175,5 +132,5 @@ class AbstractQuery(object):
         :param item:
         :return: list of strings
         """
-        return self._perform_query(None, 'synonyms', EntityNotFound, item,
+        return self._perform_query('basic', 'synonyms', EntityNotFound, item,
                                    **kwargs)

@@ -54,6 +54,20 @@ def comp_dir(direction):
     return next(k for k in directions if k != _dirn)
 
 
+def num_dir(direction):
+    """
+    Converts a direction input to a number
+    :param direction:
+    :return:
+    """
+    return {'Input': 0,
+            'Output': 1,
+            'input': 0,
+            'output': 1,
+            0: 0,
+            1: 1}[direction]
+
+
 _interface = 'index'
 
 

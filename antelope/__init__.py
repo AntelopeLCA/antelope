@@ -9,7 +9,7 @@ from .interfaces.abstract_query import PrivateArchive, EntityNotFound, NoAccessT
 
 from .interfaces.iconfigure import ConfigureInterface
 from .interfaces.iexchange import ExchangeInterface, ExchangeRequired
-from .interfaces.iindex import IndexInterface, IndexRequired, directions, comp_dir, check_direction, valid_sense
+from .interfaces.iindex import IndexInterface, IndexRequired, directions, comp_dir, num_dir, check_direction, valid_sense
 from .interfaces.ibackground import BackgroundInterface, BackgroundRequired
 from .interfaces.iquantity import QuantityInterface, QuantityRequired, NoFactorsFound, ConversionReferenceMismatch, FlowableMismatch
 from .interfaces.iforeground import ForegroundInterface
@@ -29,9 +29,6 @@ from os.path import splitext
 from collections import namedtuple
 
 
-ANTELOPE_VERSION = '0.1.2b'
-
-
 class PropertyExists(Exception):
     pass
 
@@ -45,14 +42,31 @@ class BasicQuery(IndexInterface, ExchangeInterface, QuantityInterface):
         self._archive = archive
         self._dbg = debug
 
-    def _iface(self, itype, **kwargs):
+    def _perform_query(self, itype, attrname, exc, *args, strict=False, **kwargs):
         if itype is None:
             itype = 'basic'
-        yield self._archive.make_interface(itype)
+        iface = self._archive.make_interface(itype)
+        result = getattr(iface, attrname)(*args, **kwargs)
+        if result is not None:  # successful query must return something
+            return result
+        raise exc(itype, attrname, *args)
 
     @property
     def origin(self):
         return self._archive.ref
+
+    def make_ref(self, entity):
+        """
+        Query subclasses can return abstracted versions of query results.
+        :param entity:
+        :return: an entity that could have a reference to a grounded query
+        """
+        if entity is None:
+            return None
+        if entity.is_entity:
+            return entity.make_ref(self)
+        else:
+            return entity  # already a ref
 
     '''
     I think that's all I need to do!
@@ -151,7 +165,7 @@ CONTEXT_STATUS_ = 'new'  # 'compat': context = flow['Compartment']; 'new': conte
 
 # Containers of information about linked exchanges.  Direction is given with respect to the termination.
 ExteriorFlow = namedtuple('ExteriorFlow', ('origin', 'flow', 'direction', 'termination'))
-ProductFlow = namedtuple('ProductFlow', ('origin', 'flow', 'direction', 'termination', 'component_id'))
+# ProductFlow = namedtuple('ProductFlow', ('origin', 'flow', 'direction', 'termination', 'component_id'))
 
 EntitySpec = namedtuple('EntitySpec', ('link', 'ref', 'name', 'group'))
 
