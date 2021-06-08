@@ -91,8 +91,11 @@ class FlowRef(EntityRef, Flow):
     def get_context(self):
         return self._query.get_context(self.context)
 
-    def terminate(self, direction=None, **kwargs):
+    def targets(self, direction=None, **kwargs):
         return self._query.targets(self.external_ref, direction, **kwargs)
+
+    def terminate(self, **kwargs):
+        return self.targets(**kwargs)
 
     def originate(self, direction=None, **kwargs):
         return self._query.originate(self.external_ref, direction, **kwargs)

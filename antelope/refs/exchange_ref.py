@@ -91,6 +91,8 @@ class ExchangeRef(object):
             elif isinstance(self.termination, str):
                 return 'node'
             else:
+                if hasattr(self.termination, 'elementary') and self.termination.elementary:
+                    return 'elementary'
                 return 'context'
         return 'cutoff'
 
