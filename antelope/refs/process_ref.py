@@ -217,11 +217,9 @@ class ProcessRef(EntityRef):
         ref_flow = self._use_ref_exch(ref_flow)
         return self._query.cutoffs(self.external_ref, ref_flow=ref_flow, **kwargs)
 
-    def is_in_background(self, termination=None, ref_flow=None, **kwargs):
-        if termination is None:
-            termination = self.external_ref
+    def is_in_background(self, ref_flow=None, **kwargs):
         ref_flow = self._use_ref_exch(ref_flow)
-        return self._query.is_in_background(termination, ref_flow=ref_flow, **kwargs)
+        return self._query.is_in_background(self.external_ref, ref_flow=ref_flow, **kwargs)
 
     def ad(self, ref_flow=None, **kwargs):
         ref_flow = self._use_ref_exch(ref_flow)

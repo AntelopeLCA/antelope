@@ -90,7 +90,7 @@ def local_ref(source, prefix=None):
 
     Okay, FINE.  I'll use the full path.  WITH leading '.' removed.
 
-    Anyway, to be clear, local semantic references are not supposed to be distributed.
+    Anyway, to be clear, local semantic origins are not supposed to be distributed.
     :param source:
     :param prefix: [None] default 'local'
     :return:
@@ -163,9 +163,10 @@ which one to do. It should take either of the two values: 'compat' means "old st
 CONTEXT_STATUS_ = 'new'  # 'compat': context = flow['Compartment']; 'new': context = exch.termination
 
 
-# Containers of information about linked exchanges.  Direction is given with respect to the termination.
+# Exterior exchanges- with contexts outside the db.  Direction is given with respect to the Interior (e.g. "Output" "to air")
+# LciaResults should negate values when an exchange direction and a context are not complementary (i.e. "Input" "to air")
 ExteriorFlow = namedtuple('ExteriorFlow', ('origin', 'flow', 'direction', 'termination'))
-# ProductFlow = namedtuple('ProductFlow', ('origin', 'flow', 'direction', 'termination', 'component_id'))
+
 
 EntitySpec = namedtuple('EntitySpec', ('link', 'ref', 'name', 'group'))
 
