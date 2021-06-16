@@ -2,6 +2,9 @@ from ..interfaces import check_direction
 from .. import ExchangeRequired
 
 
+EXCHANGE_TYPES = ('reference', 'self', 'node', 'context', 'cutoff')
+
+
 class ExchangeRef(object):
     """
     Codifies the information required to define an exchange.  The supplied information could be either object or
@@ -63,6 +66,12 @@ class ExchangeRef(object):
         return self._val
 
     @property
+    def values(self):
+        if isinstance(self._val, dict):
+            return self._val
+        return {None: self._val}
+
+    @property
     def termination(self):
         return self._term
 
@@ -91,9 +100,9 @@ class ExchangeRef(object):
             elif isinstance(self.termination, str):
                 return 'node'
             else:
-                if hasattr(self.termination, 'elementary') and self.termination.elementary:
-                    return 'elementary'
+                # resolved: 'elementary' is not an exchange type- the type is 'context'
                 return 'context'
+            # 'elementary' is a property of an exchange, but not an exchange_ref
         return 'cutoff'
 
     def __str__(self):

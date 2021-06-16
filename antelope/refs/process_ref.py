@@ -131,11 +131,11 @@ class ProcessRef(EntityRef):
     def exchanges(self, **kwargs):
         for x in self._query.exchanges(self.external_ref, **kwargs):
             yield ExchangeRef(self, self._query.make_ref(x.flow), x.direction, value=None, termination=x.termination,
-                              comment=x.comment)
+                              comment=x.comment, is_reference=x.is_reference)
 
     def exchange_values(self, flow, direction=None, termination=None, reference=None, **kwargs):
         """
-        This should get replaced by ev()
+        oooh kay...
         :param flow:
         :param direction:
         :param termination:
@@ -150,13 +150,13 @@ class ProcessRef(EntityRef):
                 flow = flow.external_ref
         for x in  self._query.exchange_values(self.external_ref, flow, direction,
                                               termination=termination, reference=reference, **kwargs):
-            yield ExchangeRef(self, self._query.make_ref(x.flow), x.direction, value=x.value, termination=x.termination,
+            yield ExchangeRef(self, self._query.make_ref(x.flow), x.direction, value=x.values, termination=x.termination,
                               comment=x.comment)
 
     def inventory(self, ref_flow=None, **kwargs):
         # ref_flow = self._use_ref_exch(ref_flow)  # ref_flow=None returns unallocated inventory
         for x in sorted(self._query.inventory(self.external_ref, ref_flow=ref_flow, **kwargs),
-                        key=lambda t: (not t.is_reference, t.type == 'elementary', t.type == 'context', t.type == 'cutoff', t.direction)):
+                        key=lambda t: (not t.is_reference, t.elementary, t.type == 'context', t.type == 'cutoff', t.direction)):
             yield ExchangeRef(self, self._query.make_ref(x.flow), x.direction, value=x.value, termination=x.termination,
                               comment=x.comment, is_reference=x.is_reference)
 
