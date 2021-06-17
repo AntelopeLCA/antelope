@@ -156,7 +156,7 @@ class ProcessRef(EntityRef):
     def inventory(self, ref_flow=None, **kwargs):
         # ref_flow = self._use_ref_exch(ref_flow)  # ref_flow=None returns unallocated inventory
         for x in sorted(self._query.inventory(self.external_ref, ref_flow=ref_flow, **kwargs),
-                        key=lambda t: (not t.is_reference, t.elementary, t.type == 'context', t.type == 'cutoff', t.direction)):
+                        key=lambda t: (not t.is_reference, t.is_elementary, t.type == 'context', t.type == 'cutoff', t.direction)):
             yield ExchangeRef(self, self._query.make_ref(x.flow), x.direction, value=x.value, termination=x.termination,
                               comment=x.comment, is_reference=x.is_reference)
 
@@ -176,9 +176,19 @@ class ProcessRef(EntityRef):
     support process
     '''
     def reference_value(self, flow=None):
-        if flow is None:
-            flow = self.reference().flow
-        return sum(x.value for x in self.exchange_values(flow, reference=True))
+        """
+        Attempts to return the un-allocated exchange value for the designated reference exchange
+        :param flow:
+        :return:
+        """
+        flow = self.reference(flow).flow
+        rx = list(self.exchange_values(flow, reference=True))
+        if len(rx) < 1:
+            raise NoReference(flow)
+        elif len(rx) > 1:
+            raise MultipleReferences(flow)
+        else:
+            return rx[0].values[None]
 
     def get_exchange(self, key):
         try:

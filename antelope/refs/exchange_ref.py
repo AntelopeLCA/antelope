@@ -2,6 +2,10 @@ from ..interfaces import check_direction
 from .. import ExchangeRequired
 
 
+class UnallocatedExchange(Exception):
+    pass
+
+
 EXCHANGE_TYPES = ('reference', 'self', 'node', 'context', 'cutoff')
 
 
@@ -56,14 +60,15 @@ class ExchangeRef(object):
 
     @property
     def value(self):
-        if self.is_reference:
+        if isinstance(self._val, dict):
             try:
+                return self._val[None]
+            except KeyError:
+                raise UnallocatedExchange
+        else:
+            if self.is_reference:
                 return self.process.reference_value(self.flow)
-            except (AttributeError, ExchangeRequired):
-                if self._val != 0.0:
-                    return self._val
-                raise ExchangeRequired('Inoperable process ref %s' % self.process.link)
-        return self._val
+            return self._val
 
     @property
     def values(self):
@@ -189,7 +194,8 @@ class RxRef(ExchangeRef):
         if comment is not None:
             kwargs['comment'] = comment
         kwargs.pop('termination', None)
-        super(RxRef, self).__init__(process, flow, direction, value=0.0, is_reference=True, **kwargs)
+        super(RxRef, self).__init__(process, flow, direction, value=0.0,
+                                    is_reference=True, **kwargs)
 
     '''
     def __str__(self):
