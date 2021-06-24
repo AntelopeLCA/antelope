@@ -26,7 +26,6 @@ class FlowRef(EntityRef, Flow):
         if self.has_property('casnumber'):
             self._add_synonym(self._localitem('casnumber'))
         self._flowable.add_term(self.link)
-        self._chars_seen = dict()
 
     @property
     def _addl(self):
@@ -121,7 +120,7 @@ class FlowRef(EntityRef, Flow):
 
     '''
     Characterization caching
-    '''
+    this is now builtin to the flow interface
     def see_char(self, qq, cx, loc, qrr):
         self._chars_seen[qq, cx, loc] = qrr
 
@@ -130,3 +129,4 @@ class FlowRef(EntityRef, Flow):
 
     def pop_char(self, qq, cx, loc):
         return self._chars_seen.pop((qq, cx, loc), None)
+    '''

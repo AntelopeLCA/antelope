@@ -1,4 +1,5 @@
 from .flow_interface import FlowInterface
+from ..interfaces.iquantity import ConversionReferenceMismatch, NoFactorsFound
 
 from synonym_dict import SynonymSet
 
@@ -128,3 +129,38 @@ class Flow(FlowInterface):
             return other in self._flowable
         return any([t in self._flowable for t in other.synonyms])
 
+    __chars_seen = None
+
+    @property
+    def _chars_seen(self):
+        if self.__chars_seen is None:
+            self.__chars_seen = dict()
+        return self.__chars_seen
+
+    def lookup_cf(self, quantity, context, locale, refresh=False, **kwargs):
+        """
+        Cache characterization factors obtained from quantity relation queries
+        :param quantity:
+        :param context:
+        :param locale:
+        :param refresh:
+        :param kwargs:
+        :return:
+        """
+        key = (quantity, context, locale)
+        if refresh:
+            self._chars_seen.pop(key, None)
+        try:
+            return self._chars_seen.__getitem__(key)
+        except KeyError:
+            try:
+                qr = quantity.quantity_relation(self.reference_entity, self.name, context, locale=locale, **kwargs)
+            except ConversionReferenceMismatch as e:
+                qr = e.args[0]
+            except NoFactorsFound:
+                qr = None
+        self._chars_seen[key] = qr
+        return qr
+
+    def pop_char(self, qq, cx, loc):
+        return self._chars_seen.pop((qq, cx, loc), None)
