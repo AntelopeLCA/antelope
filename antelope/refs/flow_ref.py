@@ -21,7 +21,7 @@ class FlowRef(EntityRef, Flow):
         super(FlowRef, self).__init__(*args, **kwargs)
         try:
             self._add_synonym(self._localitem('name'), set_name=True)
-        except KeyError:
+        except (KeyError, AttributeError):
             pass
         if self.has_property('casnumber'):
             self._add_synonym(self._localitem('casnumber'))

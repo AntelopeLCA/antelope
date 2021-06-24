@@ -94,6 +94,14 @@ class FlowInterface(BaseEntity):
         """
         return NotImplemented
 
+    @property
+    def locale(self):
+        """
+        A flow can have a locale
+        :return:
+        """
+        return NotImplemented
+
     def get_context(self):
         raise NotImplementedError
 

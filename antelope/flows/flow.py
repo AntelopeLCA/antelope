@@ -1,7 +1,17 @@
 from .flow_interface import FlowInterface
 from ..interfaces.iquantity import ConversionReferenceMismatch, NoFactorsFound
 
+import os
+import json
+
 from synonym_dict import SynonymSet
+
+"""
+openlca_locales.json file created from: antelope_olca package, gen_locales('openlca_locales.json') 
+"""
+
+with open(os.path.join(os.path.dirname(__file__), 'openlca_locales.json')) as fp:
+    olca_locales = json.load(fp)
 
 
 class Flow(FlowInterface):
@@ -11,6 +21,7 @@ class Flow(FlowInterface):
 
     _context = ()
     _context_set_level = 0
+    _locale = None
 
     _filt = str.maketrans('\u00b4\u00a0\u2032', "' '", '')  # filter name strings to pull out problematic unicode
 
@@ -46,7 +57,22 @@ class Flow(FlowInterface):
             tm = term.translate(self._filt).strip()  # have to put strip after because \u00a0 turns to space
             self._flowable.add_term(tm)
             self._flowable.set_name(tm)
+            self._check_locale(tm)
         self._flowable.add_term(term.strip())
+
+    def _check_locale(self, term):
+        if self._locale is None:
+            parts = term.split(', ')
+            cand = parts[-1]
+            if cand in olca_locales:
+                self._locale = cand
+                self._flowable.add_term(', '.join(parts[:-1]))
+
+    @property
+    def locale(self):
+        if self._locale is None:
+            return 'GLO'
+        return self._locale
 
     def _catch_flowable(self, key, value):
         """
@@ -69,6 +95,9 @@ class Flow(FlowInterface):
                 for v in value:
                     self._add_synonym(v)
                 return True
+        elif key in ('locale', 'location'):
+            self._locale = value
+            return True
 
     __flowable = None
 
@@ -147,6 +176,7 @@ class Flow(FlowInterface):
         :param kwargs:
         :return:
         """
+        locale = locale or self.locale
         key = (quantity, context, locale)
         if refresh:
             self._chars_seen.pop(key, None)
