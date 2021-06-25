@@ -40,6 +40,7 @@ setup(
     summary="An interface specification for accessing LCA data",
     long_description_content_type='text/markdown',
     long_description=open('README.md').read(),
+    include_package_data=True,
     classifiers=[
         "Development Status :: 4 - Beta",
         "Intended Audience :: Science/Research",
