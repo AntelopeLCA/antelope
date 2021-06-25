@@ -72,18 +72,9 @@ class QuantityInterface(AbstractQuery):
     """
     QuantityInterface
     """
-    def get_canonical(self, quantity, **kwargs):
-        """
-        Retrieve a canonical quantity based on a synonym or other distinguishable term.  Canonical quantities
-        include standard concepts like "mass" that have a semantic scope that is broader than LCA, and also reference
-        versions of LCIA methods such as CML2001 / GWP-100. It is up to the implementation to canonicalize these.
-        :param quantity: external_id of quantity
-        :return: QuantityRef
-        """
-        return self.make_ref(self._perform_query(_interface, 'get_canonical',
-                                                 QuantityRequired,
-                                                 quantity, **kwargs))
-
+    '''
+    qdb- and native-level queries
+    '''
     def profile(self, flow, **kwargs):
         """
         Generate characterizations for the named flow or flowable, with the reference quantity noted in each case
@@ -96,7 +87,11 @@ class QuantityInterface(AbstractQuery):
     def characterize(self, flowable, ref_quantity, query_quantity, value, context=None, location='GLO', **kwargs):
         """
         Add Characterization data for a flowable, reporting the amount of a query quantity that is equal to a unit
-        amount of a reference quantity, for a given context and location
+        amount of a reference quantity, for a given context and location.
+
+        At the native level, this is only used internally. At the qdb level there is basically no reason to use it--
+        characterizations should only get added via import_cfs() which is part of get_canonical()
+
         :param flowable: string or flow external ref
         :param ref_quantity: string or external ref
         :param query_quantity: string or external ref
@@ -205,3 +200,50 @@ class QuantityInterface(AbstractQuery):
         """
         return self._perform_query(_interface, 'norm', QuantityRequired,
                                    quantity_ref, region=region, **kwargs)
+
+    '''
+    qdb-only queries
+    '''
+    def get_canonical(self, quantity, **kwargs):
+        """
+        Retrieve a canonical quantity based on a synonym or other distinguishable term.  Canonical quantities
+        include standard concepts like "mass" that have a semantic scope that is broader than LCA, and also reference
+        versions of LCIA methods such as CML2001 / GWP-100. It is up to the implementation to canonicalize these.
+        :param quantity: external_id of quantity
+        :return: QuantityRef
+        """
+        return self.make_ref(self._perform_query(_interface, 'get_canonical',
+                                                 QuantityRequired,
+                                                 quantity, **kwargs))
+
+    def bulk_factors(self, quantity, flows, **kwargs):
+        """
+        Accept an iterable of flow specifications (either a flow UUID which is known(?) or (flowable, ref_quantity,
+        context, locale)). Return a list of
+        :param quantity: a query quantity
+        :param flows: an iterable of flow specifications (flowable, ref_quantity, context, locale)
+        :param kwargs:
+        :return:
+        """
+        pass
+
+    def flows_for_origin(self, origin, flowable=None, context=None, locale=None, **kwargs):
+        """
+        Return a list of flows matching the supplied characteristics
+        :param origin:
+        :param flowable:
+        :param context:
+        :param locale:
+        :param kwargs:
+        :return:
+        """
+        pass
+
+    def post_flows(self, flows):
+        """
+        Accept an iterable of flow specifications to accumulate to the quantity database
+        :param flows:
+        :return:
+        """
+        pass
+

@@ -184,7 +184,7 @@ class Flow(FlowInterface):
             return self._chars_seen.__getitem__(key)
         except KeyError:
             try:
-                qr = quantity.quantity_relation(self.reference_entity, self.name, context, locale=locale, **kwargs)
+                qr = quantity.quantity_relation(self.name, self.reference_entity, context, locale=locale, **kwargs)
             except ConversionReferenceMismatch as e:
                 qr = e.args[0]
             except NoFactorsFound:
