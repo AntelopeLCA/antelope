@@ -75,6 +75,16 @@ class QuantityInterface(AbstractQuery):
     '''
     qdb- and native-level queries
     '''
+
+    def synonyms(self, item, **kwargs):
+        """
+        Return a list of synonyms for the object -- quantity, flowable, or compartment
+        :param item:
+        :return: list of strings
+        """
+        return self._perform_query(_interface, 'synonyms', QuantityRequired, item,
+                                   **kwargs)
+
     def profile(self, flow, **kwargs):
         """
         Generate characterizations for the named flow or flowable, with the reference quantity noted in each case
@@ -167,6 +177,16 @@ class QuantityInterface(AbstractQuery):
         Perform process foreground LCIA for the given quantity reference.  Included for compatibility with antelope v1.
         In this query, the inventory is computed remotely; whereas with quantity.do_lcia() inventory knowledge is
         required
+
+        The way we imagine this working in the days of future XDB/QDB:
+         - it's not foreground LCIA at all, it's encapsulated LCIA
+         - it's not part of the quantity interface, it's part of the basic interface
+         - it requires background data implemented at the server, even if the client is denied background authorization
+           (hence the basic interface)
+         - either the quantity ref must be known locally or resolvable to a do_lcia operation by the catalog
+         - there is also the implied need for sys_lcia which is a POST operation that uses sys_lci
+        It needs to be rewritten.
+
         :param process:
         :param ref_flow:
         :param quantity_ref:
