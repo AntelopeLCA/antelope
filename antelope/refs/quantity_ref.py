@@ -156,6 +156,9 @@ class QuantityRef(EntityRef):
     """
     Interface methods
     """
+    def has_lcia_engine(self):
+        return self._query.is_lcia_engine()
+
     def is_canonical(self, other):
         return self._query.get_canonical(other) is self
 

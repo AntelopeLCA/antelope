@@ -224,8 +224,32 @@ class QuantityInterface(AbstractQuery):
     '''
     qdb-only queries
     '''
+
+    def is_lcia_engine(self, **kwargs):
+        """
+        A key question in the quantity interface is the way terms are managed.  There are two main footings:
+         - the terms specified by the source are authentic / canonical and should be reproduced
+         - terms from different data sources refer to the same concept.
+        An archive's Term Manager determines how input terms are interpreted and how characterizations are looked up.
+
+        if the term manager is an LciaEngine, it uses a standard set of contexts and flowables, and provides routes
+        to add new synonyms for flowables/contexts and to report new flowables or contexts.  Ultimately the objective
+        is to manage characterization + knowledge of intermediate flows.
+
+        This routine reports whether an interface implements the LciaEngine [protocol?] for dealing with flows.
+
+        :param kwargs:
+        :return: True/False - could also provide more structured information as needed.
+        """
+
+        try:
+            return self._perform_query(_interface, 'is_lcia_engine', QuantityRequired, **kwargs)
+        except QuantityRequired:
+            return False
+
     def get_canonical(self, quantity, **kwargs):
         """
+        This is not really qdb-specific as trivial for non-qdbs.
         Retrieve a canonical quantity based on a synonym or other distinguishable term.  Canonical quantities
         include standard concepts like "mass" that have a semantic scope that is broader than LCA, and also reference
         versions of LCIA methods such as CML2001 / GWP-100. It is up to the implementation to canonicalize these.
@@ -236,18 +260,19 @@ class QuantityInterface(AbstractQuery):
                                                  QuantityRequired,
                                                  quantity, **kwargs))
 
-    def bulk_factors(self, quantity, flows, **kwargs):
+    def get_factors(self, quantity, flows, **kwargs):
         """
-        Accept an iterable of flow specifications (either a flow UUID which is known(?) or (flowable, ref_quantity,
+        Accept an iterable of flow specifications (either a flow UUID which is known(?) and/or (flowable, ref_quantity,
         context, locale)). Return a list of
         :param quantity: a query quantity
         :param flows: an iterable of flow specifications (flowable, ref_quantity, context, locale)
         :param kwargs:
         :return:
         """
-        pass
+        return self._perform_query(_interface, 'get_factors', QuantityRequired,
+                                   quantity, flows, **kwargs)
 
-    def flows_for_origin(self, origin, flowable=None, context=None, locale=None, **kwargs):
+    def flows_with_origin(self, origin, flowable=None, context=None, locale=None, **kwargs):
         """
         Return a list of flows matching the supplied characteristics
         :param origin:
@@ -257,12 +282,13 @@ class QuantityInterface(AbstractQuery):
         :param kwargs:
         :return:
         """
-        pass
+        return self._perform_query(_interface, 'flows_with_origin', QuantityRequired,
+                                   origin, flowable=flowable, context=context, locale=locale, **kwargs)
 
     def post_flows(self, flows):
         """
-        Accept an iterable of flow specifications to accumulate to the quantity database
-        :param flows:
+        flows_with_origin as POST/PUT/PATCH
+        :param flows: iterable of inputs to f_w_o
         :return:
         """
         pass
