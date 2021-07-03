@@ -20,7 +20,7 @@ from .refs.process_ref import MultipleReferences, NoReference
 from .refs.catalog_ref import CatalogRef, QuantityRef, UnknownOrigin
 from .refs.quantity_ref import convert, NoUnitConversionTable
 from .refs.base import NoCatalog, EntityRefMergeError
-from .refs.exchange_ref import ExchangeRef, EXCHANGE_TYPES
+from .refs.exchange_ref import ExchangeRef, RxRef, EXCHANGE_TYPES
 
 import re
 
