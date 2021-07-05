@@ -88,7 +88,8 @@ def exchanges_from_spreadsheet(sheetlike, term_dict, node=None, origin=None):
 
     Optional
     'unit', 'units' - unit of measure for the flow
-    'context', 'compartment' - used to determine the termination of the exchange, default to None
+    'context', 'compartment' - used to determine the termination of the exchange, default to None (use a process
+     external_ref to indicate a linked provider process)
 
     Ignored:
     'process' - ignored

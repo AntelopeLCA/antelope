@@ -40,7 +40,7 @@ class ExchangeInterface(AbstractQuery):
         :param process:
         :param flow:
         :param direction: [None] if none, if flows exist with both directions, raise an error
-        :param termination: [None] if none, return sum of cutoff flows
+        :param termination: [None] if none, return sum of flows across all terminations
         :param ref_flow: [None] if none, return unallocated value. Otherwise, return value allocated to a unit of the
          specified reference
         :return: a float
