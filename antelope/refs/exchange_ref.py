@@ -1,8 +1,8 @@
 from ..interfaces import check_direction
-from .. import ExchangeRequired
+# from .. import ExchangeRequired
 
 
-class UnallocatedExchange(Exception):
+class UnallocatedExchangeError(Exception):
     pass
 
 
@@ -34,7 +34,7 @@ class ExchangeRef(object):
         self._flow = flow
         self._dir = check_direction(direction)
         self._val = value
-        if unit is None:
+        if unit is None:  # this should rather be used to convert numeric values to the flow's reference unit ??
             if hasattr(self._flow, 'unit'):
                 unit = self._flow.unit
             else:
@@ -64,7 +64,7 @@ class ExchangeRef(object):
             try:
                 return self._val[None]
             except KeyError:
-                raise UnallocatedExchange
+                raise UnallocatedExchangeError
         else:
             if self.is_reference:
                 return self.process.reference_value(self.flow)
@@ -183,6 +183,13 @@ class ExchangeRef(object):
             return self.args['comment']
         except KeyError:
             return ''
+
+    @property
+    def locale(self):
+        try:
+            return self.args['locale']
+        except KeyError:
+            return self.flow.locale
 
 
 class RxRef(ExchangeRef):
