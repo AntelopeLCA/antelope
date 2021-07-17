@@ -313,7 +313,7 @@ class EntityRef(BaseRef):
 
     def properties(self):
         try:
-            for k in self._query.properties(self.external_ref):
+            for k in self._query.properties(self):
                 yield k
         except NoAccessToEntity:
             for k in self._d.keys():
