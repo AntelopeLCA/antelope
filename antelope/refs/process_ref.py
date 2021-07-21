@@ -155,10 +155,10 @@ class ProcessRef(EntityRef):
 
     def inventory(self, ref_flow=None, **kwargs):
         # ref_flow = self._use_ref_exch(ref_flow)  # ref_flow=None returns unallocated inventory
-        for x in sorted(self._query.inventory(self.external_ref, ref_flow=ref_flow, **kwargs),
-                        key=lambda t: (not t.is_reference, t.is_elementary, t.type == 'context', t.type == 'cutoff', t.direction)):
-            yield ExchangeRef(self, self._query.make_ref(x.flow), x.direction, value=x.value, termination=x.termination,
-                              comment=x.comment, is_reference=x.is_reference)
+        inv = [ExchangeRef(self, self._query.make_ref(x.flow), x.direction, value=x.value, termination=x.termination,
+                           comment=x.comment, is_reference=x.is_reference)
+               for x in self._query.inventory(self.external_ref, ref_flow=ref_flow, **kwargs)]
+        return sorted(inv, key=lambda t: (not t.is_reference, t.direction, t.type == 'context', t.type == 'cutoff'))
 
     def exchange_relation(self, ref_flow, exch_flow, direction, termination=None, **kwargs):
         ref_flow = self._use_ref_exch(ref_flow)
@@ -206,6 +206,9 @@ class ProcessRef(EntityRef):
 
     '''
     Background queries
+    
+    BIG question here: should the ProcessRef convert ALL these to ExchangeRefs?  
+    and the answer is yes: that way client code knows it was constructed properly
     '''
     def foreground(self, ref_flow=None, **kwargs):
         ref_flow = self._use_ref_exch(ref_flow)

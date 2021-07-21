@@ -53,6 +53,7 @@ class BaseRef(BaseEntity):
     A base class for defining entity references.  The base class can also store information, such as properties
     """
     _etype = None
+    _localize = False
 
     def __init__(self, origin, external_ref, uuid=None, **kwargs):
         """
@@ -66,7 +67,10 @@ class BaseRef(BaseEntity):
         self._uuid = uuid
 
         self._d = LowerDict()
-        self._d.update({k: v for k, v in filter(lambda x: x[1] is not None, kwargs.items())})
+        for k, v in kwargs.items():
+            if v is not None:
+                self.__setitem__(k, v)
+        self._localize = True  # only localize properties added after initialization
 
     @property
     def origin(self):
@@ -114,7 +118,7 @@ class BaseRef(BaseEntity):
         return self._localitem(item) is not None
 
     def __setitem__(self, key, value):
-        if not key.lower().startswith('local_'):
+        if self._localize and not key.lower().startswith('local_'):
             key = 'local_%s' % key
         self._d[key] = value
 
@@ -287,18 +291,20 @@ class EntityRef(BaseRef):
         yield self._ref_field
 
     def _show_ref(self):
-        print('reference: %s' % self.reference_entity)
+        print('%s: %s' % (self.reference_field, self.reference_entity))
 
     def _show_hook(self):
         if self._uuid:
-            print('UUID: %s' % self.uuid)
+            print('   UUID: %s' % self.uuid)
         for i in ('Name', 'Comment'):
             try:
                 print('%7s: %s' % (i, self.get_item(i)))
             except NoAccessToEntity:
                 print('%7s: NoAccessToEntity' % i)
             except KeyError:
-                pass
+                self[i] = ''
+        if self._reference_entity is not None:
+            self._show_ref()
 
     def validate(self):
         """

@@ -19,17 +19,24 @@ class FlowRef(EntityRef, Flow):
 
     def __init__(self, *args, **kwargs):
         super(FlowRef, self).__init__(*args, **kwargs)
+        '''
         try:
             self._add_synonym(self._localitem('name'), set_name=True)
         except (KeyError, AttributeError):
             pass
-        if self.has_property('casnumber'):
+        if self._localitem('casnumber'):
             self._add_synonym(self._localitem('casnumber'))
+        '''
         self._flowable.add_term(self.link)
 
     @property
     def _addl(self):
         return self.unit
+
+    def _show_hook(self):
+        print('Context: %s' % (self.context, ))
+        print(' Locale: %s' % self.locale)
+        super(FlowRef, self)._show_hook()
 
     '''
     def has_characterization(self, quantity, location='GLO'):

@@ -23,7 +23,7 @@ class NoAccessToEntity(Exception):
 
 class AbstractQuery(object):
     """
-    Not-qute-abstract base class for executing queries
+    Not-quite-abstract base class for executing queries
 
     Query implementation must provide:
      - origin (property)
