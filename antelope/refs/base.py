@@ -35,6 +35,9 @@ from synonym_dict import LowerDict
 from ..flows import BaseEntity
 from ..interfaces.abstract_query import NoAccessToEntity
 
+import re
+
+uuid_regex = re.compile('([0-9a-f]{8}-?([0-9a-f]{4}-?){3}[0-9a-f]{12})', flags=re.IGNORECASE)
 
 class NoCatalog(Exception):
     pass
@@ -251,6 +254,9 @@ class EntityRef(BaseRef):
         super(EntityRef, self).__init__(origin, external_ref, **kwargs)
         if not query.validate():
             raise InvalidQuery('Query failed validation')
+        if self._uuid is None:
+            if uuid_regex.match(external_ref):
+                self._uuid = external_ref
         self._reference_entity = reference_entity
 
         self._query = query
@@ -259,7 +265,8 @@ class EntityRef(BaseRef):
     def uuid(self):
         if self._uuid is None:
             self._uuid = self._query.get_uuid(self.external_ref)
-        return self._uuid
+        if self._uuid:
+            return self._uuid
 
     def query_synonyms(self, term):
         """

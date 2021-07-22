@@ -68,6 +68,14 @@ class BasicQuery(IndexInterface, ExchangeInterface, QuantityInterface):
         else:
             return entity  # already a ref
 
+    def __str__(self):
+        return '%s(%s:%s:%s)' % (self.__class__.__name__, self.origin,
+                                 self._archive.__class__.__name__,
+                                 self._archive.source)
+
+    def __repr__(self):
+        return self.__str__()
+
     '''
     I think that's all I need to do!
     '''
