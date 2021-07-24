@@ -128,10 +128,13 @@ class ProcessRef(EntityRef):
     '''
     Inventory queries
     '''
+    def _to_exch_ref(self, x, value):
+        return ExchangeRef(self, self._query.make_ref(x.flow), x.direction, value=value, termination=x.termination,
+                           comment=x.comment, is_reference=x.is_reference)
+
     def exchanges(self, **kwargs):
         for x in self._query.exchanges(self.external_ref, **kwargs):
-            yield ExchangeRef(self, self._query.make_ref(x.flow), x.direction, value=None, termination=x.termination,
-                              comment=x.comment, is_reference=x.is_reference)
+            yield self._to_exch_ref(x, value=None)
 
     def exchange_values(self, flow, direction=None, termination=None, reference=None, **kwargs):
         """
@@ -150,8 +153,7 @@ class ProcessRef(EntityRef):
                 flow = flow.external_ref
         for x in  self._query.exchange_values(self.external_ref, flow, direction,
                                               termination=termination, reference=reference, **kwargs):
-            yield ExchangeRef(self, self._query.make_ref(x.flow), x.direction, value=x.values, termination=x.termination,
-                              comment=x.comment)
+            yield self._to_exch_ref(x, value=x.values)
 
     def inventory(self, ref_flow=None, **kwargs):
         # ref_flow = self._use_ref_exch(ref_flow)  # ref_flow=None returns unallocated inventory
@@ -255,7 +257,8 @@ class ProcessRef(EntityRef):
             self._lci.pop(ref_flow, None)
         if ref_flow not in self._lci:
 
-            self._lci[ref_flow] = list(self._query.lci(self.external_ref, ref_flow, **kwargs))
+            self._lci[ref_flow] = [self._to_exch_ref(i, i.value)
+                                   for i in self._query.lci(self.external_ref, ref_flow, **kwargs)]
         for i in self._lci[ref_flow]:
             yield i
 
@@ -274,7 +277,8 @@ class ProcessRef(EntityRef):
         excl = set((k.flow.external_ref, k.direction) for k in observed)
         ref_flow = self._use_ref_exch(ref_flow)
         incl = (k for k in self.inventory(ref_flow) if (k.flow.external_ref, k.direction) not in excl)
-        return self._query.sys_lci(self, incl, **kwargs)
+        for i in self._query.sys_lci(self, incl, **kwargs):
+            yield self._to_exch_ref(i, i.value)
 
     def bg_lcia(self, lcia_qty, ref_flow=None, **kwargs):
         """

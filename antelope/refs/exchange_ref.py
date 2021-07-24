@@ -99,11 +99,12 @@ class ExchangeRef(object):
         the termination is always one of the following:
          - None
          - a str
+         - a tuple (corresponding to a context)
          - an object with the 'entity_type' property with the value 'context', 'process', or 'fragment'
         :param term:
         :return:
         """
-        if term is None or isinstance(term, str):
+        if term is None or isinstance(term, str) or isinstance(term, tuple):
             self._term = term
         elif hasattr(term, 'entity_type'):
             if term.entity_type in ('context', 'process', 'fragment'):
@@ -116,13 +117,15 @@ class ExchangeRef(object):
     @property
     def term_ref(self):
         """
-        returns either None, a str external_ref, or a Context
-        Equivalent to native Exchange.termination for hashing purposes
+        returns either None, a str external_ref, or a tuple.
+        Equivalent to native Exchange.lkey for hashing purposes
         :return:
         """
         if hasattr(self._term, 'entity_type'):
             if self._term.entity_type in ('process', 'fragment'):
                 return self._term.external_ref
+            elif self._term.entity_type == 'context':
+                return tuple(self._term)
         return self._term
 
     @property
