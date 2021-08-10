@@ -45,7 +45,7 @@ def _exchange_params(origin, rowdict):
     dirn = check_direction(_popanykey(rowdict, 'direction', 'flowdir', strict=True))
     try:
         value = float(_popanykey(rowdict, 'value', 'amount', strict=True))
-    except ValueError:
+    except (ValueError, TypeError):
         value = 0.0
     unit = _popanykey(rowdict, 'unit', 'units')
     term = _popanykey(rowdict, 'context', 'compartment')
