@@ -16,7 +16,7 @@ from .interfaces.iforeground import ForegroundInterface
 
 from .flows import BaseEntity, FlowInterface, Flow
 
-from .refs.process_ref import MultipleReferences
+from .refs.process_ref import MultipleReferences, NoReference
 from .refs.catalog_ref import CatalogRef, QuantityRef, UnknownOrigin
 from .refs.quantity_ref import convert, NoUnitConversionTable
 from .refs.base import NoCatalog, EntityRefMergeError
@@ -153,7 +153,7 @@ CONTEXT_STATUS_ = 'new'  # 'compat': context = flow['Compartment']; 'new': conte
 ExteriorFlow = namedtuple('ExteriorFlow', ('origin', 'flow', 'direction', 'termination'))
 ProductFlow = namedtuple('ProductFlow', ('origin', 'flow', 'direction', 'termination', 'component_id'))
 
-EntitySpec = namedtuple('EntitySpec', ('link', 'ref', 'name', 'group'), defaults=(None,))
+EntitySpec = namedtuple('EntitySpec', ('link', 'ref', 'name', 'group'))
 
 # packages that contain 'providers'
 antelope_herd = [
