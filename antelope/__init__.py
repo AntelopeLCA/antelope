@@ -33,6 +33,19 @@ class PropertyExists(Exception):
     pass
 
 
+class ValuesAccessRequired(Exception):
+    """
+    The requested route requires a grant that has values=True
+    """
+    pass
+
+
+class UpdateAccessRequired(Exception):
+    """
+    The requested route requires a grant that has updates=True
+    """
+    pass
+
 '''
 Query classes
 '''

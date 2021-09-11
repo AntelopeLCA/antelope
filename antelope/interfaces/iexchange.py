@@ -8,6 +8,8 @@ class ExchangeRequired(Exception):
 
 _interface = 'exchange'
 
+EXCHANGE_VALUES_REQUIRED = {'ev', 'exchange_values', 'inventory', 'exchange_relation'}
+
 
 class ExchangeInterface(AbstractQuery):
     """
@@ -45,7 +47,7 @@ class ExchangeInterface(AbstractQuery):
          specified reference
         :return: a float
         """
-        return self._perform_query(_interface, 'exchange_values', ExchangeRequired,
+        return self._perform_query(_interface, 'ev', ExchangeRequired,
                                    process, flow, direction=direction, termination=termination, ref_flow=ref_flow,
                                    **kwargs)
 
