@@ -41,6 +41,17 @@ def valid_sense(sense):
 
 
 def comp_dir(direction):
+    """
+    Returns the complementary direction to the provided direction ('input' or 'output'), case-insensitive but
+    unfortunately localized.
+
+    (Obviously this whole concept is essentially i18n of a boolean value)
+
+    comp_dir also accepts inputs of sense, e.g. 'source' and 'sink'  The implicit direction of a 'source' is 'output',
+    and so comp_dir('Source') returns 'Input', and comp_dir('Sink') returns 'Output'.
+    :param direction:
+    :return:
+    """
     if direction is None:
         return None
     try:
@@ -54,9 +65,22 @@ def comp_dir(direction):
     return next(k for k in directions if k != _dirn)
 
 
+def comp_sense(direction):
+    """
+    This inverts the conversion of sense to complementary direction in comp_dir
+    comp_sense('Input') returns 'Source' and comp_sense('Output') returns 'Sink'
+    :param direction:
+    :return:
+    """
+    return {
+        'Input': 'Sink',
+        'Output': 'Source'
+    }[check_direction(direction)]
+
+
 def num_dir(direction):
     """
-    Converts a direction input to a number
+    Converts a direction input to a number, in which Input = 0 and Output = 1.
     :param direction:
     :return:
     """
@@ -65,7 +89,9 @@ def num_dir(direction):
             'input': 0,
             'output': 1,
             0: 0,
-            1: 1}[direction]
+            1: 1,
+            '0': 0,
+            '1': 1}[direction]
 
 
 _interface = 'index'
