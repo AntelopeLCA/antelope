@@ -63,7 +63,7 @@ def exchanges_from_spreadsheet(sheetlike, term_dict, node=None, origin=None):
     for the parent node.  These could be used to construct a foreground model but do not by themselves constitute
     a foreground model.
 
-    Requirements for the sheet-like object:
+    Requirements for the sheet-like object: XlrdLike / xls_tools
      - name property that returns a string
      - nrows property that reports the number of rows
      - row(index) function that returns an ordered list of entries for the specified index (0-indexed).
