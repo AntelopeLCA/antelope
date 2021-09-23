@@ -73,8 +73,8 @@ def comp_sense(direction):
     :return:
     """
     return {
-        'Input': 'Sink',
-        'Output': 'Source'
+        'Input': 'Source',
+        'Output': 'Sink'
     }[check_direction(direction)]
 
 
