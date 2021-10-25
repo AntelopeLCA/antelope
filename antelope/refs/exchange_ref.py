@@ -176,11 +176,12 @@ class RxRef(ExchangeRef):
     Class for process reference exchanges
 
     """
-    def __init__(self, process, flow, direction, comment=None, **kwargs):
+    def __init__(self, process, flow, direction, comment=None, value=0.0, **kwargs):
         if comment is not None:
             kwargs['comment'] = comment
         kwargs.pop('termination', None)
-        super(RxRef, self).__init__(process, flow, direction, value=0.0, is_reference=True, **kwargs)
+        kwargs.pop('is_reference', None)
+        super(RxRef, self).__init__(process, flow, direction, value=value, is_reference=True, **kwargs)
 
     '''
     def __str__(self):

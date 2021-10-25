@@ -5,6 +5,17 @@ from .refs import CatalogRef, ExchangeRef
 from .interfaces import check_direction
 
 
+class TermDictDeprecated(Exception):
+    """
+    Exchanges are allowed to specify terminations, including context, compartment, defaultprovider, activitylinkid,
+    or target. However, the exchanges-from-spreadsheet code is not allowed to apply any interpretation or mapping
+    between the specified terminations and the targets in the foreground.  Instead, that mapping should be applied
+    when the exchanges are used to create fragments.  The main reason for this is that the signature of the
+    exchange interface does not support term_flow, descend, or other fragment-specific aspects.
+    """
+    pass
+
+
 def _row_dict(sheetlike, row):
     """
     Creates a dictionary from the named row of the 'sheetlike' input.
@@ -25,8 +36,8 @@ def _popanykey(dct, *keys, strict=False):
     :return:
     """
     for key in keys:
-        if key in dct:
-            return dct.pop(key)
+        if key.lower() in dct:
+            return dct.pop(key.lower())
     if strict:
         raise KeyError(keys)
     return None
@@ -48,14 +59,14 @@ def _exchange_params(origin, rowdict):
     except (ValueError, TypeError):
         value = 0.0
     unit = _popanykey(rowdict, 'unit', 'units')
-    term = _popanykey(rowdict, 'context', 'compartment')
+    term = _popanykey(rowdict, 'context', 'compartment', 'defaultprovider', 'activitylinkid', 'target')
     if term == '':
         term = None
     print('%s %s %g %s [%s]' % (flow, dirn, value, unit, term))
     return flow, dirn, value, unit, term
 
 
-def exchanges_from_spreadsheet(sheetlike, term_dict, node=None, origin=None):
+def exchanges_from_spreadsheet(sheetlike, term_dict=None, node=None, origin=None):
     """
     A routine to create a list of flat exchanges (all having the same parent node) from an excel table.
 
@@ -88,13 +99,13 @@ def exchanges_from_spreadsheet(sheetlike, term_dict, node=None, origin=None):
 
     Optional
     'unit', 'units' - unit of measure for the flow
-    'context', 'compartment' - used to determine the termination of the exchange, default to None
+    'context', 'compartment', 'defaultprovider', 'activitylinkid', 'target' - used to determine the termination of the exchange, default to None
 
     Ignored:
     'process' - ignored
 
     :param sheetlike: an Xlrd-like object with name, nrows, and row() 
-    :param term_dict: a dict mapping context / category / flow external_ref to termination
+    :param term_dict: DEPRECATED.  Terminations should be handled in foreground code.
     :param node: [None] if present, use as exchange parent node for all exchanges
     :param origin: ['local.spreadsheet'] Should be provided by caller if 'node' is omitted, to give identifying 
       information to the created process
@@ -106,6 +117,9 @@ def exchanges_from_spreadsheet(sheetlike, term_dict, node=None, origin=None):
     term_dict: a dictionary mapping strings found in "context", "compartment", or "flow" columns (in that order) to
      terminations.
     """
+    if term_dict is not None:
+        raise TermDictDeprecated('Apply term dict in foreground code when converting exchanges to fragments, not here')
+
     if origin is None:
         origin = 'local.spreadsheet'
     if node is None:
@@ -126,9 +140,5 @@ def exchanges_from_spreadsheet(sheetlike, term_dict, node=None, origin=None):
         except KeyError:
             print('Skipping poorly defined row %d\n%s' % (row, c_flow))
             continue
-        if term in term_dict:
-            term = term_dict[term]
-        elif term is None:
-            if flow_ref.external_ref in term_dict:
-                term = term_dict[flow_ref.external_ref]
+
         yield ExchangeRef(proc_ref, flow_ref, dirn, value=value, unit=units, termination=term, **c_flow)
