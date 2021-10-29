@@ -67,6 +67,18 @@ class BackgroundInterface(AbstractQuery):
         return self._perform_query(_interface, 'consumers', BackgroundRequired,
                                    process, ref_flow=ref_flow, **kwargs)
 
+    def emitters(self, flow, direction=None, context=None, **kwargs):
+        """
+        Processes with a given elementary flow
+        :param flow:
+        :param direction:
+        :param context:
+        :param kwargs:
+        :return:
+        """
+        return self._perform_query(_interface, 'emitters', BackgroundRequired,
+                                   flow, direction=direction, context=context, **kwargs)
+
     def dependencies(self, process, ref_flow=None, **kwargs):
         """
         Interior exchanges for a given node
