@@ -1,6 +1,6 @@
 from setuptools import setup, find_packages
 
-ANTELOPE_VERSION = '0.1.6'
+ANTELOPE_VERSION = '0.1.7'
 
 requires = [
     "synonym_dict>=0.2.0"
@@ -8,6 +8,8 @@ requires = [
 
 """
 Version History:
+0.1.7 2021/08/05 - merge configuration changes developed in virtualize branch
+
 0.1.6 2021/03/16 - get_context() into flow interface spec- returns an implementation-specific context entity
 
 0.1.5 2021/03/09 - remove unnecessary dependence on Py>=3.7 in namedtuple use
