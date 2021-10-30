@@ -129,14 +129,15 @@ class IndexInterface(AbstractQuery):
         for i in self._perform_query(_interface, 'flows', IndexRequired, **kwargs):
             yield self.make_ref(i)
 
-    def flowables(self, **kwargs):
+    def flowables(self, search=None, **kwargs):
         """
         Generate known flowables by their canonical name
+        :param search: [None] if provided, filter results (implementation dependent)
         :param kwargs:
         :return:
         """
         return self._perform_query(_interface, 'flowables', IndexRequired,
-                                   ** kwargs)
+                                   search=search, **kwargs)
 
     def contexts(self, **kwargs):
         """
