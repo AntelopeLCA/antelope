@@ -37,7 +37,8 @@ class ForegroundInterface(AbstractQuery):
                                    term_ref, origin=origin, **kwargs)
 
     '''
-    candidates
+    core required functionality
+    NOTE: a foreground interface must have access to a qdb to run get_canonical
     '''
     def new_quantity(self, name, ref_unit=None, **kwargs):
         """
@@ -62,3 +63,50 @@ class ForegroundInterface(AbstractQuery):
         return self._perform_query(_interface, 'new_flow', ForegroundRequired,
                                    name, ref_quantity=ref_quantity, context=context,
                                    **kwargs)
+
+    def new_fragment(self, flow, direction, **kwargs):
+        """
+        Create a fragment and add it to the foreground.
+
+        If creating a child flow ('parent' kwarg is non-None), then supply the direction with respect to the parent
+        fragment. Otherwise, supply the direction with respect to the newly created fragment.  Example: for a fragment
+        for electricity production:
+
+        >>> fg = ForegroundInterface(...)
+        >>> elec = fg.new_flow('Electricity supply fragment', 'kWh')
+        >>> my_frag = fg.new_fragment(elec, 'Output')  # flow is an output from my_frag
+        >>> child = fg.new_fragment(elec, 'Input', parent=my_frag, balance=True)  # flow is an input to my_frag
+        >>> child.terminate(elec_production_process)
+
+        :param flow: a flow entity/ref, or an external_ref known to the foreground
+        :param direction:
+        :param kwargs: uuid=None, parent=None, comment=None, value=None, balance=False; **kwargs passed to LcFragment
+        :return: the fragment? or a fragment ref? <== should only be used in the event of a non-local foreground
+        """
+        return self._perform_query(_interface, 'new_fragment', ForegroundRequired,
+                                   flow, direction, **kwargs)
+
+    def observe(self, fragment, exchange_value=None, termination=None, name=None, scenario=None, **kwargs):
+        """
+        Observe a fragment's exchange value with respect to its parent activity level.  Only applicable for
+        non-balancing fragments whose parents are processes or foreground nodes (child flows of subfragments have
+        their exchange values determined at traversal, as do balancing flows).
+
+        A fragment should be named when it is observed.  This should replace name_fragment. In a completed model, all
+        observable fragments should have names.
+
+        Also use to define scenario exchange values (or to make replicate observations..).
+
+        scenario and name should be mutually exclusive; if both are supplied, name is ignored.
+
+        :param fragment:
+        :param exchange_value: [this must be the second positional argument for legacy reasons, but can still be None]
+        :param termination:
+        :param name:
+        :param scenario:
+        :param kwargs:
+        :return:
+        """
+        return self._perform_query(_interface, 'observe', ForegroundRequired,
+                                   fragment, exchange_value=exchange_value, termination=termination, name=name,
+                                   scenario=scenario, **kwargs)
