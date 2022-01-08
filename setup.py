@@ -3,11 +3,16 @@ from setuptools import setup, find_packages
 ANTELOPE_VERSION = '0.1.7'
 
 requires = [
-    "synonym_dict>=0.2.0"
+    "synonym_dict>=0.2.0",
+    "pydantic>=1.8.2"
 ]
 
 """
 Version History:
+0.2.0-virtualize - in progress, with xdb
+                   minimal complete foreground spec
+                   add xdb token spec
+                   
 0.1.7 2021/08/05 - merge configuration changes developed in virtualize branch
 
 0.1.6 2021/03/16 - get_context() into flow interface spec- returns an implementation-specific context entity

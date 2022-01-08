@@ -11,7 +11,7 @@ _interface = 'foreground'
 class ForegroundInterface(AbstractQuery):
     """
     The bare minimum foreground interface allows a foreground to create new flows and quantities, lookup terminations,
-     and to save anything it creates.
+    observe exchanges, and to save anything it creates.
     """
     '''
     minimal
