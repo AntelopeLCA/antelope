@@ -113,6 +113,7 @@ class CatalogRef(BaseRef):
             return self._asgn_etype
         return super(CatalogRef, self).entity_type
 
+    @property
     def unit(self):
         if self.entity_type == 'quantity':
             if self.has_property('Indicator'):
