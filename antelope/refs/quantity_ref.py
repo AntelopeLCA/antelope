@@ -83,15 +83,19 @@ class QuantityRef(EntityRef):
 
     @property
     def unit(self):
-        if isinstance(self.reference_entity, str):
-            return self.reference_entity
-        return self.reference_entity.unitstring
+        ref = self.reference_entity
+        if isinstance(ref, str):
+            return ref
+        elif hasattr(ref, 'unitstring'):
+            return ref.unitstring
+        return ref
 
     @property
     def _addl(self):
+        u = self.unit or ''
         if self.is_lcia_method:
-            return '%s] [LCIA' % self.unit
-        return self.unit
+            return '%s] [LCIA' % u
+        return u
 
     @property
     def name(self):

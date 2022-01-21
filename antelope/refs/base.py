@@ -245,16 +245,23 @@ class EntityRef(BaseRef):
         """
         origin = masquerade or query.origin
         super(EntityRef, self).__init__(origin, external_ref, **kwargs)
-        if not query.validate():
-            raise InvalidQuery('Query failed validation')
         self._reference_entity = reference_entity
 
-        self._query = query
+        self._the_query = query
+
+    @property
+    def _query(self):
+        if not self._the_query.validate():
+            raise InvalidQuery('Query failed validation')
+        return self._the_query
 
     @property
     def uuid(self):
         if self._uuid is None:
-            self._uuid = self._query.get_uuid(self.external_ref)
+            try:
+                self._uuid = self._query.get_uuid(self.external_ref)
+            except InvalidQuery:
+                pass  # a None uuid is fine, but next time we ask, it will check again
         return self._uuid
 
     def query_synonyms(self, term):
@@ -268,15 +275,13 @@ class EntityRef(BaseRef):
     def get_reference(self):
         return self.reference_entity
 
-    def _check_query(self, message=''):
-        if self._query is None:
-            print(self)
-            raise NoCatalog(message)
-
     @property
     def reference_entity(self):
         if self._reference_entity is None:
-            self._reference_entity = self._query.get_reference(self.external_ref)
+            try:
+                self._reference_entity = self._query.get_reference(self.external_ref)
+            except InvalidQuery:
+                pass  # a None reference_entity is fine, but next time we ask, it will check again
         return self._reference_entity
 
     @property
@@ -338,7 +343,7 @@ class EntityRef(BaseRef):
         if loc is not None:
             return loc
         if force_query:
-            self._check_query('getitem %s' % item)
+            # self._check_query('getitem %s' % item)
             val = self._query.get_item(self, item)
             if val is not None and val != '':
                 self._d[item] = val
@@ -361,7 +366,7 @@ class EntityRef(BaseRef):
         """
         try:
             self.get_item(item)
-        except (KeyError, NoAccessToEntity):
+        except (KeyError, NoAccessToEntity, InvalidQuery):
             return False
         return True
 

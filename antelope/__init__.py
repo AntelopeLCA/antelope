@@ -19,7 +19,7 @@ from .flows import BaseEntity, FlowInterface, Flow
 from .refs.process_ref import MultipleReferences, NoReference
 from .refs.catalog_ref import CatalogRef, QuantityRef, UnknownOrigin
 from .refs.quantity_ref import convert, NoUnitConversionTable
-from .refs.base import NoCatalog, EntityRefMergeError
+from .refs.base import NoCatalog, EntityRefMergeError, InvalidQuery
 from .refs.exchange_ref import ExchangeRef, RxRef
 
 import re

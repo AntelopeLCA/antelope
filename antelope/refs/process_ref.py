@@ -19,7 +19,7 @@ class ProcessRef(EntityRef):
 
     @property
     def _addl(self):
-        return self.__getitem__('SpatialScope')
+        return self._localitem('SpatialScope') or ''
 
     def __init__(self, external_ref, query, **kwargs):
         self._default_rx = None
