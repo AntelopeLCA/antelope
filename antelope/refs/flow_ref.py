@@ -19,18 +19,24 @@ class FlowRef(EntityRef, Flow):
 
     def __init__(self, *args, **kwargs):
         super(FlowRef, self).__init__(*args, **kwargs)
+        '''
         try:
             self._add_synonym(self._localitem('name'), set_name=True)
         except (KeyError, AttributeError):
             pass
-        if self.has_property('casnumber'):
+        if self._localitem('casnumber'):
             self._add_synonym(self._localitem('casnumber'))
+        '''
         self._flowable.add_term(self.link)
-        self._chars_seen = dict()
 
     @property
     def _addl(self):
         return self.unit
+
+    def _show_hook(self):
+        print('Context: %s' % (self.context, ))
+        print(' Locale: %s' % self.locale)
+        super(FlowRef, self)._show_hook()
 
     '''
     def has_characterization(self, quantity, location='GLO'):
@@ -97,6 +103,11 @@ class FlowRef(EntityRef, Flow):
     def targets(self, direction=None, **kwargs):
         return self._query.targets(self.external_ref, direction, **kwargs)
 
+    def emitters(self, direction=None, context=None, **kwargs):
+        if context is None:
+            context = self.context
+        return self._query.emitters(self.external_ref, direction=direction, context=context, **kwargs)
+
     def terminate(self, **kwargs):
         return self.targets(**kwargs)
 
@@ -119,7 +130,7 @@ class FlowRef(EntityRef, Flow):
 
     '''
     Characterization caching
-    '''
+    this is now builtin to the flow interface
     def see_char(self, qq, cx, loc, qrr):
         self._chars_seen[qq, cx, loc] = qrr
 
@@ -128,3 +139,4 @@ class FlowRef(EntityRef, Flow):
 
     def pop_char(self, qq, cx, loc):
         return self._chars_seen.pop((qq, cx, loc), None)
+    '''

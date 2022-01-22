@@ -94,6 +94,14 @@ class FlowInterface(BaseEntity):
         """
         return NotImplemented
 
+    @property
+    def locale(self):
+        """
+        A flow can have a locale
+        :return:
+        """
+        return NotImplemented
+
     def get_context(self):
         raise NotImplementedError
 
@@ -103,4 +111,19 @@ class FlowInterface(BaseEntity):
         :param other:
         :return:
         """
+        raise NotImplementedError
+
+    def lookup_cf(self, quantity, context, locale, refresh=False, **kwargs):
+        """
+        Look for cached characterizations, and retrieve if none is found
+        :param quantity:
+        :param context:
+        :param locale:
+        :param refresh: [False] if True, discard cached CF
+        :param kwargs: passed to quantity relation
+        :return:
+        """
+        raise NotImplementedError
+
+    def pop_char(self, quantity, context, locale):
         raise NotImplementedError

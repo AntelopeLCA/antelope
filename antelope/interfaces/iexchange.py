@@ -8,6 +8,8 @@ class ExchangeRequired(Exception):
 
 _interface = 'exchange'
 
+EXCHANGE_VALUES_REQUIRED = {'ev', 'exchange_values', 'inventory', 'exchange_relation'}
+
 
 class ExchangeInterface(AbstractQuery):
     """
@@ -40,12 +42,12 @@ class ExchangeInterface(AbstractQuery):
         :param process:
         :param flow:
         :param direction: [None] if none, if flows exist with both directions, raise an error
-        :param termination: [None] if none, return sum of cutoff flows
+        :param termination: [None] if none, return sum of flows across all terminations
         :param ref_flow: [None] if none, return unallocated value. Otherwise, return value allocated to a unit of the
          specified reference
         :return: a float
         """
-        return self._perform_query(_interface, 'exchange_values', ExchangeRequired,
+        return self._perform_query(_interface, 'ev', ExchangeRequired,
                                    process, flow, direction=direction, termination=termination, ref_flow=ref_flow,
                                    **kwargs)
 

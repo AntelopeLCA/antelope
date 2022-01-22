@@ -23,7 +23,7 @@ class NoAccessToEntity(Exception):
 
 class AbstractQuery(object):
     """
-    Not-qute-abstract base class for executing queries
+    Not-quite-abstract base class for executing queries
 
     Query implementation must provide:
      - origin (property)
@@ -125,12 +125,3 @@ class AbstractQuery(object):
     def get_reference(self, external_ref):
         return self._perform_query('basic', 'get_reference', EntityNotFound,
                                    external_ref)
-
-    def synonyms(self, item, **kwargs):
-        """
-        Return a list of synonyms for the object -- quantity, flowable, or compartment
-        :param item:
-        :return: list of strings
-        """
-        return self._perform_query('basic', 'synonyms', EntityNotFound, item,
-                                   **kwargs)

@@ -72,17 +72,18 @@ class QuantityInterface(AbstractQuery):
     """
     QuantityInterface
     """
-    def get_canonical(self, quantity, **kwargs):
+    '''
+    qdb- and native-level queries
+    '''
+
+    def synonyms(self, item, **kwargs):
         """
-        Retrieve a canonical quantity based on a synonym or other distinguishable term.  Canonical quantities
-        include standard concepts like "mass" that have a semantic scope that is broader than LCA, and also reference
-        versions of LCIA methods such as CML2001 / GWP-100. It is up to the implementation to canonicalize these.
-        :param quantity: external_id of quantity
-        :return: QuantityRef
+        Return a list of synonyms for the object -- quantity, flowable, or compartment
+        :param item:
+        :return: list of strings
         """
-        return self.make_ref(self._perform_query(_interface, 'get_canonical',
-                                                 QuantityRequired,
-                                                 quantity, **kwargs))
+        return self._perform_query(_interface, 'synonyms', QuantityRequired, item,
+                                   **kwargs)
 
     def profile(self, flow, **kwargs):
         """
@@ -96,7 +97,11 @@ class QuantityInterface(AbstractQuery):
     def characterize(self, flowable, ref_quantity, query_quantity, value, context=None, location='GLO', **kwargs):
         """
         Add Characterization data for a flowable, reporting the amount of a query quantity that is equal to a unit
-        amount of a reference quantity, for a given context and location
+        amount of a reference quantity, for a given context and location.
+
+        At the native level, this is only used internally. At the qdb level there is basically no reason to use it--
+        characterizations should only get added via import_cfs() which is part of get_canonical()
+
         :param flowable: string or flow external ref
         :param ref_quantity: string or external ref
         :param query_quantity: string or external ref
@@ -172,6 +177,16 @@ class QuantityInterface(AbstractQuery):
         Perform process foreground LCIA for the given quantity reference.  Included for compatibility with antelope v1.
         In this query, the inventory is computed remotely; whereas with quantity.do_lcia() inventory knowledge is
         required
+
+        The way we imagine this working in the days of future XDB/QDB:
+         - it's not foreground LCIA at all, it's encapsulated LCIA
+         - it's not part of the quantity interface, it's part of the basic interface
+         - it requires background data implemented at the server, even if the client is denied background authorization
+           (hence the basic interface)
+         - either the quantity ref must be known locally or resolvable to a do_lcia operation by the catalog
+         - there is also the implied need for sys_lcia which is a POST operation that uses sys_lci
+        It needs to be rewritten.
+
         :param process:
         :param ref_flow:
         :param quantity_ref:
@@ -205,3 +220,76 @@ class QuantityInterface(AbstractQuery):
         """
         return self._perform_query(_interface, 'norm', QuantityRequired,
                                    quantity_ref, region=region, **kwargs)
+
+    '''
+    qdb-only queries
+    '''
+
+    def is_lcia_engine(self, **kwargs):
+        """
+        A key question in the quantity interface is the way terms are managed.  There are two main footings:
+         - the terms specified by the source are authentic / canonical and should be reproduced
+         - terms from different data sources refer to the same concept.
+        An archive's Term Manager determines how input terms are interpreted and how characterizations are looked up.
+
+        if the term manager is an LciaEngine, it uses a standard set of contexts and flowables, and provides routes
+        to add new synonyms for flowables/contexts and to report new flowables or contexts.  Ultimately the objective
+        is to manage characterization + knowledge of intermediate flows.
+
+        This routine reports whether an interface implements the LciaEngine [protocol?] for dealing with flows.
+
+        :param kwargs:
+        :return: True/False - could also provide more structured information as needed.
+        """
+
+        try:
+            return self._perform_query(_interface, 'is_lcia_engine', QuantityRequired, **kwargs)
+        except QuantityRequired:
+            return False
+
+    def get_canonical(self, quantity, **kwargs):
+        """
+        This is not really qdb-specific as trivial for non-qdbs.
+        Retrieve a canonical quantity based on a synonym or other distinguishable term.  Canonical quantities
+        include standard concepts like "mass" that have a semantic scope that is broader than LCA, and also reference
+        versions of LCIA methods such as CML2001 / GWP-100. It is up to the implementation to canonicalize these.
+        :param quantity: external_id of quantity
+        :return: QuantityRef
+        """
+        return self.make_ref(self._perform_query(_interface, 'get_canonical',
+                                                 QuantityRequired,
+                                                 quantity, **kwargs))
+
+    def get_factors(self, quantity, flows, **kwargs):
+        """
+        Accept an iterable of flow specifications (either a flow UUID which is known(?) and/or (flowable, ref_quantity,
+        context, locale)). Return a list of
+        :param quantity: a query quantity
+        :param flows: an iterable of flow specifications (flowable, ref_quantity, context, locale)
+        :param kwargs:
+        :return:
+        """
+        return self._perform_query(_interface, 'get_factors', QuantityRequired,
+                                   quantity, flows, **kwargs)
+
+    def flows_with_origin(self, origin, flowable=None, context=None, locale=None, **kwargs):
+        """
+        Return a list of flows matching the supplied characteristics
+        :param origin:
+        :param flowable:
+        :param context:
+        :param locale:
+        :param kwargs:
+        :return:
+        """
+        return self._perform_query(_interface, 'flows_with_origin', QuantityRequired,
+                                   origin, flowable=flowable, context=context, locale=locale, **kwargs)
+
+    def post_flows(self, flows):
+        """
+        flows_with_origin as POST/PUT/PATCH
+        :param flows: iterable of inputs to f_w_o
+        :return:
+        """
+        pass
+

@@ -19,8 +19,10 @@ from .flows import BaseEntity, FlowInterface, Flow
 from .refs.process_ref import MultipleReferences, NoReference
 from .refs.catalog_ref import CatalogRef, QuantityRef, UnknownOrigin
 from .refs.quantity_ref import convert, NoUnitConversionTable
+
 from .refs.base import NoCatalog, EntityRefMergeError, InvalidQuery
-from .refs.exchange_ref import ExchangeRef, RxRef
+from .refs.exchange_ref import ExchangeRef, RxRef, EXCHANGE_TYPES
+
 
 import re
 
@@ -32,6 +34,19 @@ from collections import namedtuple
 class PropertyExists(Exception):
     pass
 
+
+class ValuesAccessRequired(Exception):
+    """
+    The requested route requires a grant that has values=True
+    """
+    pass
+
+
+class UpdateAccessRequired(Exception):
+    """
+    The requested route requires a grant that has updates=True
+    """
+    pass
 
 '''
 Query classes
@@ -67,6 +82,14 @@ class BasicQuery(IndexInterface, ExchangeInterface, QuantityInterface):
             return entity.make_ref(self)
         else:
             return entity  # already a ref
+
+    def __str__(self):
+        return '%s(%s:%s:%s)' % (self.__class__.__name__, self.origin,
+                                 self._archive.__class__.__name__,
+                                 self._archive.source)
+
+    def __repr__(self):
+        return self.__str__()
 
     '''
     I think that's all I need to do!
@@ -163,9 +186,9 @@ which one to do. It should take either of the two values: 'compat' means "old st
 CONTEXT_STATUS_ = 'new'  # 'compat': context = flow['Compartment']; 'new': context = exch.termination
 
 
-# Containers of information about linked exchanges.  Direction is given with respect to the termination.
+# Exterior exchanges- with contexts outside the db.  Direction is given with respect to the Interior (e.g. "Output" "to air")
+# LciaResults should negate values when an exchange direction and a context are not complementary (i.e. "Input" "to air")
 ExteriorFlow = namedtuple('ExteriorFlow', ('origin', 'flow', 'direction', 'termination'))
-# ProductFlow = namedtuple('ProductFlow', ('origin', 'flow', 'direction', 'termination', 'component_id'))
 
 EntitySpec = namedtuple('EntitySpec', ('link', 'ref', 'name', 'group'))
 

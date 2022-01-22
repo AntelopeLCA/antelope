@@ -1,5 +1,12 @@
 from ..interfaces import check_direction
-from .. import ExchangeRequired
+# from .. import ExchangeRequired
+
+
+class UnallocatedExchangeError(Exception):
+    pass
+
+
+EXCHANGE_TYPES = ('reference', 'self', 'node', 'context', 'cutoff')
 
 
 class ExchangeRef(object):
@@ -10,10 +17,13 @@ class ExchangeRef(object):
     is_reference = None
     entity_type = 'exchange'
     is_entity = False
+    _term = None
 
     def __init__(self, process, flow, direction, value=0.0, unit=None, termination=None, is_reference=False, **kwargs):
         """
-        Process, flow, must be entity refs; termination can be entity or external_ref
+        Process, flow, must be entity refs; termination can be process or fragment entity or external_ref,
+        context, or None (cutoff).  Any str will be interpreted as an external_ref.  Any non-None, non-str will be
+        interpreted as a context (but you're better off supplying an authentic context than a tuple)
 
         :param process:
         :param flow:
@@ -27,17 +37,21 @@ class ExchangeRef(object):
         self._flow = flow
         self._dir = check_direction(direction)
         self._val = value
-        if unit is None:
+        if unit is None:  # this should rather be used to convert numeric values to the flow's reference unit ??
             if hasattr(self._flow, 'unit'):
                 unit = self._flow.unit
             else:
                 unit = ''
         self._unit = unit
-        self._term = termination
+        self.termination = termination
         self.args = kwargs
         self.is_reference = bool(is_reference)
 
         self._hash = hash((process.origin, process.external_ref, flow.external_ref, direction, self.term_ref))
+
+    @property
+    def origin(self):
+        return self._node.origin
 
     @property
     def process(self):
@@ -53,25 +67,65 @@ class ExchangeRef(object):
 
     @property
     def value(self):
-        if self.is_reference:
+        if isinstance(self._val, dict):
             try:
+                return self._val[None]
+            except KeyError:
+                raise UnallocatedExchangeError
+        else:
+            if self.is_reference:
                 return self.process.reference_value(self.flow)
-            except (AttributeError, ExchangeRequired):
-                if self._val != 0.0:
-                    return self._val
-                raise ExchangeRequired('Inoperable process ref %s' % self.process.link)
-        return self._val
+            return self._val
+
+    @property
+    def values(self):
+        if isinstance(self._val, dict):
+            return self._val
+        return {None: self._val}
 
     @property
     def termination(self):
+        """
+        This can be an entity, str, or None.
+        Note that term_ref replicates the characteristics of Exchange.termination (either None, context, or str).
+
+        :return:
+        """
         return self._term
+
+    @termination.setter
+    def termination(self, term):
+        """
+        the termination is always one of the following:
+         - None
+         - a str
+         - a tuple (corresponding to a context)
+         - an object with the 'entity_type' property with the value 'context', 'process', or 'fragment'
+        :param term:
+        :return:
+        """
+        if term is None or isinstance(term, str) or isinstance(term, tuple):
+            self._term = term
+        elif hasattr(term, 'entity_type'):
+            if term.entity_type in ('context', 'process', 'fragment'):
+                self._term = term
+            else:
+                raise TypeError('%s: Invalid termination type: %s' % (term, term.entity_type))
+        else:
+            raise ValueError('Unintelligible termination %s' % term)
 
     @property
     def term_ref(self):
-        if self._term is None:
-            return None
-        elif hasattr(self._term, 'external_ref'):
-            return self._term.external_ref
+        """
+        returns either None, a str external_ref, or a tuple.
+        Equivalent to native Exchange.lkey for hashing purposes
+        :return:
+        """
+        if hasattr(self._term, 'entity_type'):
+            if self._term.entity_type in ('process', 'fragment'):
+                return self._term.external_ref
+            elif self._term.entity_type == 'context':
+                return tuple(self._term)
         return self._term
 
     @property
@@ -86,14 +140,16 @@ class ExchangeRef(object):
         if self.is_reference:
             return 'reference'
         elif self.termination is not None:
-            if self.termination == self.process.external_ref:
+            if self.term_ref == self.process.external_ref:
                 return 'self'
-            elif isinstance(self.termination, str):
+            elif isinstance(self.term_ref, str):
                 return 'node'
             else:
-                if hasattr(self.termination, 'elementary') and self.termination.elementary:
-                    return 'elementary'
+                # resolved: 'elementary' is not an exchange type- the type is 'context'
                 return 'context'
+                # also resolved: any non-None, non-str term_ref indicates a context
+                # it is an ERROR to supply a context NAME as a termination- it will be interpreted as a process ref
+            # 'elementary' is a property of a context, but not an exchange_ref
         return 'cutoff'
 
     def __str__(self):
@@ -170,12 +226,27 @@ class ExchangeRef(object):
         except KeyError:
             return ''
 
+    @property
+    def locale(self):
+        try:
+            return self.args['locale']
+        except KeyError:
+            return self.flow.locale
+
 
 class RxRef(ExchangeRef):
     """
     Class for process reference exchanges
 
     """
+    @property
+    def external_ref(self):
+        """
+        Reference exchanges can be used as flows w/l/o/g
+        :return:
+        """
+        return self._flow.external_ref
+
     def __init__(self, process, flow, direction, comment=None, value=0.0, **kwargs):
         if comment is not None:
             kwargs['comment'] = comment

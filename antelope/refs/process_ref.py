@@ -128,14 +128,17 @@ class ProcessRef(EntityRef):
     '''
     Inventory queries
     '''
+    def _to_exch_ref(self, x, value):
+        return ExchangeRef(self, self._query.make_ref(x.flow), x.direction, value=value, termination=x.termination,
+                           comment=x.comment, is_reference=x.is_reference)
+
     def exchanges(self, **kwargs):
         for x in self._query.exchanges(self.external_ref, **kwargs):
-            yield ExchangeRef(self, self._query.make_ref(x.flow), x.direction, value=None, termination=x.termination,
-                              comment=x.comment)
+            yield self._to_exch_ref(x, value=None)
 
     def exchange_values(self, flow, direction=None, termination=None, reference=None, **kwargs):
         """
-        This should get replaced by ev()
+        oooh kay...
         :param flow:
         :param direction:
         :param termination:
@@ -150,15 +153,14 @@ class ProcessRef(EntityRef):
                 flow = flow.external_ref
         for x in  self._query.exchange_values(self.external_ref, flow, direction,
                                               termination=termination, reference=reference, **kwargs):
-            yield ExchangeRef(self, self._query.make_ref(x.flow), x.direction, value=x.value, termination=x.termination,
-                              comment=x.comment)
+            yield self._to_exch_ref(x, value=x.values)
 
     def inventory(self, ref_flow=None, **kwargs):
         # ref_flow = self._use_ref_exch(ref_flow)  # ref_flow=None returns unallocated inventory
-        for x in sorted(self._query.inventory(self.external_ref, ref_flow=ref_flow, **kwargs),
-                        key=lambda t: (not t.is_reference, t.type == 'elementary', t.type == 'context', t.type == 'cutoff', t.direction)):
-            yield ExchangeRef(self, self._query.make_ref(x.flow), x.direction, value=x.value, termination=x.termination,
-                              comment=x.comment, is_reference=x.is_reference)
+        inv = [ExchangeRef(self, self._query.make_ref(x.flow), x.direction, value=x.value, termination=x.termination,
+                           comment=x.comment, is_reference=x.is_reference)
+               for x in self._query.inventory(self.external_ref, ref_flow=ref_flow, **kwargs)]
+        return sorted(inv, key=lambda t: (not t.is_reference, t.direction, t.type == 'context', t.type == 'cutoff'))
 
     def exchange_relation(self, ref_flow, exch_flow, direction, termination=None, **kwargs):
         ref_flow = self._use_ref_exch(ref_flow)
@@ -176,9 +178,19 @@ class ProcessRef(EntityRef):
     support process
     '''
     def reference_value(self, flow=None):
-        if flow is None:
-            flow = self.reference().flow
-        return sum(x.value for x in self.exchange_values(flow, reference=True))
+        """
+        Attempts to return the un-allocated exchange value for the designated reference exchange
+        :param flow:
+        :return:
+        """
+        flow = self.reference(flow).flow
+        rx = list(self.exchange_values(flow, reference=True))
+        if len(rx) < 1:
+            raise NoReference(flow)
+        elif len(rx) > 1:
+            raise MultipleReferences(flow)
+        else:
+            return rx[0].values[None]
 
     def get_exchange(self, key):
         try:
@@ -196,6 +208,9 @@ class ProcessRef(EntityRef):
 
     '''
     Background queries
+    
+    BIG question here: should the ProcessRef convert ALL these to ExchangeRefs?  
+    and the answer is yes: that way client code knows it was constructed properly
     '''
     def foreground(self, ref_flow=None, **kwargs):
         ref_flow = self._use_ref_exch(ref_flow)
@@ -217,11 +232,9 @@ class ProcessRef(EntityRef):
         ref_flow = self._use_ref_exch(ref_flow)
         return self._query.cutoffs(self.external_ref, ref_flow=ref_flow, **kwargs)
 
-    def is_in_background(self, termination=None, ref_flow=None, **kwargs):
-        if termination is None:
-            termination = self.external_ref
+    def is_in_background(self, ref_flow=None, **kwargs):
         ref_flow = self._use_ref_exch(ref_flow)
-        return self._query.is_in_background(termination, ref_flow=ref_flow, **kwargs)
+        return self._query.is_in_background(self.external_ref, ref_flow=ref_flow, **kwargs)
 
     def ad(self, ref_flow=None, **kwargs):
         ref_flow = self._use_ref_exch(ref_flow)
@@ -244,7 +257,8 @@ class ProcessRef(EntityRef):
             self._lci.pop(ref_flow, None)
         if ref_flow not in self._lci:
 
-            self._lci[ref_flow] = list(self._query.lci(self.external_ref, ref_flow, **kwargs))
+            self._lci[ref_flow] = [self._to_exch_ref(i, i.value)
+                                   for i in self._query.lci(self.external_ref, ref_flow, **kwargs)]
         for i in self._lci[ref_flow]:
             yield i
 
@@ -263,7 +277,8 @@ class ProcessRef(EntityRef):
         excl = set((k.flow.external_ref, k.direction) for k in observed)
         ref_flow = self._use_ref_exch(ref_flow)
         incl = (k for k in self.inventory(ref_flow) if (k.flow.external_ref, k.direction) not in excl)
-        return self._query.sys_lci(self, incl, **kwargs)
+        for i in self._query.sys_lci(self, incl, **kwargs):
+            yield self._to_exch_ref(i, i.value)
 
     def bg_lcia(self, lcia_qty, ref_flow=None, **kwargs):
         """

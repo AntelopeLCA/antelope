@@ -27,6 +27,8 @@ class BackgroundRequired(Exception):
 
 _interface = 'background'
 
+BACKGROUND_VALUES_REQUIRED = {'dependencies', 'emissions', 'cutoffs', 'lci', 'sys_lci', 'foreground', 'ad', 'bf'}
+
 
 class BackgroundInterface(AbstractQuery):
     """
@@ -69,7 +71,8 @@ class BackgroundInterface(AbstractQuery):
 
     def emitters(self, flow, direction=None, context=None, **kwargs):
         """
-        Processes with a given elementary flow
+        Generate Reference exchanges which include the designated exterior flow in their inventories, optionally
+        filtering by context
         :param flow:
         :param direction:
         :param context:
@@ -185,6 +188,8 @@ class BackgroundInterface(AbstractQuery):
         Returns an ordered list of exchanges for the foreground matrix Af for the given process and reference flow-
         the first being the named process + reference flow, and every successive one having a named termination, so
         that the exchanges could be linked into a fragment tree.
+
+        This technically should require exchange interface as well as values
         :param process:
         :param ref_flow:
         :return:

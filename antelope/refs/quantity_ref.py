@@ -1,3 +1,20 @@
+"""
+Quantity Reference
+
+A couple things really bother me about this spec:
+
+1- the routine for doing LCIA (antelope_core.implementations.quantity.do_lcia()) seems like it should be generic,
+but it depends on the LciaResult implementation, which is irretrievably part of the core and NOT part of the spec.
+
+1a- That means the interface currently lacks a specification for LCIA Results, which seems important
+
+2- The signatures for these methods are delicate:
+  quantity_ref.cf(flow, context=?, locale=?) --> float
+  quantity_ref.quantity_relation(flowable, ref_quantity, context=?, locale=?) --> QuantityConversion
+  quantity_ref.characterize(flowable, ref_quantity, value, context=?, locale=?) --> CF
+
+"""
+
 from .base import EntityRef
 from synonym_dict import LowerDict
 
@@ -143,6 +160,9 @@ class QuantityRef(EntityRef):
     """
     Interface methods
     """
+    def has_lcia_engine(self):
+        return self._query.is_lcia_engine()
+
     def is_canonical(self, other):
         return self._query.get_canonical(other) is self
 
@@ -161,7 +181,7 @@ class QuantityRef(EntityRef):
     def do_lcia(self, inventory, **kwargs):
         return self._query.do_lcia(self, inventory, **kwargs)
 
-    def quantity_relation(self, ref_quantity, flowable, context, locale='GLO', **kwargs):
+    def quantity_relation(self, flowable, ref_quantity, context, locale='GLO', **kwargs):
         return self._query.quantity_relation(flowable, ref_quantity, self, context, locale=locale, **kwargs)
 
     def norm(self, **kwargs):
