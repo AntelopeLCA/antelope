@@ -19,8 +19,10 @@ from .flows import BaseEntity, FlowInterface, Flow
 from .refs.process_ref import MultipleReferences, NoReference
 from .refs.catalog_ref import CatalogRef, QuantityRef, UnknownOrigin
 from .refs.quantity_ref import convert, NoUnitConversionTable
-from .refs.base import NoCatalog, EntityRefMergeError
+
+from .refs.base import NoCatalog, EntityRefMergeError, InvalidQuery
 from .refs.exchange_ref import ExchangeRef, RxRef, EXCHANGE_TYPES
+
 
 import re
 
@@ -111,7 +113,7 @@ def local_ref(source, prefix=None):
 
     Okay, FINE.  I'll use the full path.  WITH leading '.' removed.
 
-    Anyway, to be clear, local semantic origins are not supposed to be distributed.
+    Anyway, to be clear, local semantic references are not supposed to be distributed.
     :param source:
     :param prefix: [None] default 'local'
     :return:
@@ -187,7 +189,6 @@ CONTEXT_STATUS_ = 'new'  # 'compat': context = flow['Compartment']; 'new': conte
 # Exterior exchanges- with contexts outside the db.  Direction is given with respect to the Interior (e.g. "Output" "to air")
 # LciaResults should negate values when an exchange direction and a context are not complementary (i.e. "Input" "to air")
 ExteriorFlow = namedtuple('ExteriorFlow', ('origin', 'flow', 'direction', 'termination'))
-
 
 EntitySpec = namedtuple('EntitySpec', ('link', 'ref', 'name', 'group'))
 
