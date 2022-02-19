@@ -254,7 +254,7 @@ class EntityRef(BaseRef):
         super(EntityRef, self).__init__(origin, external_ref, **kwargs)
         if self._uuid is None:
             if uuid_regex.match(external_ref):
-                self._uuid = external_ref
+                self._uuid = str(external_ref)
         self._reference_entity = reference_entity
 
         self._the_query = query
@@ -269,7 +269,9 @@ class EntityRef(BaseRef):
     def uuid(self):
         if self._uuid is None:
             try:
-                self._uuid = self._query.get_uuid(self.external_ref)
+                _uuid = self._query.get_uuid(self.external_ref)
+                if _uuid:  # implementation should return a valid UUID, or False [cannot return None]
+                    self._uuid = _uuid
             except InvalidQuery:
                 pass  # a None uuid is fine, but next time we ask, it will check again
         return self._uuid
