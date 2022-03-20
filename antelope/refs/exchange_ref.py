@@ -6,6 +6,13 @@ class UnallocatedExchangeError(Exception):
     pass
 
 
+class InaccessibleExchangeValue(Exception):
+    """
+    The exchange ref is somehow unable to lookup the exchange value
+    """
+    pass
+
+
 EXCHANGE_TYPES = ('reference', 'self', 'node', 'context', 'cutoff')
 
 
@@ -19,7 +26,7 @@ class ExchangeRef(object):
     is_entity = False
     _term = None
 
-    def __init__(self, process, flow, direction, value=0.0, unit=None, termination=None, is_reference=False, **kwargs):
+    def __init__(self, process, flow, direction, value=None, unit=None, termination=None, is_reference=False, **kwargs):
         """
         Process, flow, must be entity refs; termination can be process or fragment entity or external_ref,
         context, or None (cutoff).  Any str will be interpreted as an external_ref.  Any non-None, non-str will be
@@ -73,9 +80,15 @@ class ExchangeRef(object):
             except KeyError:
                 raise UnallocatedExchangeError
         else:
-            if self.is_reference:
-                return self.process.reference_value(self.flow)
-            return self._val
+            if self._val is not None:  # need to accept 0.0
+                return self._val
+            else:
+                try:
+                    if self.is_reference:
+                        return self.process.reference_value(self.flow)
+                    return self.process.exchange_relation(None, self.flow, self.direction, termination=self.termination)
+                except AttributeError:
+                    raise InaccessibleExchangeValue
 
     @property
     def values(self):

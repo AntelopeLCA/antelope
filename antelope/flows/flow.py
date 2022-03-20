@@ -23,7 +23,7 @@ class Flow(FlowInterface):
     _context_set_level = 0
     _locale = None
 
-    _filt = str.maketrans('\u00b4\u00a0\u2032', "' '", '')  # filter name strings to pull out problematic unicode
+    _filt = str.maketrans('\u00b4\u00a0\u2032\xa0', "' ' ", '')  # filter name strings to pull out problematic unicode
 
     def _catch_context(self, key, value):
         """
