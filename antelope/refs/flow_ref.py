@@ -30,6 +30,10 @@ class FlowRef(EntityRef, Flow):
         self._flowable.add_term(self.link)
 
     @property
+    def context(self):
+        return self._query.get_context(self._context)
+
+    @property
     def _addl(self):
         return self.unit
 
