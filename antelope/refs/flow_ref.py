@@ -33,6 +33,10 @@ class FlowRef(EntityRef, Flow):
     def context(self):
         return self._query.get_context(self._context)
 
+    @context.setter
+    def context(self, value):
+        self._catch_context('Context', value)
+
     @property
     def _addl(self):
         return self.unit

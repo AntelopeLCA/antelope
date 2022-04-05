@@ -59,7 +59,8 @@ def _exchange_params(origin, rowdict):
     except (ValueError, TypeError):
         value = 0.0
     unit = _popanykey(rowdict, 'unit', 'units')
-    term = _popanykey(rowdict, 'context', 'compartment', 'defaultprovider', 'activitylinkid', 'target')
+    term = _popanykey(rowdict, 'context', 'compartment', 'target',
+                      'defaultprovider', 'activitylinkid', 'term', 'termination')
     if term == '':
         term = None
     print('%s %s %g %s [%s]' % (flow, dirn, value, unit, term))

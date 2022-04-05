@@ -20,7 +20,7 @@ from .refs.process_ref import MultipleReferences, NoReference
 from .refs.catalog_ref import CatalogRef, QuantityRef, UnknownOrigin
 from .refs.quantity_ref import convert, NoUnitConversionTable
 
-from .refs.base import NoCatalog, EntityRefMergeError, InvalidQuery
+from .refs.base import NoCatalog, EntityRefMergeError, InvalidQuery, PropertyExists
 from .refs.exchange_ref import ExchangeRef, RxRef, EXCHANGE_TYPES
 
 
@@ -29,10 +29,6 @@ import re
 from os.path import splitext
 
 from collections import namedtuple
-
-
-class PropertyExists(Exception):
-    pass
 
 
 class ValuesAccessRequired(Exception):

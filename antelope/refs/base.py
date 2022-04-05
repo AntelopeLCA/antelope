@@ -51,12 +51,17 @@ class EntityRefMergeError(Exception):
     pass
 
 
+class PropertyExists(Exception):
+    pass
+
+
 class BaseRef(BaseEntity):
     """
     A base class for defining entity references.  The base class can also store information, such as properties
     """
     _etype = None
     _localize = False
+    _uuid = None
 
     def __init__(self, origin, external_ref, uuid=None, **kwargs):
         """
@@ -67,12 +72,16 @@ class BaseRef(BaseEntity):
         """
         self._origin = origin
         self._ref = external_ref
-        self._uuid = uuid
+        self.uuid = uuid
 
         self._d = LowerDict()
         for k, v in kwargs.items():
             if v is not None:
                 self.__setitem__(k, v)
+
+        if self._uuid is None:
+            self.uuid = str(external_ref)  # regex check happens inside; NOP if fails
+
         self._localize = True  # only localize properties added after initialization
 
     @property
@@ -81,11 +90,19 @@ class BaseRef(BaseEntity):
 
     @property
     def external_ref(self):
-        return self._ref
+        return str(self._ref)
 
     @property
     def uuid(self):
-        return self._uuid or self._ref
+        return self._uuid
+
+    @uuid.setter
+    def uuid(self, value):
+        if self._uuid is not None:
+            raise PropertyExists(self.link, self._uuid)
+        if uuid_regex.match(str(value)):
+            self._uuid = str(value)
+            # do nothing if regex does not match
 
     @property
     def entity_type(self):
@@ -252,9 +269,6 @@ class EntityRef(BaseRef):
         """
         origin = masquerade or query.origin
         super(EntityRef, self).__init__(origin, external_ref, **kwargs)
-        if self._uuid is None:
-            if uuid_regex.match(external_ref):
-                self._uuid = str(external_ref)
         self._reference_entity = reference_entity
 
         self._the_query = query
@@ -275,6 +289,14 @@ class EntityRef(BaseRef):
             except InvalidQuery:
                 pass  # a None uuid is fine, but next time we ask, it will check again
         return self._uuid
+
+    @uuid.setter
+    def uuid(self, value):
+        if self._uuid is not None:
+            raise PropertyExists(self.link, self._uuid)
+        if uuid_regex.match(str(value)):
+            self._uuid = str(value)
+            # do nothing if regex does not match
 
     def query_synonyms(self, term):
         """
