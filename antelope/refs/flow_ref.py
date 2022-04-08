@@ -104,9 +104,9 @@ class FlowRef(EntityRef, Flow):
     '''
     def get_context(self):
         try:
-            return self._query.get_context(self.context)
+            return self._query.get_context(self._context)
         except InvalidQuery:
-            return self._the_query.get_context(self.context)  # this one can bypass -- by talking directly to the catalog
+            return self._the_query.get_context(self._context)  # this one can bypass -- by talking directly to the catalog
 
     def targets(self, direction=None, **kwargs):
         return self._query.targets(self.external_ref, direction, **kwargs)
