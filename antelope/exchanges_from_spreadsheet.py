@@ -5,6 +5,10 @@ from .refs import CatalogRef, ExchangeRef
 from .interfaces import check_direction
 
 
+class ValueIsBalance(Exception):
+    pass
+
+
 class TermDictDeprecated(Exception):
     """
     Exchanges are allowed to specify terminations, including context, compartment, defaultprovider, activitylinkid,
@@ -54,16 +58,23 @@ def _exchange_params(origin, rowdict):
     flow_ref = _popanykey(rowdict, 'flow', 'flowref', 'flow_ref', 'external_ref', strict=True)
     flow = CatalogRef(origin, flow_ref, entity_type='flow')
     dirn = check_direction(_popanykey(rowdict, 'direction', 'flowdir', strict=True))
-    try:
-        value = float(_popanykey(rowdict, 'value', 'amount', strict=True))
-    except (ValueError, TypeError):
-        value = 0.0
+    val = _popanykey(rowdict, 'value', 'amount', strict=True)
+    if str(val).lower() == 'balance':
+        value = ValueIsBalance
+    else:
+        try:
+            value = float(val)
+        except (ValueError, TypeError):
+            value = 0.0
     unit = _popanykey(rowdict, 'unit', 'units')
     term = _popanykey(rowdict, 'context', 'compartment', 'target',
                       'defaultprovider', 'activitylinkid', 'term', 'termination')
     if term == '':
         term = None
-    print('%s %s %g %s [%s]' % (flow, dirn, value, unit, term))
+    if value is ValueIsBalance:
+        print('%s %s (balance) %s [%s]' % (flow, dirn, unit, term))
+    else:
+        print('%s %s %g %s [%s]' % (flow, dirn, value, unit, term))
     return flow, dirn, value, unit, term
 
 
@@ -94,7 +105,7 @@ def exchanges_from_spreadsheet(sheetlike, term_dict=None, node=None, origin=None
     Required:
     'flow', 'flowref', 'flow_ref', 'external_ref' - in that order, used to specify flow
     'direction', 'flowdir' - in that order, used to specify direction w.r.t. parent node
-    'value', 'amount' - in that order
+    'value', 'amount' - in that order.
     This method returns unresolved catalog refs- in order for client code to use them, the flow refs must resolve (bc
     reference quantity must be known and is not required to be specified)
 
@@ -104,6 +115,11 @@ def exchanges_from_spreadsheet(sheetlike, term_dict=None, node=None, origin=None
 
     Ignored:
     'process' - ignored
+
+    Any remaining fields are passed to the exchange ref as initialization arguments.
+
+    A 'value' whose string is lowercase-equivalent to 'balance' will add balance=True to the initialization dict and
+    set the value to 0.
 
     :param sheetlike: an Xlrd-like object with name, nrows, and row() 
     :param term_dict: DEPRECATED.  Terminations should be handled in foreground code.
@@ -141,5 +157,9 @@ def exchanges_from_spreadsheet(sheetlike, term_dict=None, node=None, origin=None
         except KeyError:
             print('Skipping poorly defined row %d\n%s' % (row, c_flow))
             continue
+
+        if value is ValueIsBalance:
+            c_flow['balance'] = True
+            value = 0.0
 
         yield ExchangeRef(proc_ref, flow_ref, dirn, value=value, unit=units, termination=term, **c_flow)

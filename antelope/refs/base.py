@@ -33,7 +33,7 @@ The CatalogRef can instantiate a grounded reference if supplied with a query obj
 from synonym_dict import LowerDict
 
 from ..flows import BaseEntity
-from ..interfaces.abstract_query import NoAccessToEntity
+from ..interfaces.abstract_query import NoAccessToEntity, EntityNotFound
 
 import re
 
@@ -380,7 +380,13 @@ class EntityRef(BaseRef):
             return loc
         if force_query:
             # self._check_query('getitem %s' % item)
-            val = self._query.get_item(self, item)
+            try:
+                val = self._query.get_item(self, item)
+            except NoAccessToEntity:
+                try:
+                    val = self._query.get(self.link).get_item(item)
+                except EntityNotFound:
+                    raise KeyError(item)
             if val is not None and val != '':
                 self._d[item] = val
                 return val
