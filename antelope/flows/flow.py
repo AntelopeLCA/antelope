@@ -155,8 +155,12 @@ class Flow(FlowInterface):
                 self.external_ref == other.external_ref)  # not sure about this last one! we should check origin too
         '''
         if isinstance(other, str):
+            if other == self.external_ref:
+                return True
             return other in self._flowable
-        return any([t in self._flowable for t in other.synonyms])
+        if hasattr(other, 'synonyms'):
+            return any([t in self._flowable for t in other.synonyms])
+        return False
 
     __chars_seen = None
 

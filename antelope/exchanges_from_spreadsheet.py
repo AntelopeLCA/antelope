@@ -27,7 +27,7 @@ def _row_dict(sheetlike, row):
     :param row: int
     :return: dict k: v where k are entry.value.lower() for entry in row(0) and v are entry.value for entry in row(row)
     """
-    headers = [k.value.lower() for k in sheetlike.row(0)]
+    headers = [str(k.value).lower() for k in sheetlike.row(0)]
     return {headers[i]: k.value for i, k in enumerate(sheetlike.row(row)) if i < len(headers)}
 
 

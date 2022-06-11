@@ -383,10 +383,14 @@ class EntityRef(BaseRef):
             try:
                 val = self._query.get_item(self, item)
             except NoAccessToEntity:
-                try:
-                    val = self._query.get(self.link).get_item(item)
+                try:  # this works in some corner cases ...
+                    lit = self._query.get(self.link)
                 except EntityNotFound:
                     raise KeyError(item)
+                if lit is self:
+                    raise
+                val = lit.get_item(item)
+
             if val is not None and val != '':
                 self._d[item] = val
                 return val
