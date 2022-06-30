@@ -154,6 +154,8 @@ class Flow(FlowInterface):
                 (trim_cas(self['CasNumber']) == trim_cas(other['CasNumber']) and len(self['CasNumber']) > 4) or
                 self.external_ref == other.external_ref)  # not sure about this last one! we should check origin too
         '''
+        if hasattr(other, 'flow'):
+            other = other.flow
         if isinstance(other, str):
             if other == self.external_ref:
                 return True
