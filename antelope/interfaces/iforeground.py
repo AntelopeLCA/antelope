@@ -110,3 +110,34 @@ class ForegroundInterface(AbstractQuery):
         return self._perform_query(_interface, 'observe', ForegroundRequired,
                                    fragment, exchange_value=exchange_value, termination=termination, name=name,
                                    scenario=scenario, **kwargs)
+
+    def observe_unit_score(self, fragment, quantity, score, scenario=None, **kwargs):
+        return self._perform_query(_interface, 'observe_unit_score', ForegroundRequired,
+                                   fragment, quantity, score, scenario=scenario, **kwargs)
+
+    def traverse(self, fragment, scenario=None, **kwargs):
+        """
+        Traverse the fragment (observed) according to the scenario specification and return a list of FragmentFlows
+        :param fragment:
+        :param scenario:
+        :param kwargs:
+        :return:
+        """
+        return self._perform_query(_interface, 'traverse', ForegroundRequired,
+                                   fragment, scenario, **kwargs)
+
+    def fragment_lcia(self, fragment, quantity_ref, scenario=None, **kwargs):
+        """
+        Perform fragment LCIA by first traversing the fragment to determine node weights, and then combining with
+        unit scores.
+        Not sure whether this belongs in Quantity or Foreground. but probably foreground.
+        :param fragment:
+        :param quantity_ref:
+        :param scenario:
+        :param kwargs:
+        :return: an LciaResult whose components are FragmentFlows
+        """
+        return self._perform_query(_interface, 'fragment_lcia', ForegroundRequired,
+                                   fragment, quantity_ref, scenario, **kwargs)
+
+
