@@ -61,6 +61,12 @@ class Flow(FlowInterface):
         self._flowable.add_term(term.strip())
 
     def _check_locale(self, term):
+        """
+        If the term matches the pattern ^[text], [locale]$, where 'locale' is found in a canonical set of locale
+         specs (olca_locales), then add the locale-free term as a synonym and set the locale as the flow's locale.
+        :param term:
+        :return:
+        """
         if self._locale is None:
             parts = term.split(', ')
             cand = parts[-1]
