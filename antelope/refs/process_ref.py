@@ -151,8 +151,8 @@ class ProcessRef(EntityRef):
                 flow = flow.flow.external_ref
             elif flow.entity_type == 'flow':
                 flow = flow.external_ref
-        for x in  self._query.exchange_values(self.external_ref, flow, direction,
-                                              termination=termination, reference=reference, **kwargs):
+        for x in self._query.exchange_values(self.external_ref, flow, direction,
+                                             termination=termination, reference=reference, **kwargs):
             yield self._to_exch_ref(x, value=x.values)
 
     def inventory(self, ref_flow=None, **kwargs):

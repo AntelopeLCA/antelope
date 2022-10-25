@@ -44,9 +44,11 @@ class UpdateAccessRequired(Exception):
     """
     pass
 
+
 '''
 Query classes
 '''
+
 
 class BasicQuery(IndexInterface, ExchangeInterface, QuantityInterface):
     def __init__(self, archive, debug=False):

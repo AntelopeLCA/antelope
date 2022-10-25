@@ -169,7 +169,7 @@ class BaseRef(BaseEntity):
         if other is None:
             return False
         try:
-            return (#(other.entity_type == 'unknown' or self.entity_type == other.entity_type) and
+            return (  # (other.entity_type == 'unknown' or self.entity_type == other.entity_type) and
                     self.external_ref == other.external_ref and
                     (self.origin.startswith(other.origin) or other.origin.startswith(self.origin)))
         except AttributeError:
