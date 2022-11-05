@@ -7,9 +7,19 @@ xdb and qdb servers.
 """
 
 from pydantic import BaseModel
-from typing import List
+from typing import List, Dict
 from collections import defaultdict
 from datetime import datetime, timedelta
+
+
+class ResourceSpec(BaseModel):
+    origin: str
+    source: str
+    ds_type: str
+    interfaces: List[str]
+    static: bool
+    options: Dict  # includes: priority=int, download={url: str, md5sum: Optional[str]}, token=str, possibly other ds-specific
+    config: Dict[str, List[List]]  # must be a dict of config key: list of config value tuples (list of lists)
 
 
 class GrantSpec(BaseModel):
@@ -17,7 +27,7 @@ class GrantSpec(BaseModel):
     A grant is assigned to an authorized user for a specific origin (including sub-origins) and interface.
 
     """
-    user_email: str  # registered user who requested access
+    username: str  # registered user who requested access
     origin: str  # origin to which access is granted
     interface: str  # interface to which access is granted
 
@@ -72,7 +82,7 @@ class JwtGrant(BaseModel):
         qdb = False
         dur = None
         for g in grants:
-            users.add(g.user_email)
+            users.add(g.username)
             qdb |= g.qdb
             if g.origin.startswith(issuer):
                 origins[g.origin].add(g.serialize())
