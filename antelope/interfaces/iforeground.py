@@ -115,6 +115,15 @@ class ForegroundInterface(AbstractQuery):
         return self._perform_query(_interface, 'observe_unit_score', ForegroundRequired,
                                    fragment, quantity, score, scenario=scenario, **kwargs)
 
+    def tree(self, fragment, **kwargs):
+        """
+        Return the fragment tree structure with all child flows in depth-first order
+        :param fragment:
+        :param kwargs:
+        :return:
+        """
+        return self._perform_query(_interface, 'tree', ForegroundRequired, fragment, **kwargs)
+
     def traverse(self, fragment, scenario=None, **kwargs):
         """
         Traverse the fragment (observed) according to the scenario specification and return a list of FragmentFlows
