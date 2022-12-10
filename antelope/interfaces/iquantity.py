@@ -196,6 +196,7 @@ class QuantityInterface(AbstractQuery):
         return self._perform_query(_interface, 'lcia', QuantityRequired,
                                    process, ref_flow, quantity_ref, **kwargs)
 
+    '''
     def fragment_lcia(self, fragment, quantity_ref, scenario=None, **kwargs):
         """
         Perform fragment LCIA by first traversing the fragment to determine node weights, and then combining with
@@ -209,6 +210,7 @@ class QuantityInterface(AbstractQuery):
         """
         return self._perform_query(_interface, 'fragment_lcia', QuantityRequired,
                                    fragment, quantity_ref, scenario, **kwargs)
+    '''
 
     def norm(self, quantity_ref, region=None, **kwargs):
         """

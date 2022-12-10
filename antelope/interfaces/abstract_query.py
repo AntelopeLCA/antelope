@@ -80,7 +80,7 @@ class AbstractQuery(object):
                 self._perform_query('basic', 'validate', ValidationError)
                 self._validated = True
             except ValidationError:
-                self._validated = False
+                return False
         return self._validated
 
     def get(self, eid, **kwargs):
