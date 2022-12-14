@@ -38,7 +38,6 @@ class GrantSpec(BaseModel):
     update: bool  # whether user may alter the resource
     has_quota: bool  # whether user's activities are quota constrained (if true, xdb sends a receipt to auth server for every query)
 
-
     def serialize(self):
         s = [self.interface]
         if self.values:
@@ -67,6 +66,20 @@ class JwtGrant(BaseModel):
     exp: int  # required
 
     grants: str  # specifies origins and permissions
+
+    @classmethod
+    def install_origins(cls, origins: List[str], sub: str, master_issuer: str, duration=60):
+        """
+        A token that is signed by the master issuer, specifying a list of origins to install from local resources
+        :param origins:
+        :param sub: the master issuer user
+        :param master_issuer: the master issuer
+        :param duration: lifetime for this token (default 60 seconds)
+        :return:
+        """
+        the_grants = ' '.join(origins)
+        exp = datetime.utcnow() + timedelta(seconds=duration)
+        return cls(iss=master_issuer, sub=sub, exp=exp.timestamp(), grants=the_grants)
 
     @classmethod
     def from_grants(cls, grants: List[GrantSpec], issuer: str):
@@ -106,4 +119,13 @@ class JwtGrant(BaseModel):
         the_grants = ' '.join(str_grants)
         exp = datetime.utcnow() + timedelta(seconds=dur)
 
-        return JwtGrant(iss=issuer, sub=user, exp=int(exp.timestamp()), grants=the_grants)
+        return cls(iss=issuer, sub=user, exp=int(exp.timestamp()), grants=the_grants)
+
+
+class IssuerKey(BaseModel):
+    """
+    An object of this class is sent to an xdb server to inform it of the information required to validate issuer tokens
+    """
+    issuer: str
+    public_key: str
+    expiry: datetime
