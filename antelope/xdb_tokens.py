@@ -68,20 +68,6 @@ class JwtGrant(BaseModel):
     grants: str  # specifies origins and permissions
 
     @classmethod
-    def install_origins(cls, origins: List[str], sub: str, master_issuer: str, duration=60):
-        """
-        A token that is signed by the master issuer, specifying a list of origins to install from local resources
-        :param origins:
-        :param sub: the master issuer user
-        :param master_issuer: the master issuer
-        :param duration: lifetime for this token (default 60 seconds)
-        :return:
-        """
-        the_grants = ' '.join(origins)
-        exp = datetime.utcnow() + timedelta(seconds=duration)
-        return cls(iss=master_issuer, sub=sub, exp=exp.timestamp(), grants=the_grants)
-
-    @classmethod
     def from_grants(cls, grants: List[GrantSpec], issuer: str):
         """
 
@@ -117,15 +103,23 @@ class JwtGrant(BaseModel):
             str_grants.append('qdb')
 
         the_grants = ' '.join(str_grants)
-        exp = datetime.utcnow() + timedelta(seconds=dur)
+        exp = datetime.now() + timedelta(seconds=dur)
 
         return cls(iss=issuer, sub=user, exp=int(exp.timestamp()), grants=the_grants)
 
 
 class IssuerKey(BaseModel):
     """
-    An object of this class is sent to an xdb server to inform it of the information required to validate issuer tokens
+    An object of this class is exchanged to transmit information required to validate issuer tokens.
+    I suppose this entire thing could be stored in a JWT. but storing a pubkey inside a JWT seems silly. But:
+    it is done, as long as the pubkey being stored is NOT the one used to validate the token! that would be useless.
+
+    Anyway, we will stick to our existing plan: an instance of this class used as POST data.
     """
     issuer: str
     public_key: str
-    expiry: datetime
+    expiry: int  # timestamp
+
+    @classmethod
+    def from_issuer(cls, issuer):
+        return cls(issuer=issuer.issuer, public_key=issuer.public_key, expiry=issuer.expiry.timestamp())
