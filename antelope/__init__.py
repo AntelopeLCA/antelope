@@ -14,7 +14,7 @@ from .interfaces.ibackground import BackgroundInterface, BackgroundRequired
 from .interfaces.iquantity import QuantityInterface, QuantityRequired, NoFactorsFound, ConversionReferenceMismatch, FlowableMismatch
 from .interfaces.iforeground import ForegroundInterface
 
-from .flows import BaseEntity, FlowInterface, Flow
+from .flows import BaseEntity, NullEntity, FlowInterface, Flow
 
 from .refs.process_ref import MultipleReferences, NoReference
 from .refs.catalog_ref import CatalogRef, QuantityRef, UnknownOrigin
@@ -51,6 +51,14 @@ Query classes
 
 
 class BasicQuery(IndexInterface, ExchangeInterface, QuantityInterface):
+    """
+    A basic query depends on an archive-- which is not yet well-defined, but which has the following API:
+    archive.make_interface(interface): returns an implementation of the designated interface
+    archive.ref: returns the archive's semantic reference
+    archive.source: returns the physical source for the archive's content
+
+    Note that an alternative abstract query implementation could be imagined
+    """
     def __init__(self, archive, debug=False):
         self._archive = archive
         self._dbg = debug

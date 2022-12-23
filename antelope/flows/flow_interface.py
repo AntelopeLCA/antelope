@@ -58,6 +58,29 @@ class BaseEntity(object):
         return NotImplemented
 
 
+class NullEntity(BaseEntity):
+    entity_type = 'null'
+    external_ref = 'null'
+    reference_entity = None
+
+    def __init__(self, origin):
+        self._origin = origin
+
+    @property
+    def origin(self):
+        return self._origin
+
+    def properties(self):
+        for i in ():
+            yield i
+
+    def get(self, item):
+        raise KeyError
+
+    def make_ref(self, query):
+        return NotImplemented
+
+
 class FlowInterface(BaseEntity):
     """
     An abstract class that establishes common functionality for OBSERVATIONS OF FLOWS.  A Flow consists of:
