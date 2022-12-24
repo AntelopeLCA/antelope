@@ -20,6 +20,9 @@ class ResourceSpec(BaseModel):
     static: bool
     options: Dict  # includes: priority=int, download={url: str, md5sum: Optional[str]}, token=str, possibly other ds-specific
     config: Dict[str, List[List]]  # must be a dict of config key: list of config value tuples (list of lists)
+    """
+    n.b. the canonical config is {'hints': [['air', 'to air'], ['water', 'to water']]}
+    """
 
 
 class GrantSpec(BaseModel):
