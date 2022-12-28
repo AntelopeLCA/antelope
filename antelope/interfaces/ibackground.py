@@ -45,6 +45,14 @@ class BackgroundInterface(AbstractQuery):
         return self._perform_query(_interface, 'check_bg', BackgroundRequired,
                                    reset=reset, **kwargs)
 
+    def setup_bm(self, query):
+        """
+        Utility hook for configuring a background from an index + exchange query
+        :param query:
+        :return:
+        """
+        return False
+
     def exterior_flows(self, direction=None, search=None, **kwargs):
         """
         Yield a list of ExteriorFlows or cutoff flows, which serialize to flow, direction

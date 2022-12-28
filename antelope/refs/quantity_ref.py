@@ -191,6 +191,17 @@ class QuantityRef(EntityRef):
         The unit of the flow is measured in terms of the query quantity.  But we don't yet know the size of a unit
         of the query quantity because that is what is in fact being characterized.
 
+        To see this borne out, imagine using characterize() in its most natural way, for LCIA:
+        >>> gwp.characterize('methane', 'mass', 25)
+        "I characterize the GWP of methane in a unit mass to be 25" <<--- CORRECT
+        {I characterize the unit GWP of methane to have a mass of 0.04} <<--- plainly wrong
+
+        REALLY, the MOST natural way to characterize is as follows (see FlowRef.characterize()):
+        >>> m = q.get('methane')
+        >>> m.unit
+        'kg'
+        >>> m.characterize(gwp, 25, context='to air')
+
         generations may determine whether this was a terrible mistake.
         :param flowable:
         :param ref_quantity:

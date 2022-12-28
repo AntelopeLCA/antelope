@@ -39,6 +39,7 @@ import re
 
 uuid_regex = re.compile('([0-9a-f]{8}-?([0-9a-f]{4}-?){3}[0-9a-f]{12})', flags=re.IGNORECASE)
 
+
 class NoCatalog(Exception):
     pass
 
@@ -60,7 +61,6 @@ class BaseRef(BaseEntity):
     A base class for defining entity references.  The base class can also store information, such as properties
     """
     _etype = None
-    _localize = False
     _uuid = None
 
     def __init__(self, origin, external_ref, uuid=None, **kwargs):
@@ -81,8 +81,6 @@ class BaseRef(BaseEntity):
 
         if self._uuid is None:
             self.uuid = str(external_ref)  # regex check happens inside; NOP if fails
-
-        self._localize = True  # only localize properties added after initialization
 
     @property
     def origin(self):
@@ -110,36 +108,34 @@ class BaseRef(BaseEntity):
             return 'unknown'
         return self._etype
 
-    def _localitem(self, item):
-        if item in self._d:
-            return self._d[item]
-        if 'local_%s' % item in self._d:
-            return self._d['local_%s' % item]
-
     def __getitem__(self, item):
         """
         should be overridden
         :param item:
         :return:
         """
-        return self._localitem(item)
+        return self._d.__getitem__(item)
 
     def properties(self):
         for k in self._d.keys():
             yield k
 
     def get(self, item, default=None):
+        """
+        get() is local only. subclasses should implement get_item() to access items via a query
+        :param item:
+        :param default:
+        :return:
+        """
         try:
-            return self.__getitem__(item)
+            return self._d.__getitem__(item)
         except KeyError:
             return default
 
     def has_property(self, item):
-        return self._localitem(item) is not None
+        return item in self._d
 
     def __setitem__(self, key, value):
-        if self._localize and not key.lower().startswith('local_'):
-            key = 'local_%s' % key
         self._d[key] = value
 
     @property
@@ -246,6 +242,13 @@ class BaseRef(BaseEntity):
         return j
 
 
+class _MissingItem(Exception):
+    """
+    Used to prevent repeated upstream queries for a missing item
+    """
+    pass
+
+
 class EntityRef(BaseRef):
     """
     An EntityRef is a CatalogRef that has been provided a valid catalog query.  the EntityRef is still semi-abstract
@@ -292,6 +295,7 @@ class EntityRef(BaseRef):
 
     @uuid.setter
     def uuid(self, value):
+        # need to repeat this because uuid is overridden
         if self._uuid is not None:
             raise PropertyExists(self.link, self._uuid)
         if uuid_regex.match(str(value)):
@@ -323,7 +327,10 @@ class EntityRef(BaseRef):
         return True
 
     def signature_fields(self):
-        yield self._ref_field
+        # this seems problematic
+        # just let a ref yield everything it knows
+        for k in self._d.keys():
+            yield k
 
     def _show_ref(self):
         print('%s: %s' % (self.reference_field, self.reference_entity))
@@ -374,35 +381,39 @@ class EntityRef(BaseRef):
         :param force_query:
         :return:
         """
+        if item == self._ref_field:
+            return self.reference_entity
         # check local first.  return Localitem if present.
-        loc = self._localitem(item)
-        if loc is not None:
+        loc = self.get(item)
+        if loc is _MissingItem:
+            raise KeyError(item)
+        elif loc is not None:
             return loc
-        if force_query:
+        else:
             # self._check_query('getitem %s' % item)
             try:
                 val = self._query.get_item(self, item)
             except NoAccessToEntity:
-                try:  # this works in some corner cases ...
+                try:  # this works in masquerade: the local.qdb query retrieves the authentic ref from the qdb
                     lit = self._query.get(self.link)
                 except EntityNotFound:
+                    self._d[item] = _MissingItem
                     raise KeyError(item)
                 if lit is self:
                     raise
                 val = lit.get_item(item)
+            except KeyError:
+                self._d[item] = _MissingItem
+                raise
 
             if val is not None and val != '':
                 self._d[item] = val
                 return val
+        self._d[item] = _MissingItem
         raise KeyError(item)
 
     def __getitem__(self, item):
-        if item == self._ref_field:
-            return self.reference_entity
-        val = self.get_item(item)
-        if val is None:
-            raise KeyError(item)
-        return val
+        return self.get_item(item)
 
     def has_property(self, item):
         """
@@ -412,9 +423,9 @@ class EntityRef(BaseRef):
         """
         try:
             self.get_item(item)
-        except (KeyError, NoAccessToEntity, InvalidQuery):
+            return True
+        except KeyError:
             return False
-        return True
 
     def serialize(self, **kwargs):
         j = super(EntityRef, self).serialize(**kwargs)

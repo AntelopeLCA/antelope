@@ -54,6 +54,9 @@ class ExchangeInterface(AbstractQuery):
     def exchange_values(self, process, flow, direction=None, termination=None, reference=None, **kwargs):
         """
         Leftover from earlier implementation; deprecated.
+        2022-12-27: is this really deprecated? it's used in computing reference_value and I don't see any other way...
+        perhaps we should add reference_value() to the API but for now let's keep this around
+
         Return a list of exchanges with values matching the specification
         :param process:
         :param flow:
