@@ -405,8 +405,8 @@ class EntityRef(BaseRef):
             except KeyError:
                 self._d[item] = _MissingItem
                 raise
-
-            if val is not None and val != '':
+            # we used to catch '' too but this is ng- remote will think it's a property but local will raise MissingItem
+            if val is not None:  # and val != ''
                 self._d[item] = val
                 return val
         self._d[item] = _MissingItem
@@ -424,7 +424,7 @@ class EntityRef(BaseRef):
         try:
             self.get_item(item)
             return True
-        except KeyError:
+        except (KeyError, NoAccessToEntity):
             return False
 
     def serialize(self, **kwargs):
