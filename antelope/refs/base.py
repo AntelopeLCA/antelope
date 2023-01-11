@@ -424,7 +424,7 @@ class EntityRef(BaseRef):
         try:
             self.get_item(item)
             return True
-        except (KeyError, NoAccessToEntity):
+        except (KeyError, NoAccessToEntity, InvalidQuery):
             return False
 
     def serialize(self, **kwargs):

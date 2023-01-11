@@ -125,4 +125,8 @@ class IssuerKey(BaseModel):
 
     @classmethod
     def from_issuer(cls, issuer):
-        return cls(issuer=issuer.issuer, public_key=issuer.public_key, expiry=issuer.expiry.timestamp())
+        return cls(issuer=issuer.issuer, public_key=issuer.public_key, expiry=issuer.expiry)
+
+    @classmethod
+    def from_db_issuer(cls, db_issuer):
+        return cls(issuer=db_issuer.issuer, public_key=db_issuer.public_key, expiry=db_issuer.expiry.timestamp())
