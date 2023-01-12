@@ -224,6 +224,34 @@ class QuantityInterface(AbstractQuery):
                                    quantity_ref, region=region, **kwargs)
 
     '''
+    core required functionality
+    NOTE: a foreground interface must have access to a qdb to run get_canonical
+    '''
+    def new_quantity(self, name, ref_unit=None, **kwargs):
+        """
+        Creates a new quantity entity and adds it to the foreground
+        :param name:
+        :param ref_unit:
+        :param kwargs:
+        :return:
+        """
+        return self._perform_query(_interface, 'new_quantity', QuantityRequired,
+                                   name, ref_unit=ref_unit, **kwargs)
+
+    def new_flow(self, name, ref_quantity=None, context=None, **kwargs):
+        """
+        Creates a new flow entity and adds it to the foreground
+        :param name: required flow name
+        :param ref_quantity: [None] implementation must handle None / specify a default
+        :param context: [None] Required if flow is strictly elementary. Should be a tuple
+        :param kwargs:
+        :return:
+        """
+        return self._perform_query(_interface, 'new_flow', QuantityRequired,
+                                   name, ref_quantity=ref_quantity, context=context,
+                                   **kwargs)
+
+    '''
     qdb-only queries
     '''
 
