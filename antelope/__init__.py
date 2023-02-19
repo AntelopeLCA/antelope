@@ -18,7 +18,7 @@ from .flows import BaseEntity, NullEntity, FlowInterface, Flow
 
 from .refs.process_ref import MultipleReferences, NoReference
 from .refs.catalog_ref import CatalogRef, QuantityRef, UnknownOrigin
-from .refs.quantity_ref import convert, NoUnitConversionTable
+from .refs.quantity_ref import convert, NoUnitConversionTable, RefQuantityRequired
 
 from .refs.base import NoCatalog, EntityRefMergeError, InvalidQuery, PropertyExists
 from .refs.exchange_ref import ExchangeRef, RxRef, EXCHANGE_TYPES

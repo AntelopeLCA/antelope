@@ -19,6 +19,10 @@ from .base import EntityRef
 from synonym_dict import LowerDict
 
 
+class RefQuantityRequired(Exception):
+    pass
+
+
 class NoUnitConversionTable(Exception):
     pass
 
@@ -172,8 +176,15 @@ class QuantityRef(EntityRef):
     def factors(self, **kwargs):
         return self._query.factors(self.external_ref, **kwargs)
 
-    def cf(self, flow, **kwargs):
-        return self._query.cf(flow, self.external_ref, **kwargs)
+    def cf(self, flow, ref_quantity=None, **kwargs):
+        if ref_quantity is None:
+            try:
+                ref_quantity = flow.reference_entity
+            except AttributeError:
+                raise RefQuantityRequired
+        if self.is_canonical(ref_quantity):
+            return 1.0
+        return self._query.cf(flow, self.external_ref, ref_quantity=ref_quantity, **kwargs)
 
     def characterize(self, flowable, ref_quantity, value, **kwargs):
         """
