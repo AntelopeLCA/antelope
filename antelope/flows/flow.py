@@ -2,9 +2,30 @@ from .flow_interface import FlowInterface
 from ..interfaces.iquantity import ConversionReferenceMismatch, NoFactorsFound
 
 import os
+import re
 import json
 
 from synonym_dict import SynonymSet
+from synonym_dict.flowables.cas_number import CasNumber, InvalidCasNumber
+
+
+# the weak link in our biogenic CO2 accounting: flow name MUST be caught by this regex in order to be quelled
+# our hacky-hack: rename flows when they are CO2 and any term matches the regex. do this in the LciaEngine.
+biogenic = re.compile('(biotic|biogenic|non-fossil|in air)', flags=re.IGNORECASE)
+
+
+def flowname_is_biogenic(flowname):
+    return bool(biogenic.search(flowname))
+
+
+class QuelledCO2(object):
+    def __init__(self, flowable, context):
+        self.flowable = flowable
+        self.context = context
+
+    @property
+    def value(self):
+        return 0.0
 
 """
 openlca_locales.json file created from: antelope_olca package, gen_locales('openlca_locales.json') 
@@ -17,8 +38,22 @@ with open(os.path.join(os.path.dirname(__file__), 'openlca_locales.json')) as fp
 class Flow(FlowInterface):
     """
     A partly-abstract class that implements the flow specification but not the entity specification.
+
+    Included in this specification is a *detection of biogenic CO2 by regex*
+    Each flow has a quell_co2 property which is True if:
+     - the flow is a synonym for CO2 and
+     - the flow's name matches the biogenic regex: '(biotic|biogenic|non-fossil|in air)' (case insensitive)
+    There are 3 ways for a flow to be identified as a synonym for CO2:
+     1. pass is_co2=True at instantiation
+     2. set flow.is_co2 = True
+     3. assign a CasNumber equivalent to '124-38-9'
+
+    Item #2 can be used in general by downstream implementations.
+
+    For the time being, the flow name matching the regex is the *only* way to identify a flow as biogenic.
     """
 
+    _is_co2 = False
     _context = ()
     _context_set_level = 0
     _locale = None
@@ -80,6 +115,14 @@ class Flow(FlowInterface):
             return 'GLO'
         return self._locale
 
+    @property
+    def is_co2(self):
+        return self._is_co2
+
+    @is_co2.setter
+    def is_co2(self, value):
+        self._is_co2 = bool(value)
+
     def _catch_flowable(self, key, value):
         """
         Returns True or None- allow to chain to avoid redundant _catch_context
@@ -91,7 +134,14 @@ class Flow(FlowInterface):
             self._add_synonym(value, set_name=True)
             return True
         elif key == 'casnumber':
-            self._add_synonym(value)
+            try:
+                c = CasNumber(value)
+                for t in c.terms:
+                    self._add_synonym(t)
+                if c.name == '124-38-9':
+                    self._is_co2 = True
+            except InvalidCasNumber:
+                pass
             return True
         elif key == 'synonyms':
             if isinstance(value, str):
@@ -178,18 +228,31 @@ class Flow(FlowInterface):
             self.__chars_seen = dict()
         return self.__chars_seen
 
-    def lookup_cf(self, quantity, context, locale, refresh=False, **kwargs):
+    @property
+    def quell_co2(self):
+        if self._is_co2:
+            if flowname_is_biogenic(self.name):
+                return True
+        return False
+
+    def lookup_cf(self, quantity, context, locale, refresh=False, quell_biogenic_co2=False, **kwargs):
         """
         Cache characterization factors obtained from quantity relation queries
         :param quantity:
         :param context:
         :param locale:
         :param refresh:
+        :param quell_biogenic_co2:
         :param kwargs:
-        :return:
+        :return: a QRResult which is not even known to the interface
         """
         locale = locale or self.locale
         key = (quantity, context, locale)
+
+        if quell_biogenic_co2:
+            if self.quell_co2:
+                return QuelledCO2(self._flowable, context)
+
         if refresh:
             self._chars_seen.pop(key, None)
         try:
