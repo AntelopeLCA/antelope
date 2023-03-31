@@ -275,17 +275,20 @@ class ProcessRef(EntityRef):
         :return:
         """
         excl = set((k.flow.external_ref, k.direction) for k in observed)
+        if len(excl) == 0:
+            return self.lci(ref_flow=ref_flow, **kwargs)
         ref_flow = self._use_ref_exch(ref_flow)
         incl = (k for k in self.inventory(ref_flow) if (k.flow.external_ref, k.direction) not in excl)
         for i in self._query.sys_lci(self, incl, **kwargs):
             yield self._to_exch_ref(i, i.value)
 
-    def bg_lcia(self, lcia_qty, ref_flow=None, **kwargs):
+    def bg_lcia(self, lcia_qty, observed=None, ref_flow=None, **kwargs):
         """
         :param lcia_qty: should be a quantity ref (or qty), not an external ID
+        :param observed: see unobserved_lci
         :param ref_flow:
         :param kwargs:
         :return:
         """
         ref_flow = self._use_ref_exch(ref_flow)
-        return self._query.bg_lcia(self.external_ref, lcia_qty, ref_flow=ref_flow, **kwargs)
+        return self._query.bg_lcia(self.external_ref, lcia_qty, observed=observed, ref_flow=ref_flow, **kwargs)

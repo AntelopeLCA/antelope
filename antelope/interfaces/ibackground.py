@@ -153,18 +153,29 @@ class BackgroundInterface(AbstractQuery):
         return self._perform_query(_interface, 'sys_lci', BackgroundRequired,
                                    node, demand, **kwargs)
 
-    def bg_lcia(self, process, query_qty, ref_flow=None, **kwargs):
+    def bg_lcia(self, process, query_qty, observed=None, ref_flow=None, **kwargs):
         """
         returns an LciaResult object, aggregated as appropriate depending on the interface's privacy level.
+        This is an ensemble function that stitches together bg functions with quantity access.
+
         :param process:
-        :param query_qty: if this is a catalog ref, the Qdb will auto-load characterization factors.  If the
-        characterization factors are already loaded, a string reference will suffice.
+        :param query_qty: must be an operable quantity_ref. the process must have exchange access
+        :param observed: iterable of DirectedFlows (flow: FlowSpec, direction: str)
         :param ref_flow:
         :param kwargs:
         :return:
         """
-        return self._perform_query(_interface, 'bg_lcia', BackgroundRequired,
-                                   process, query_qty, ref_flow=ref_flow, **kwargs)
+        p_ref = self.make_ref(self.get(process))  # a ref
+        if observed is None:
+            observed = ()
+        obs = set((x.flow.external_ref, x.direction) for x in observed)
+        if len(obs) > 0:
+            incl = (x for x in p_ref.inventory(ref_flow=ref_flow) if (x.flow.external_ref, x.direction) not in obs)
+            lci = self.sys_lci(process, incl)
+        else:
+            lci = p_ref.lci(ref_flow=ref_flow)
+        # aggregation
+        return query_qty.do_lcia(lci, **kwargs)
 
     '''
     Methods requiring a partial ordering (implemented by antelope_background)
