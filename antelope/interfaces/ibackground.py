@@ -19,6 +19,7 @@ More plugins are yet imagined.
 """
 
 from .abstract_query import AbstractQuery
+from itertools import chain
 
 
 class BackgroundRequired(Exception):
@@ -133,7 +134,7 @@ class BackgroundInterface(AbstractQuery):
         return self._perform_query(_interface, 'lci', BackgroundRequired,
                                    process, ref_flow=ref_flow, **kwargs)
 
-    def sys_lci(self, node, demand, **kwargs):
+    def sys_lci(self, demand, **kwargs):
         """
         Perform LCI on an arbitrary demand vector, which should be supplied as an iterable of exchanges whose
         terminations can be found in the background database.
@@ -141,17 +142,17 @@ class BackgroundInterface(AbstractQuery):
         Terminations to foreground, background, and exterior flows are allowed.
 
         sys_lci(process_ref.dependencies()) + process_ref.emissions() should equal process_ref.lci()
-        (although the sum of iterables would not be straightforward to compute)
+        although the sum of iterables would not be straightforward to compute... the correct approach is:
+        sys_lci(itertools.chain(process_ref.dependencies(), process_ref.emissions(), process_ref.cutoffs()))
 
-        sys_lci(process_ref.inventory()) should equal process_ref.lci() directly, up to a normalization.
-        :param node: the node that should appear as the parent/process of the returned exchanges- not used in
-         computation
+        sys_lci(process_ref.inventory()) should equal process_ref.lci() directly, up to a normalization, assuming
+        the individual exchanges are properly terminated.
         :param demand: an iterable of exchanges with terminations that can be found in the background database.
         :param kwargs:
         :return:
         """
         return self._perform_query(_interface, 'sys_lci', BackgroundRequired,
-                                   node, demand, **kwargs)
+                                   demand, **kwargs)
 
     def bg_lcia(self, process, query_qty, observed=None, ref_flow=None, **kwargs):
         """
@@ -170,8 +171,11 @@ class BackgroundInterface(AbstractQuery):
             observed = ()
         obs = set((x.flow.external_ref, x.direction) for x in observed)
         if len(obs) > 0:
-            incl = (x for x in p_ref.inventory(ref_flow=ref_flow) if (x.flow.external_ref, x.direction) not in obs)
-            lci = self.sys_lci(process, incl)
+            inventory = chain(p_ref.dependencies(ref_flow=ref_flow),
+                              p_ref.emissions(ref_flow=ref_flow),
+                              p_ref.cutoffs(ref_flow=ref_flow))
+            incl = (k for k in inventory if (k.flow.external_ref, k.direction) not in obs)
+            lci = self.sys_lci(incl)
         else:
             lci = p_ref.lci(ref_flow=ref_flow)
         # aggregation

@@ -1,5 +1,6 @@
 from .base import EntityRef
 from .exchange_ref import ExchangeRef
+from itertools import chain
 
 
 class MultipleReferences(Exception):
@@ -266,8 +267,12 @@ class ProcessRef(EntityRef):
         """
         Performs a sys_lci of the process's unobserved exchanges. derived by excluding observed exchanges from the
         process's inventory and passing the result to sys_lci.  Note that terminations are ignored-- if a process
-        has an observed Electricity flow, all the process's electricity exchanges are assumed to be accounted for
-        by the observation.  (flow.external_ref, direction) is the filter.
+        has an observed (e.g.) Electricity flow, all the process's electricity exchanges are assumed to be accounted
+        for by the observation.  (flow.external_ref, direction) is the filter.
+
+        Problem with this implementation: if the exchanges do not contain termination info, then the resulting
+        inclusion inventory will be non-operable in the background.  Because it is a background method, it may be
+        more appropriate to use the combined dependencies and emissions rather than inventory.
 
         :param observed: iterable of exchanges or child flows, having a flow (with external_ref) and direction
         :param ref_flow:
@@ -278,8 +283,11 @@ class ProcessRef(EntityRef):
         if len(excl) == 0:
             return self.lci(ref_flow=ref_flow, **kwargs)
         ref_flow = self._use_ref_exch(ref_flow)
-        incl = (k for k in self.inventory(ref_flow) if (k.flow.external_ref, k.direction) not in excl)
-        for i in self._query.sys_lci(self, incl, **kwargs):
+        inventory = chain(self.dependencies(ref_flow=ref_flow),
+                          self.emissions(ref_flow=ref_flow),
+                          self.cutoffs(ref_flow=ref_flow))
+        incl = (k for k in inventory if (k.flow.external_ref, k.direction) not in excl)
+        for i in self._query.sys_lci(incl, **kwargs):
             yield self._to_exch_ref(i, i.value)
 
     def bg_lcia(self, lcia_qty, observed=None, ref_flow=None, **kwargs):

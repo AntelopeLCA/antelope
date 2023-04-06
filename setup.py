@@ -1,6 +1,6 @@
 from setuptools import setup, find_packages
 
-ANTELOPE_VERSION = '0.1.8'
+ANTELOPE_VERSION = '0.2.0'
 
 requires = [
     "synonym_dict>=0.2.0",
