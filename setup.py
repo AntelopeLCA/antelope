@@ -1,6 +1,6 @@
 from setuptools import setup, find_packages
 
-ANTELOPE_VERSION = '0.1.7'
+ANTELOPE_VERSION = '0.1.8'
 
 requires = [
     "synonym_dict>=0.2.0",
@@ -13,6 +13,13 @@ Version History:
                    minimal complete foreground spec
                    add xdb token spec
                    
+0.1.8 2022/04/08 - Minor changes, to go along with 0.1.8 core release
+ - support None in exchanges_from_spreadsheet (this will still not work until xls_tools is out)
+ - add comp_sense function to relate Sink-Output and Source-Input
+ - add emitters() function
+ - add positional search argument for flowables()
+ - allow refs to operate with invalid queries
+
 0.1.7 2021/08/05 - merge configuration changes developed in virtualize branch
 
 0.1.6 2021/03/16 - get_context() into flow interface spec- returns an implementation-specific context entity
