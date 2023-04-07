@@ -139,7 +139,8 @@ class BackgroundInterface(AbstractQuery):
         Perform LCI on an arbitrary demand vector, which should be supplied as an iterable of exchanges whose
         terminations can be found in the background database.
 
-        Terminations to foreground, background, and exterior flows are allowed.
+        Terminations to foreground and background are allowed. Exterior flows are just passed through but contexts
+        may be transformed in the process and thus should be excluded.  See bg_lcia() for recommended implementation.
 
         sys_lci(process_ref.dependencies()) + process_ref.emissions() should equal process_ref.lci()
         although the sum of iterables would not be straightforward to compute... the correct approach is:
@@ -171,11 +172,11 @@ class BackgroundInterface(AbstractQuery):
             observed = ()
         obs = set((x.flow.external_ref, x.direction) for x in observed)
         if len(obs) > 0:
-            inventory = chain(p_ref.dependencies(ref_flow=ref_flow),
-                              p_ref.emissions(ref_flow=ref_flow),
-                              p_ref.cutoffs(ref_flow=ref_flow))
-            incl = (k for k in inventory if (k.flow.external_ref, k.direction) not in obs)
-            lci = self.sys_lci(incl)
+            exts = chain(p_ref.emissions(ref_flow=ref_flow),
+                         p_ref.cutoffs(ref_flow=ref_flow))
+            incl = (k for k in p_ref.dependencies(ref_flow=ref_flow) if (k.flow.external_ref, k.direction) not in obs)
+            ext = (k for k in exts if (k.flow.external_ref, k.direction) not in obs)
+            lci = chain(self.sys_lci(incl), ext)
         else:
             lci = p_ref.lci(ref_flow=ref_flow)
         # aggregation
