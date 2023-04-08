@@ -19,6 +19,7 @@ More plugins are yet imagined.
 """
 
 from .abstract_query import AbstractQuery
+from ..refs import ExchangeRef
 from itertools import chain
 
 
@@ -134,6 +135,10 @@ class BackgroundInterface(AbstractQuery):
         return self._perform_query(_interface, 'lci', BackgroundRequired,
                                    process, ref_flow=ref_flow, **kwargs)
 
+    def _make_sys_lci_exchange(self, x):
+        return ExchangeRef(self.get(x.process), self.make_ref(x.flow), x.direction, value=x.value,
+                           termination=x.termination, comment='SYS LCI', is_reference=False)
+
     def sys_lci(self, demand, **kwargs):
         """
         Perform LCI on an arbitrary demand vector, which should be supplied as an iterable of UnallocatedExchange
@@ -152,35 +157,21 @@ class BackgroundInterface(AbstractQuery):
         :param kwargs:
         :return:
         """
-        return self._perform_query(_interface, 'sys_lci', BackgroundRequired,
-                                   demand, **kwargs)
+        for i in self._perform_query(_interface, 'sys_lci', BackgroundRequired, demand, **kwargs):
+            return self._make_sys_lci_exchange(i)
 
     def bg_lcia(self, process, query_qty, observed=None, ref_flow=None, **kwargs):
         """
-        returns an LciaResult object, aggregated as appropriate depending on the interface's privacy level.
-        This is an ensemble function that stitches together bg functions with quantity access.
 
         :param process:
-        :param query_qty: must be an operable quantity_ref. the process must have exchange access
-        :param observed: iterable of DirectedFlows (flow: FlowSpec, direction: str)
+        :param query_qty:
+        :param observed:
         :param ref_flow:
         :param kwargs:
         :return:
         """
-        p_ref = self.make_ref(self.get(process))  # a ref
-        if observed is None:
-            observed = ()
-        obs = set((x.flow.external_ref, x.direction) for x in observed)
-        if len(obs) > 0:
-            exts = chain(p_ref.emissions(ref_flow=ref_flow),
-                         p_ref.cutoffs(ref_flow=ref_flow))
-            incl = (k for k in p_ref.dependencies(ref_flow=ref_flow) if (k.flow.external_ref, k.direction) not in obs)
-            ext = (k for k in exts if (k.flow.external_ref, k.direction) not in obs)
-            lci = chain(self.sys_lci(incl), ext)
-        else:
-            lci = p_ref.lci(ref_flow=ref_flow)
-        # aggregation
-        return query_qty.do_lcia(lci, **kwargs)
+        return self._perform_query(_interface, 'bg_lcia', BackgroundRequired,
+                                   process, query_qty, observed=observed, ref_flow=ref_flow, **kwargs)
 
     '''
     Methods requiring a partial ordering (implemented by antelope_background)
