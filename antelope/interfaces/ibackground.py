@@ -136,8 +136,8 @@ class BackgroundInterface(AbstractQuery):
 
     def sys_lci(self, demand, **kwargs):
         """
-        Perform LCI on an arbitrary demand vector, which should be supplied as an iterable of exchanges whose
-        terminations can be found in the background database.
+        Perform LCI on an arbitrary demand vector, which should be supplied as an iterable of UnallocatedExchange
+        models whose terminations can be found in the background database.
 
         Terminations to foreground and background are allowed. Exterior flows are just passed through but contexts
         may be transformed in the process and thus should be excluded.  See bg_lcia() for recommended implementation.

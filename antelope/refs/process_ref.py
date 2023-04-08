@@ -158,8 +158,7 @@ class ProcessRef(EntityRef):
 
     def inventory(self, ref_flow=None, **kwargs):
         # ref_flow = self._use_ref_exch(ref_flow)  # ref_flow=None returns unallocated inventory
-        inv = [ExchangeRef(self, self._query.make_ref(x.flow), x.direction, value=x.value, termination=x.termination,
-                           comment=x.comment, is_reference=x.is_reference)
+        inv = [self._to_exch_ref(x, x.value)
                for x in self._query.inventory(self.external_ref, ref_flow=ref_flow, **kwargs)]
         return sorted(inv, key=lambda t: (not t.is_reference, t.direction, t.type == 'context', t.type == 'cutoff'))
 
@@ -223,15 +222,18 @@ class ProcessRef(EntityRef):
 
     def dependencies(self, ref_flow=None, **kwargs):
         ref_flow = self._use_ref_exch(ref_flow)
-        return self._query.dependencies(self.external_ref, ref_flow=ref_flow, **kwargs)
+        return [self._to_exch_ref(x, x.value) for x in
+                self._query.dependencies(self.external_ref, ref_flow=ref_flow, **kwargs)]
 
     def emissions(self, ref_flow=None, **kwargs):
         ref_flow = self._use_ref_exch(ref_flow)
-        return self._query.emissions(self.external_ref, ref_flow=ref_flow, **kwargs)
+        return [self._to_exch_ref(x, x.value) for x in
+                self._query.emissions(self.external_ref, ref_flow=ref_flow, **kwargs)]
 
     def cutoffs(self, ref_flow=None, **kwargs):
         ref_flow = self._use_ref_exch(ref_flow)
-        return self._query.cutoffs(self.external_ref, ref_flow=ref_flow, **kwargs)
+        return [self._to_exch_ref(x, x.value) for x in
+                self._query.cutoffs(self.external_ref, ref_flow=ref_flow, **kwargs)]
 
     def is_in_background(self, ref_flow=None, **kwargs):
         ref_flow = self._use_ref_exch(ref_flow)
@@ -239,11 +241,13 @@ class ProcessRef(EntityRef):
 
     def ad(self, ref_flow=None, **kwargs):
         ref_flow = self._use_ref_exch(ref_flow)
-        return self._query.ad(self.external_ref, ref_flow, **kwargs)
+        return [self._to_exch_ref(x, x.value) for x in
+                self._query.ad(self.external_ref, ref_flow, **kwargs)]
 
     def bf(self, ref_flow=None, **kwargs):
         ref_flow = self._use_ref_exch(ref_flow)
-        return self._query.bf(self.external_ref, ref_flow, **kwargs)
+        return [self._to_exch_ref(x, x.value) for x in
+                self._query.bf(self.external_ref, ref_flow, **kwargs)]
 
     def lci(self, ref_flow=None, refresh=False, **kwargs):
         """
