@@ -158,7 +158,7 @@ class BackgroundInterface(AbstractQuery):
         :return:
         """
         for i in self._perform_query(_interface, 'sys_lci', BackgroundRequired, demand, **kwargs):
-            return self._make_sys_lci_exchange(i)
+            yield self._make_sys_lci_exchange(i)
 
     def bg_lcia(self, process, query_qty, observed=None, ref_flow=None, **kwargs):
         """
