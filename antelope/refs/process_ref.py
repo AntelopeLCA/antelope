@@ -285,15 +285,16 @@ class ProcessRef(EntityRef):
         """
         obs = set((k.flow.external_ref, k.direction) for k in observed)
         if len(obs) == 0:
-            return self.lci(ref_flow=ref_flow, **kwargs)
-        ref_flow = self._use_ref_exch(ref_flow)
-        exts = chain(self.emissions(ref_flow=ref_flow),
-                     self.cutoffs(ref_flow=ref_flow))
-        incl = (k for k in self.dependencies(ref_flow=ref_flow) if (k.flow.external_ref, k.direction) not in obs)
-        ext = (k for k in exts if (k.flow.external_ref, k.direction) not in obs)
-        lci = chain(self._query.sys_lci(incl, **kwargs), ext)
-        for i in lci:
-            yield self._to_exch_ref(i, i.value)
+            yield from self.lci(ref_flow=ref_flow, **kwargs)
+        else:
+            ref_flow = self._use_ref_exch(ref_flow)
+            exts = chain(self.emissions(ref_flow=ref_flow),
+                         self.cutoffs(ref_flow=ref_flow))
+            incl = (k for k in self.dependencies(ref_flow=ref_flow) if (k.flow.external_ref, k.direction) not in obs)
+            ext = (k for k in exts if (k.flow.external_ref, k.direction) not in obs)
+            lci = chain(self._query.sys_lci(incl, **kwargs), ext)
+            for i in lci:
+                yield self._to_exch_ref(i, i.value)
 
     def bg_lcia(self, lcia_qty, observed=None, ref_flow=None, **kwargs):
         """

@@ -162,6 +162,8 @@ class QuantityInterface(AbstractQuery):
     def do_lcia(self, quantity, inventory, locale='GLO', **kwargs):
         """
         Successively implement the quantity relation over an iterable of exchanges.
+        we should probably generalize this to automatically expect a list of results, to support running whole
+        methodologies. This is now supported in antelope_foreground and xdb.
 
         :param quantity:
         :param inventory:
