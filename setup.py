@@ -1,6 +1,6 @@
 from setuptools import setup, find_packages
 
-ANTELOPE_VERSION = '0.2.0'
+ANTELOPE_VERSION = '0.2.1'
 
 requires = [
     "synonym_dict>=0.2.0",
@@ -9,6 +9,10 @@ requires = [
 
 """
 Version History:
+0.2.1-virtualize - 2023/04/10 xdb passes benchmarks.
+                   pydantic models moved into interface
+                   sys_lci and bg_lcia operational, both locally and remotely
+
 0.2.0-virtualize - in progress, with xdb
                    minimal complete foreground spec
                    add xdb token spec
