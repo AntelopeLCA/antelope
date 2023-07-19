@@ -57,24 +57,10 @@ class Entity(EntityRef):
 
     @classmethod
     def from_entity(cls, entity, **kwargs):
-        obj = cls(origin=entity.origin,
-                  entity_id=entity.external_ref,
-                  entity_type=entity.entity_type,
-                  properties=LowerDict())
-
-        for key, val in kwargs.items():
-            obj.properties[key.lower()] = entity[key]
-
-        obj.properties['name'] = entity['name']  # entity.name is doctored
-
-        if entity.entity_type == 'quantity':
-            obj.properties['unit'] = entity.unit
-            # if entity.is_lcia_method:
-            #     obj.properties['indicator'] = entity['indicator']  # this should be handled by signature_fields()
-
-        if entity.uuid is not None:
-            obj.properties['uuid'] = entity.uuid
-        return obj
+        e_s = entity.serialize()  # this ensures that we get the reference field
+        if entity.uuid is not None and entity.uuid != entity.external_ref:
+            e_s['uuid'] = entity.uuid
+        return cls.from_json(e_s)
 
     @classmethod
     def from_json(cls, j):
@@ -88,6 +74,26 @@ class Entity(EntityRef):
         for key, val in j.items():
             obj.properties[key] = val
         return obj
+
+    def serialize(self):
+        """
+        this simulates LcEntity.serialize()
+        :return:
+        """
+        j = {
+
+            'entityType': self.entity_type,
+            'externalId': self.entity_id,
+            'origin': self.origin
+        }
+        for k, v in self.properties.items():
+            if k in ('is_lcia_method', 'uuid'):
+                continue
+            elif k == 'unit':
+                j['referenceUnit'] = v
+            else:
+                j[k] = v
+        return j
 
 
 class FlowEntity(Entity):
