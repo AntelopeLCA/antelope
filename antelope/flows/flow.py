@@ -235,21 +235,39 @@ class Flow(FlowInterface):
                 return True
         return False
 
-    def lookup_cf(self, quantity, context, locale, refresh=False, quell_biogenic_co2=False, **kwargs):
+    def lookup_cf(self, quantity, context, locale, refresh=False, quell_biogenic_co2=None, **kwargs):
         """
-        Cache characterization factors obtained from quantity relation queries
+        Cache characterization factors obtained from quantity relation queries.
+
+        BIOGENIC CO2: This function includes a mechanism to suppress ALL impact scores for biogenic CO2.  Any flow
+        can have the is_co2 flag set-- this happens automatically if the flow is given a CAS number that matches
+        CO2 (124-38-9). It can also be set in client code.  If this flag is true, AND the flow's name matches a
+        regexp that describes non-fossil, biogenic, "in air", then the flow is considered to be biogenic CO2 (its
+        quell_co2 property is True).
+
+        WHEN performing a lookup, the function determines whether to quell biogenic CO2 in the following two ways:
+        either the quantity has a property 'quell_biogenic_co2' or the lookup_cf receives a kwarg 'quell_biogenic_co2'
+        The kwarg overrides the quantity property.  IF the boolean value of the specification is 'True', AND the flow's
+        quell_co2 property is True, THEN the flow will return a "QuelledCO2" characterization that always equals 0.
+        Otherwise, it will perform the lookup.
+
         :param quantity:
         :param context:
         :param locale:
         :param refresh:
-        :param quell_biogenic_co2:
+        :param quell_biogenic_co2: [None] override quantity specification for this property.
         :param kwargs:
         :return: a QRResult which is not even known to the interface
         """
         locale = locale or self.locale
         key = (quantity, context, locale)
 
-        if quell_biogenic_co2:
+        if quell_biogenic_co2 is not None:
+            qbc = bool(quell_biogenic_co2)
+        else:
+            qbc = quantity.get('quell_biogenic_co2')
+
+        if qbc:
             if self.quell_co2:
                 return QuelledCO2(self._flowable, context)
 
