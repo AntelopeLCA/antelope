@@ -14,8 +14,8 @@ TODO: decide on a consistent structure / format for entity identification.  Curr
 """
 
 from pydantic import BaseModel
-from pydantic.typing import List, Dict, Optional
-from synonym_dict import LowerDict
+from typing import List, Dict, Optional
+# from synonym_dict import LowerDict
 
 
 class ResponseModel(BaseModel):
