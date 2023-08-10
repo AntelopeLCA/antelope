@@ -237,12 +237,12 @@ class Exchange(ResponseModel):
 
 
 class ReferenceExchange(Exchange):
-    is_reference = True
+    is_reference: bool = True
     termination: None
 
 
 class ReferenceValue(ReferenceExchange):
-    value = float
+    value: float
 
     @classmethod
     def from_rx(cls, x):

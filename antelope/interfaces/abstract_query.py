@@ -43,7 +43,17 @@ class AbstractQuery(object):
     def make_ref(self, entity):
         raise NotImplementedError
 
-    def _perform_query(self, itype, attrname, exc, *args, strict=False, **kwargs):
+    def _perform_query(self, itype, attrname, exc, *args, **kwargs):
+        """
+
+        :param itype: type of query being performed (which interface is being invoked)
+        :param attrname: query name
+        :param exc: "fallback exception": ignore it if an implementation raises it; then raise it if no implementation
+         succeeds
+        :param args: to pass to the query
+        :param kwargs: to pass to the query or subclass
+        :return:
+        """
         raise NotImplementedError
 
     '''
@@ -126,3 +136,14 @@ class AbstractQuery(object):
     def get_reference(self, external_ref):
         return self._perform_query('basic', 'get_reference', EntityNotFound,
                                    external_ref)
+
+    def synonyms(self, item, **kwargs):
+        """
+        Return a list of synonyms for the object -- quantity, flowable, or compartment
+        :param item:
+        :return: list of strings
+        """
+        return self._perform_query('basic', 'synonyms', QuantityRequired, item,
+                                   **kwargs)
+
+

@@ -63,7 +63,7 @@ class BasicQuery(IndexInterface, ExchangeInterface, QuantityInterface):
         self._archive = archive
         self._dbg = debug
 
-    def _perform_query(self, itype, attrname, exc, *args, strict=False, **kwargs):
+    def _perform_query(self, itype, attrname, exc, *args, **kwargs):
         if itype is None:
             itype = 'basic'
         iface = self._archive.make_interface(itype)
@@ -110,6 +110,8 @@ class LcQuery(BasicQuery, BackgroundInterface, ConfigureInterface):
 Utilities
 
 '''
+
+
 def local_ref(source, prefix=None):
     """
     Create a semantic ref for a local filename.  Just uses basename.  what kind of monster would access multiple

@@ -76,15 +76,6 @@ class QuantityInterface(AbstractQuery):
     qdb- and native-level queries
     '''
 
-    def synonyms(self, item, **kwargs):
-        """
-        Return a list of synonyms for the object -- quantity, flowable, or compartment
-        :param item:
-        :return: list of strings
-        """
-        return self._perform_query(_interface, 'synonyms', QuantityRequired, item,
-                                   **kwargs)
-
     def profile(self, flow, **kwargs):
         """
         Generate characterizations for the named flow or flowable, with the reference quantity noted in each case
