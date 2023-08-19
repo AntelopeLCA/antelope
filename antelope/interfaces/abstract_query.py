@@ -143,7 +143,7 @@ class AbstractQuery(object):
         :param item:
         :return: list of strings
         """
-        return self._perform_query('basic', 'synonyms', QuantityRequired, item,
+        return self._perform_query('basic', 'synonyms', KeyError, item,
                                    **kwargs)
 
 

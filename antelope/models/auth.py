@@ -44,6 +44,16 @@ class AuthorizationGrant(AuthModel):
     values: bool = False    # whether numeric data is authorized
     update: bool = False    # whether the user can POST to the resource
 
+    def authorizes(self, origin):
+        """
+        grant authorizes origin if origin is of equal or greater specificity (origin and sub-origins)
+        :param origin:
+        :return:
+        """
+        org = origin.split('.')
+        my = self.origin.split('.')[:len(org)]
+        return org == my
+
     def serialize(self):
         """ # old spec from blackbook draft
         grants are serialized as ' '-delimited access specifications of the form:
