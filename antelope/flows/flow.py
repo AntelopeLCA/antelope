@@ -251,6 +251,10 @@ class Flow(FlowInterface):
         quell_co2 property is True, THEN the flow will return a "QuelledCO2" characterization that always equals 0.
         Otherwise, it will perform the lookup.
 
+          ** Special feature ** setting the quantity's 'quell_biogenic_co2' property to the string "only" will cause it
+          to return the INVERSE of quell=True - will return quelled CF for all NON-quelled flows and ONLY measure
+          biogenic CO2.
+
         :param quantity:
         :param context:
         :param locale:
@@ -262,14 +266,23 @@ class Flow(FlowInterface):
         locale = locale or self.locale
         key = (quantity, context, locale)
 
+        _invert_bio = False
+
         if quell_biogenic_co2 is not None:
             qbc = bool(quell_biogenic_co2)
         else:
             qbc = quantity.get('quell_biogenic_co2')
+            if qbc == 'only':
+                qbc = False
+                _invert_bio = True
 
-        if qbc:
-            if self.quell_co2:
+        if _invert_bio:
+            if not self.quell_co2:
                 return QuelledCO2(self._flowable, context)
+        else:
+            if qbc:
+                if self.quell_co2:
+                    return QuelledCO2(self._flowable, context)
 
         if refresh:
             self._chars_seen.pop(key, None)
