@@ -68,7 +68,7 @@ class CatalogRef(BaseRef):
         #     return FragmentRef(external_ref, query, reference_entity, **kwargs)
         return cls(query.origin, external_ref, entity_type=etype, **kwargs)
 
-    def __init__(self, origin, external_ref, entity_type=None, **kwargs):
+    def __init__(self, origin, external_ref, entity_type=None, reference_entity=None, **kwargs):
         """
         A CatalogRef that is created from scratch will not be active
         :param origin:
@@ -82,6 +82,11 @@ class CatalogRef(BaseRef):
             self['Name'] = self.link
 
         self._asgn_etype = entity_type
+        self._reference_entity = reference_entity
+
+    @property
+    def reference_entity(self):
+        return self._reference_entity
 
     @property
     def name(self):

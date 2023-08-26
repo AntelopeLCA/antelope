@@ -60,6 +60,11 @@ class Entity(EntityRef):
         e_s = entity.serialize()  # this ensures that we get the reference field
         if entity.uuid is not None and entity.uuid != entity.external_ref:
             e_s['uuid'] = entity.uuid
+        # a bit of bleed from foreground here- but we need fragments to work-- bonus this also supports (RX) exchanges
+        if hasattr(entity, 'flow'):
+            e_s['flow'] = EntityRef.from_entity(entity.flow)
+        if hasattr(entity, 'direction'):
+            e_s['direction'] = entity.direction
         return cls.from_json(e_s)
 
     @classmethod
