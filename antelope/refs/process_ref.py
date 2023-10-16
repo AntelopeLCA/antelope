@@ -290,6 +290,7 @@ class ProcessRef(EntityRef):
             ref_flow = self._use_ref_exch(ref_flow)
             exts = chain(self.emissions(ref_flow=ref_flow),
                          self.cutoffs(ref_flow=ref_flow))
+            # TODO: BUG: dependencies() seems to reverse the direction of negative-valued flows to be positive-valued
             incl = (k for k in self.dependencies(ref_flow=ref_flow) if (k.flow.external_ref, k.direction) not in obs)
             ext = (k for k in exts if (k.flow.external_ref, k.direction) not in obs)
             lci = chain(self._query.sys_lci(incl, **kwargs), ext)

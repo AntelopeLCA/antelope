@@ -459,19 +459,6 @@ def _context_to_str(cx):
     return context
 
 
-class LciaResult(ResponseModel):
-    scenario: Optional[str]
-    object: str
-    quantity: Entity
-    scale: float
-    total: float
-
-    @classmethod
-    def from_lcia_result(cls, object, res):
-        return cls(scenario=res.scenario, object=object.name, quantity=Entity.from_entity(res.quantity), scale=res.scale,
-                   total=res.total())
-
-
 class AggregatedLciaScore(ResponseModel):
     component: str
     result: float
@@ -480,15 +467,6 @@ class AggregatedLciaScore(ResponseModel):
 class SummaryLciaScore(AggregatedLciaScore):
     node_weight: Optional[float]
     unit_score: Optional[float]
-
-
-class SummaryLciaResult(LciaResult):
-    components: List[SummaryLciaScore]
-
-    @classmethod
-    def from_lcia_result(cls, object, res):
-        return cls(scenario=res.scenario, object=object.name, quantity=Entity.from_entity(res.quantity), scale=res.scale,
-                   total=res.total(), components=res.serialize_components(detailed=False))
 
 
 class LciaDetail(ResponseModel):
@@ -527,11 +505,28 @@ class DisaggregatedLciaScore(AggregatedLciaScore):
         return obj
 
 
-class DetailedLciaResult(LciaResult):
-    components: List[DisaggregatedLciaScore]
+class LciaResult(ResponseModel):
+    scenario: Optional[str]
+    object: str
+    quantity: Entity
+    scale: float
+    total: float
+
+    components: List[DisaggregatedLciaScore] = []
+    summaries: List[SummaryLciaScore] = []
 
     @classmethod
-    def from_lcia_result(cls, obj, res):
+    def from_lcia_result(cls, object, res):
+        return cls(scenario=res.scenario, object=object.name, quantity=Entity.from_entity(res.quantity), scale=res.scale,
+                   total=res.total())
+
+    @classmethod
+    def summary(cls, object, res):
+        return cls(scenario=res.scenario, object=object.name, quantity=Entity.from_entity(res.quantity), scale=res.scale,
+                   total=res.total(), summaries=res.serialize_components(detailed=False))
+
+    @classmethod
+    def detailed(cls, obj, res):
         mod = cls(scenario=res.scenario, object=obj.name, quantity=Entity.from_entity(res.quantity), scale=res.scale,
                   total=res.total(), components=[])
         for c in res.components():
