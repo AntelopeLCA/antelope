@@ -465,6 +465,8 @@ class AggregatedLciaScore(ResponseModel):
 
 
 class SummaryLciaScore(AggregatedLciaScore):
+    origin: str
+    entity_id: str
     node_weight: Optional[float]
     unit_score: Optional[float]
 
@@ -478,8 +480,8 @@ class LciaDetail(ResponseModel):
 class DisaggregatedLciaScore(AggregatedLciaScore):
     origin: str
     entity_id: str
-    details: List[LciaDetail]
-    summaries: List[SummaryLciaScore]  # these are different data types
+    details: List[LciaDetail] = []
+    summaries: List[SummaryLciaScore] = []  # these are different data types
 
     @classmethod
     def from_component(cls, obj, c):
@@ -516,13 +518,13 @@ class LciaResult(ResponseModel):
     summaries: List[SummaryLciaScore] = []
 
     @classmethod
-    def from_lcia_result(cls, object, res):
-        return cls(scenario=res.scenario, object=object.name, quantity=Entity.from_entity(res.quantity), scale=res.scale,
+    def from_lcia_result(cls, obj, res):
+        return cls(scenario=res.scenario, object=obj.name, quantity=Entity.from_entity(res.quantity), scale=res.scale,
                    total=res.total())
 
     @classmethod
-    def summary(cls, object, res):
-        return cls(scenario=res.scenario, object=object.name, quantity=Entity.from_entity(res.quantity), scale=res.scale,
+    def summary(cls, obj, res):
+        return cls(scenario=res.scenario, object=obj.name, quantity=Entity.from_entity(res.quantity), scale=res.scale,
                    total=res.total(), summaries=res.serialize_components(detailed=False))
 
     @classmethod

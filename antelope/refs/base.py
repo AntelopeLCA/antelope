@@ -392,7 +392,7 @@ class EntityRef(BaseRef):
         else:
             # self._check_query('getitem %s' % item)
             try:
-                val = self._query.get_item(self, item)
+                val = self._query.get_item(self.external_ref, item)
             except NoAccessToEntity:
                 try:  # this works in masquerade: the local.qdb query retrieves the authentic ref from the qdb
                     lit = self._query.get(self.link)
@@ -424,7 +424,7 @@ class EntityRef(BaseRef):
         try:
             self.get_item(item)
             return True
-        except (KeyError, NoAccessToEntity, InvalidQuery):
+        except (KeyError, NoAccessToEntity, InvalidQuery, EntityNotFound):
             return False
 
     def serialize(self, **kwargs):
