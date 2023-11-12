@@ -270,7 +270,7 @@ class ExchangeValues(Exchange):
 class UnallocatedExchange(Exchange):
     is_reference: bool = False
     value: float
-    uncertainty: Optional[Dict]
+    uncertainty: Optional[Dict] = None
 
     @classmethod
     def from_inv(cls, x):

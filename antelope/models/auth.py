@@ -3,6 +3,13 @@ from typing import List
 from antelope.xdb_tokens import JwtGrant
 
 
+class NoAuthorization(Exception):
+    """
+    An error to signal that no authorization is found
+    """
+    pass
+
+
 class AuthModel(BaseModel):
     pass
 
