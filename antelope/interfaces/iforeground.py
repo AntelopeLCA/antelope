@@ -135,6 +135,18 @@ class ForegroundInterface(AbstractQuery):
         return self._perform_query(_interface, 'traverse', ForegroundRequired,
                                    fragment, scenario, **kwargs)
 
+    def activity(self, fragment, scenario=None, **kwargs):
+        """
+        Traverse the fragment, returning direct-descendent nodes only. This must be run on an authentic entity and
+        not on a ref
+        :param fragment:
+        :param scenario:
+        :param kwargs:
+        :return:
+        """
+        return self._perform_query(_interface, 'activity', ForegroundRequired,
+                                   fragment, scenario, **kwargs)
+
     def fragment_lcia(self, fragment, quantity_ref, scenario=None, **kwargs):
         """
         Perform fragment LCIA by first traversing the fragment to determine node weights, and then combining with
