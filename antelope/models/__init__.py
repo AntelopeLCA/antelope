@@ -50,6 +50,13 @@ class EntityRef(ResponseModel):
     def from_entity(cls, entity):
         return cls(origin=entity.origin, entity_id=entity.external_ref, entity_type=entity.entity_type)
 
+    @property
+    def link(self):
+        return '%s/%s' % (self.origin, self.entity_id)
+
+    def __hash__(self):
+        return hash(self.link)
+
 
 class Entity(EntityRef):
     entity_type: str
