@@ -176,7 +176,8 @@ class FlowSpec(ResponseModel):
     Non-context exchange terminations do not get included in flow specifications, because they are part of the model and
     not the flow
     """
-    external_ref: Optional[str]
+    origin: Optional[str] = None
+    external_ref: Optional[str] = None
     flowable: str
     quantity_ref: str
     context: List[str]
@@ -184,7 +185,8 @@ class FlowSpec(ResponseModel):
 
     @classmethod
     def from_flow(cls, flow):
-        return cls(external_ref=flow.external_ref, flowable=flow.name, quantity_ref=flow.reference_entity.external_ref,
+        return cls(origin=flow.origin, external_ref=flow.external_ref, flowable=flow.name,
+                   quantity_ref=flow.reference_entity.external_ref,
                    context=list(flow.context), locale=flow.locale)
 
     @classmethod
@@ -196,7 +198,8 @@ class FlowSpec(ResponseModel):
         else:
             raise TypeError('%s\nUnknown exchange type %s' % (x, x.type))
         loc = locale or x.flow.locale
-        return cls(external_ref=x.flow.external_ref, flowable=x.flow.name, quantity_ref=x.flow.reference_entity.external_ref,
+        return cls(origin=x.flow.origin, external_ref=x.flow.external_ref, flowable=x.flow.name,
+                   quantity_ref=x.flow.reference_entity.external_ref,
                    context=cx, locale=loc)
 
 
@@ -467,13 +470,13 @@ def _context_to_str(cx):
 
 
 class AggregatedLciaScore(ResponseModel):
+    origin: str
+    entity_id: str
     component: str
     result: float
 
 
 class SummaryLciaScore(AggregatedLciaScore):
-    origin: str
-    entity_id: str
     node_weight: Optional[float]
     unit_score: Optional[float]
 
@@ -485,10 +488,7 @@ class LciaDetail(ResponseModel):
 
 
 class DisaggregatedLciaScore(AggregatedLciaScore):
-    origin: str
-    entity_id: str
     details: List[LciaDetail] = []
-    summaries: List[SummaryLciaScore] = []  # these are different data types
 
     @classmethod
     def from_component(cls, obj, c):
@@ -502,19 +502,18 @@ class DisaggregatedLciaScore(AggregatedLciaScore):
         else:
             origin = obj.origin
             entity_id = obj.external_ref
-        obj = cls(origin=origin, entity_id=entity_id, component=component, result=c.cumulative_result,
-                  details=[], summaries=[])
+        obj = cls(origin=origin, entity_id=entity_id, component=component, result=c.cumulative_result, details=[])
         for d in sorted(c.details(), key=lambda x: x.result, reverse=True):
-            if hasattr(d, 'node_weight'):
-                obj.summaries.append(SummaryLciaScore(**d.serialize(detailed=False)))
-            else:
-                obj.details.append(LciaDetail(exchange=FlowSpec.from_exchange(d.exchange),
-                                              factor=QuantityConversion.from_qrresult(d.factor),
-                                              result=d.result))
+            obj.details.append(LciaDetail(exchange=FlowSpec.from_exchange(d.exchange),
+                                          factor=QuantityConversion.from_qrresult(d.factor),
+                                          result=d.result))
         return obj
 
 
 class LciaResult(ResponseModel):
+    """
+    Note that a core LciaResult can contain either (detailed) components or summaries, but not both.
+    """
     scenario: Optional[str]
     object: str
     quantity: Entity
@@ -536,8 +535,5 @@ class LciaResult(ResponseModel):
 
     @classmethod
     def detailed(cls, obj, res):
-        mod = cls(scenario=res.scenario, object=obj.name, quantity=Entity.from_entity(res.quantity), scale=res.scale,
-                  total=res.total(), components=[])
-        for c in res.components():
-            mod.components.append(DisaggregatedLciaScore.from_component(obj, c))
-        return mod
+        return cls(scenario=res.scenario, object=obj.name, quantity=Entity.from_entity(res.quantity), scale=res.scale,
+                   total=res.total(), components=res.serialize_components(detailed=True))
