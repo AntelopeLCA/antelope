@@ -113,6 +113,7 @@ class AuthorizationGrant(AuthModel):
         :return:
         """
         user = jwt.sub
+        issuer = jwt.iss
         grants = []
         for grant in jwt.grants.split(' '):
             clauses = grant.split(':')
@@ -127,6 +128,6 @@ class AuthorizationGrant(AuthModel):
                 values = 'v' in specs
                 update = 'u' in specs
 
-                grants.append(cls(user=user, origin=origin, access=access, values=values, update=update))
+                grants.append(cls(user=user, issuer=issuer, origin=origin, access=access, values=values, update=update))
 
         return grants
