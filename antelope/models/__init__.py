@@ -65,6 +65,7 @@ class Entity(EntityRef):
     @classmethod
     def from_entity(cls, entity, **kwargs):
         e_s = entity.serialize()  # this ensures that we get the reference field
+        e_s.update(kwargs)
         if entity.uuid is not None and entity.uuid != entity.external_ref:
             e_s['uuid'] = entity.uuid
         # a bit of bleed from foreground here- but we need fragments to work-- bonus this also supports (RX) exchanges
@@ -270,7 +271,7 @@ class ExchangeValues(Exchange):
     This should really be called ExchangeValues- in fact the method is already called exchangeValues!
     """
     values: Dict
-    uncertainty: Optional[Dict]
+    uncertainty: Optional[Dict] = None
 
     @classmethod
     def from_ev(cls, x):
@@ -296,7 +297,7 @@ class AllocatedExchange(Exchange):
 
     ref_flow: str
     value: float
-    uncertainty: Optional[Dict]
+    uncertainty: Optional[Dict] = None
 
     @property  # maybe this will prevent it from getting serialized but still operate
     def is_reference(self):

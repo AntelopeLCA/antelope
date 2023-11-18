@@ -234,7 +234,9 @@ class BaseRef(BaseEntity):
             'origin': self.origin,
             'externalId': self.external_ref
         }
-        if self._etype is not None:
+        if self._etype is None:
+            j['entityType'] = 'unknown'
+        else:
             j['entityType'] = self._etype
         # j.update(self._d)  ## don't want this
         if 'Name' in self._d:

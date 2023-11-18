@@ -135,5 +135,8 @@ class CatalogRef(BaseRef):
                 return True
         return False
 
+    def has_lcia_engine(self):
+        return False
+
     def cf(self, *args, **kwargs):
         return 0.0
