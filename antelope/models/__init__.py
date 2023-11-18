@@ -486,10 +486,17 @@ class LciaDetail(ResponseModel):
     factor: QuantityConversion
     result: float
 
+    @classmethod
+    def from_detailed_lcia_result(cls, d):
+        return cls(exchange=FlowSpec.from_exchange(d.exchange),
+                   factor=QuantityConversion.from_qrresult(d.factor),
+                   result=d.result)
+
 
 class DisaggregatedLciaScore(AggregatedLciaScore):
     details: List[LciaDetail] = []
 
+    '''
     @classmethod
     def from_component(cls, obj, c):
         if hasattr(c.entity, 'name'):
@@ -502,12 +509,10 @@ class DisaggregatedLciaScore(AggregatedLciaScore):
         else:
             origin = obj.origin
             entity_id = obj.external_ref
-        obj = cls(origin=origin, entity_id=entity_id, component=component, result=c.cumulative_result, details=[])
-        for d in sorted(c.details(), key=lambda x: x.result, reverse=True):
-            obj.details.append(LciaDetail(exchange=FlowSpec.from_exchange(d.exchange),
-                                          factor=QuantityConversion.from_qrresult(d.factor),
-                                          result=d.result))
-        return obj
+        return cls(origin=origin, entity_id=entity_id, component=component, result=c.cumulative_result,
+                   details=[LciaDetail.from_detailed_lcia_result(d) for d in
+                            sorted(c.details(), key=lambda x: x.result, reverse=True)])
+    '''
 
 
 class LciaResult(ResponseModel):
