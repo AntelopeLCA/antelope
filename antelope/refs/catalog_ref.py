@@ -123,8 +123,10 @@ class CatalogRef(BaseRef):
         if self.entity_type == 'quantity':
             if self.has_property('Indicator'):
                 return self['Indicator']
-            return None
+            return self.reference_entity
         elif self.entity_type == 'flow':
+            if self.reference_entity is not None:
+                return self.reference_entity.unit
             return None
         raise AttributeError('This entity does not have a unit')
 

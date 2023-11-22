@@ -86,29 +86,65 @@ class ForegroundInterface(AbstractQuery):
         return self._perform_query(_interface, 'new_fragment', ForegroundRequired,
                                    flow, direction, **kwargs)
 
-    def observe(self, fragment, exchange_value=None, termination=None, name=None, scenario=None, **kwargs):
+    def child_flows(self, fragment, **kwargs):
         """
-        Observe a fragment's exchange value with respect to its parent activity level.  Only applicable for
-        non-balancing fragments whose parents are processes or foreground nodes (child flows of subfragments have
-        their exchange values determined at traversal, as do balancing flows).
 
-        A fragment should be named when it is observed.  This should replace name_fragment. In a completed model, all
-        observable fragments should have names.
+        :param fragment:
+        :param kwargs:
+        :return:
+        """
+        return self.make_ref(self._perform_query(_interface, 'child_flows', ForegroundRequired, fragment, **kwargs))
 
-        Also use to define scenario exchange values (or to make replicate observations..).
+    def anchors(self, fragment, **kwargs):
+        """
+        List observed anchors for a fragment
 
-        scenario and name should be mutually exclusive; if both are supplied, name is ignored.
+        :param fragment:
+        :param kwargs:
+        :return:
+        """
+        return self._perform_query(_interface, 'anchors', ForegroundRequired, fragment, **kwargs)
+
+    def parameters(self, fragment=None, **kwargs):
+        """
+        Return a list of observable fragments in the foreground.
+        :param fragment: optionally filter to a specific fragment and its child flows
+        :param kwargs:
+        :return:
+        """
+
+    def observe(self, fragment, exchange_value=None, anchor=None, name=None, scenario=None, **kwargs):
+        """
+        Observe quantitative aspects of a fragment, and assign it a name.
+
+        Two different elements can be observed: its exchange value and its anchor. Either or both can be observed
+        with respect to some scenario or scope specification that really needs to be ironed out.  For now a
+        'scenario' is just a tidy string, typically: brief, non-whitespace containing, ','-parseable
+
+        If no scenario name is given, the fragment's default observed state is set.  A fragment should be named
+        when it is observed.  In a completed model, all observable fragments should "have names" (i.e. be QC'able).
+
+        Exchange value is given with respect to a unit of the parent node's activity level and the fragment's flow
+        reference quantity, optionally including a unit of measure.
+
+        Exchange values may only be observed for observable fragments, i.e. non-balancing fragments whose parents are
+        processes or foreground nodes (child flows of subfragments have their exchange values determined at traversal,
+        as do balancing flows, so not "observable" in the model building sense).
+
+        Scenario names e.g. as natural numbers could be used to store replicate observations.
+
+        Fragments should not be named during scenario observations.  If a scenario is supplied, name is ignored.
 
         :param fragment:
         :param exchange_value: [this must be the second positional argument for legacy reasons, but can still be None]
-        :param termination:
+        :param anchor: [renamed from 'termination' - the latter is still accepted in core+]
         :param name:
         :param scenario:
         :param kwargs:
         :return:
         """
         return self._perform_query(_interface, 'observe', ForegroundRequired,
-                                   fragment, exchange_value=exchange_value, termination=termination, name=name,
+                                   fragment, exchange_value=exchange_value, anchor=anchor, name=name,
                                    scenario=scenario, **kwargs)
 
     def observe_unit_score(self, fragment, quantity, score, scenario=None, **kwargs):
@@ -117,7 +153,7 @@ class ForegroundInterface(AbstractQuery):
 
     def tree(self, fragment, **kwargs):
         """
-        Return the fragment tree structure with all child flows in depth-first order
+        Return the fragment tree structure with all child flows in depth-first semi-order
         :param fragment:
         :param kwargs:
         :return:

@@ -56,16 +56,17 @@ def convert(quantity, from_unit=None, to=None):
     if from_unit == to:
         return 1.0
     elif from_unit is None:
-        if to.lower() == quantity.unit.lower():
+        if to == quantity.unit:
             return 1.0
     elif to is None:
-        if from_unit.lower() == quantity.unit.lower():
+        if from_unit == quantity.unit:
             return 1.0
 
     try:
         uc_table = quantity['UnitConversion']
-        if quantity.unit not in uc_table:
-            uc_table[quantity.unit] = 1.0
+        if quantity.unit is not None:
+            if quantity.unit not in uc_table:
+                uc_table[quantity.unit] = 1.0
     except KeyError:
         raise NoUnitConversionTable
 
