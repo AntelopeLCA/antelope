@@ -63,7 +63,7 @@ class JwtGrant(BaseModel):
 
     the grants are used authorize the query
     """
-    tid: Optional[str]  # token ID, used for revocation. has the format MASTER_ISSUER:token_id
+    tid: Optional[str] = None  # token ID, used for revocation. has the format MASTER_ISSUER:token_id
     iss: str  # the authority providing the grant- must be known to the xdb via an established keyserver
     sub: str  # must specify the authorized user that is receiving the grant (bills back to)
     # (email address (if matches 'x@y') or vault.lc id (if matches 'x' or 'x@') of authorized user
