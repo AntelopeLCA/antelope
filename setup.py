@@ -1,14 +1,16 @@
 from setuptools import setup, find_packages
 
-ANTELOPE_VERSION = '0.2.1'
+ANTELOPE_VERSION = '0.2.2'
 
 requires = [
-    "synonym_dict>=0.2.0",
-    "pydantic>=1.8.2"
+    "synonym_dict>=0.2.4",
+    "pydantic>=2.5.0"
 ]
 
 """
 Version History:
+0.2.2            - 2023/11/28 oryx debug release
+ 
 0.2.1-virtualize - 2023/04/10 xdb passes benchmarks.
                    pydantic models moved into interface
                    sys_lci and bg_lcia operational, both locally and remotely

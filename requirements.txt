@@ -1,2 +1,2 @@
 synonym_dict>=0.2.4
-pydantic>=1.8.2
+pydantic>=2.5.0
