@@ -223,6 +223,9 @@ class QuantityRef(EntityRef):
         """
         return self._query.characterize(flowable, ref_quantity, self, value, **kwargs)
 
+    def get_factors(self, flows, **kwargs):
+        return self._query.get_factors(self, flows, **kwargs)
+
     def do_lcia(self, inventory, **kwargs):
         return self._query.do_lcia(self, inventory, **kwargs)
 

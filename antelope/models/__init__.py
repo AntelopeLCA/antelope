@@ -191,6 +191,12 @@ class FlowSpec(ResponseModel):
                    context=list(flow.context), locale=flow.locale)
 
     @classmethod
+    def from_termination(cls, term):
+        return cls(origin=term.term_flow.origin, external_ref=term.term_flow.external_ref, flowable=term.term_flow.name,
+                   quantity_ref=term.term_flow.reference_entity.external_ref,
+                   context=list(term.term_node), locale=term.term_flow.locale)
+
+    @classmethod
     def from_exchange(cls, x, locale=None):
         if x.type == 'context':
             cx = list(x.termination)
@@ -470,6 +476,24 @@ def _context_to_str(cx):
     return context
 
 
+class FlowFactors(ResponseModel):
+    """
+    Client POSTs a list of FlowSpecs; server returns a list of characterizations that match the specs, grouped
+    by flow external_ref (so as to be cached in the flow's chars_seen).
+
+    The challenge here is with contexts: in order for lookup_cf to find the CF, it needs to be cached with a
+    local context; but in order for the results to be portable/reproducible, the QR results should report the
+    canonical contexts.  So, we add a context field where we reproduce the posted context.
+    """
+    origin: str
+    external_ref: str
+    context: List[str]
+    factors: List[QuantityConversion]
+
+    def add_qr_result(self, qrr):
+        self.factors.append(QuantityConversion.from_qrresult(qrr))
+
+
 class AggregatedLciaScore(ResponseModel):
     origin: str
     entity_id: str
@@ -480,6 +504,16 @@ class AggregatedLciaScore(ResponseModel):
 class SummaryLciaScore(AggregatedLciaScore):
     node_weight: Optional[float]
     unit_score: Optional[float]
+
+    def __str__(self):
+        def number(arg):
+            if arg is None:
+                return 'None'
+            return '%10.3g' % float(arg)
+
+        return 'S%8.3g = %-s x %-s | %s' % (self.result, number(self.node_weight),
+                                            number(self.unit_score),
+                                            self.component)
 
 
 class LciaDetail(ResponseModel):

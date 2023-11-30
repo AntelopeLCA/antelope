@@ -283,17 +283,17 @@ class QuantityInterface(AbstractQuery):
                                                  QuantityRequired,
                                                  quantity, **kwargs))
 
-    def get_factors(self, quantity, flows, **kwargs):
+    def get_factors(self, quantity, flow_specs, **kwargs):
         """
         Accept an iterable of flow specifications (either a flow UUID which is known(?) and/or (flowable, ref_quantity,
-        context, locale)). Return a list of
+        context, locale)). Return a list of FlowFactors
         :param quantity: a query quantity
-        :param flows: an iterable of flow specifications (flowable, ref_quantity, context, locale)
+        :param flow_specs: an iterable of FlowSpec
         :param kwargs:
         :return:
         """
         return self._perform_query(_interface, 'get_factors', QuantityRequired,
-                                   quantity, flows, **kwargs)
+                                   quantity, flow_specs, **kwargs)
 
     def flows_with_origin(self, origin, flowable=None, context=None, locale=None, **kwargs):
         """

@@ -27,6 +27,7 @@ class QuelledCO2(object):
     def value(self):
         return 0.0
 
+
 """
 openlca_locales.json file created from: antelope_olca package, gen_locales('openlca_locales.json') 
 """
@@ -237,7 +238,17 @@ class Flow(FlowInterface):
 
     def lookup_cf(self, quantity, context, locale, refresh=False, quell_biogenic_co2=None, **kwargs):
         """
-        Cache characterization factors obtained from quantity relation queries.
+        Cache characterization factors obtained from quantity relation queries.  It is decided to leave this in
+        the interface, since it does not depend on anything from outside the interface.
+
+        However, it does introduce some severe constraints.  One: it requires an EXACT MATCH of quantity, context, and
+        locale to retrieve a cached result.  Wildcard results, such as with 'None' specified for any of the three,
+        are not supported.
+
+        Two, it requires implementations to properly handle the Quell-Biogenic-CO2 feature (see below).  This is
+        enabled EITHER by passing quell_biogenic_co2 as a parameter OR by assigning it as a property to the quantity.
+        The valid values for this parameter are True (suppress biogenic CO2), False (treat all flows the same), or
+        'only' (inverse of True: quell all flows except biogenic CO2).
 
         BIOGENIC CO2: This function includes a mechanism to suppress ALL impact scores for biogenic CO2.  Any flow
         can have the is_co2 flag set-- this happens automatically if the flow is given a CAS number that matches
@@ -258,10 +269,10 @@ class Flow(FlowInterface):
         :param quantity:
         :param context:
         :param locale:
-        :param refresh:
+        :param refresh: drop cached result and re-query.
         :param quell_biogenic_co2: [None] override quantity specification for this property.
         :param kwargs:
-        :return: a QRResult which is not even known to the interface
+        :return: whatever the implementation's quantity_relation() returns
         """
         locale = locale or self.locale
         key = (quantity, context, locale)
@@ -269,7 +280,11 @@ class Flow(FlowInterface):
         _invert_bio = False
 
         if quell_biogenic_co2 is not None:
-            qbc = bool(quell_biogenic_co2)
+            if quell_biogenic_co2 == 'only':
+                qbc = False
+                _invert_bio = True
+            else:
+                qbc = bool(quell_biogenic_co2)
         else:
             qbc = quantity.get('quell_biogenic_co2')
             if qbc == 'only':
@@ -300,3 +315,22 @@ class Flow(FlowInterface):
 
     def pop_char(self, qq, cx, loc):
         return self._chars_seen.pop((qq, cx, loc), None)
+
+    def see_chars(self, qq, cx, cfs):
+        """
+
+        :param qq: an actual quantity or quantity ref
+        :param cx: an actual context
+        :param cfs: a list of objects that could be returned from a quantity_relation query (implementation-dependent)
+        :return:
+        """
+        for cf in cfs:
+            key = qq, cx, cf.locale
+            self._chars_seen[key] = cf
+
+    def is_seen(self, qq, context=None, locale=None):
+        if context is None:
+            context = self.context
+        if locale is None:
+            locale = self.locale
+        return (qq, context, locale) in self._chars_seen
