@@ -9,7 +9,7 @@ requires = [
 
 """
 Version History:
-0.2.2            - 2023/11/28 oryx debug release
+0.2.2 2023/11/30 - oryx debug release
  
 0.2.1-virtualize - 2023/04/10 xdb passes benchmarks.
                    pydantic models moved into interface
