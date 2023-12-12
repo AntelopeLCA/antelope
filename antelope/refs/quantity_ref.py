@@ -132,7 +132,10 @@ class QuantityRef(EntityRef):
 
     @property
     def is_lcia_method(self):
-        return 'Indicator' in self._d
+        is_ind = self._d.get('Indicator', '')
+        if isinstance(is_ind, str) and len(is_ind) > 0:
+            return True
+        return False
 
     def convert(self, from_unit=None, to=None):
         if not self.has_property('UnitConversion'):
@@ -167,6 +170,10 @@ class QuantityRef(EntityRef):
     """
     def has_lcia_engine(self):
         return self._query.is_lcia_engine()
+
+    @property
+    def is_local(self):
+        return self._query.origin == 'local.qdb'
 
     def is_canonical(self, other):
         return self._query.get_canonical(other) is self
