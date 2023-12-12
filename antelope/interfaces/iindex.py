@@ -169,12 +169,12 @@ class IndexInterface(AbstractQuery):
 
     def lcia_methods(self, **kwargs):
         """
-        Generate LCIA Methods-- which are quantities that have defined indicators
-        :param kwargs:
+        Generate LCIA methods (nominally, quantities with an 'Indicator' property)
+        :param kwargs: keyword search
         :return:
         """
-        indicator = kwargs.pop('Indicator', '')
-        return self.quantities(Indicator=indicator, **kwargs)
+        for i in self._perform_query(_interface, 'lcia_methods', IndexRequired, **kwargs):
+            yield self.make_ref(i)
 
     """
     API functions- entity-specific -- get accessed by catalog ref
