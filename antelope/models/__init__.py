@@ -62,6 +62,10 @@ class Entity(EntityRef):
     entity_type: str
     properties: Dict
 
+    @property
+    def external_ref(self):  # what, was there some taboo against this?
+        return self.entity_id
+
     @classmethod
     def from_entity(cls, entity, **kwargs):
         e_s = entity.serialize()  # this ensures that we get the reference field
@@ -239,7 +243,7 @@ class Exchange(ResponseModel):
     """
     origin: str
     process: str
-    flow: FlowSpec
+    flow: FlowEntity
     direction: str
     termination: Optional[str]
     context: Optional[List[str]]
@@ -254,7 +258,7 @@ class Exchange(ResponseModel):
         else:
             term = x.termination
             cx = None
-        return cls(origin=x.process.origin, process=x.process.external_ref, flow=FlowSpec.from_flow(x.flow),
+        return cls(origin=x.process.origin, process=x.process.external_ref, flow=FlowEntity.from_flow(x.flow),
                    direction=x.direction, termination=term, context=cx, type=x.type, comment=x.comment, str=str(x), **kwargs)
 
 
