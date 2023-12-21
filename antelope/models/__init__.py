@@ -62,22 +62,51 @@ class Entity(EntityRef):
     entity_type: str
     properties: Dict
 
+    def signature_fields(self):
+        # refs just return everything they know
+        for k in self.properties.keys():
+            yield k
+
     @property
     def external_ref(self):  # what, was there some taboo against this?
         return self.entity_id
 
     @classmethod
     def from_entity(cls, entity, **kwargs):
-        e_s = entity.serialize()  # this ensures that we get the reference field
-        e_s.update(kwargs)
+        ent = cls(origin=entity.origin, entity_id=entity.external_ref, entity_type=entity.entity_type,
+                  properties=dict())
+        # ent.properties.update(kwargs)  # I don't know why this was here but I don't think I want it
+        for k in entity.signature_fields():
+            ent.properties[k] = entity[k]
+
         if entity.uuid is not None and entity.uuid != entity.external_ref:
-            e_s['uuid'] = entity.uuid
+            ent.properties['uuid'] = entity.uuid
         # a bit of bleed from foreground here- but we need fragments to work-- bonus this also supports (RX) exchanges
         if hasattr(entity, 'flow'):
-            e_s['flow'] = EntityRef.from_entity(entity.flow)
+            ent.properties['flow'] = FlowEntity.from_flow(entity.flow)
         if hasattr(entity, 'direction'):
-            e_s['direction'] = entity.direction
-        return cls.from_json(e_s)
+            ent.properties['direction'] = entity.direction
+
+        if entity.entity_type == 'quantity':
+            ent.properties['unit'] = ent.properties.pop('referenceUnit', entity.unit)
+            for k in ('Method', 'Category', 'Indicator', 'Synonyms'):
+                if entity.has_property(k):
+                    ent.properties[k] = entity[k]
+        elif entity.entity_type == 'flow':
+            ent.properties['referenceQuantity'] = entity.reference_entity.external_ref
+            ent.properties['locale'] = entity.locale
+            ent.properties['context'] = list(entity.context)
+        elif entity.entity_type == 'process':
+            ent.properties['referenceExchange'] = [ReferenceExchange.from_exchange(x) for x in entity.reference_entity]
+
+        return ent
+
+    @classmethod
+    def from_flow(cls, flow):
+        ent = cls.from_entity(flow)
+        ent.properties['locale'] = flow.locale
+        ent.properties['context'] = list(flow.context)
+        return ent
 
     @classmethod
     def from_json(cls, j):
@@ -131,6 +160,7 @@ class FlowEntity(Entity):
 
         obj.properties['name'] = entity.name
         obj.properties[entity.reference_field] = entity.reference_entity.external_ref
+        obj.properties['Synonyms'] = []
 
         for key, val in kwargs.items():
             obj.properties[key] = entity[key]
