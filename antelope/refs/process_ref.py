@@ -30,7 +30,7 @@ class ProcessRef(EntityRef):
     @property
     def reference_entity(self):
         if self._reference_entity is None:
-            self._reference_entity = self._query.get_reference(self.external_ref)
+            self._reference_entity = self._query.get_reference(self)
             if len(self._reference_entity) == 1:
                 self._default_rx = self._reference_entity[0].flow.external_ref
         return self._reference_entity
