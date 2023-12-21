@@ -89,8 +89,11 @@ class FlowRef(EntityRef, Flow):
         :param value:
         :return:
         """
-        self._catch_context(key, value)
-        self._catch_flowable(key.lower(), value)
+        if key == 'locale':
+            self._locale = value
+        else:
+            self._catch_context(key, value)
+            self._catch_flowable(key.lower(), value)
         super(FlowRef, self).__setitem__(key, value)
 
     def serialize(self, characterizations=False, domesticate=False, **kwargs):
