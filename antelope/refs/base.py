@@ -331,8 +331,9 @@ class EntityRef(BaseRef):
     def signature_fields(self):
         # this seems problematic
         # just let a ref yield everything it knows
-        for k in self._d.keys():
-            yield k
+        for k, v in self._d.items():
+            if v is not _MissingItem:
+                yield k
 
     def _show_ref(self):
         print('%s: %s' % (self.reference_field, self.reference_entity))
@@ -363,11 +364,13 @@ class EntityRef(BaseRef):
 
     def properties(self):
         try:
-            for k in self._query.properties(self):
-                yield k
+            for k in self._query.properties(self):  # this forces a query refresh
+                if self.get(k) is not _MissingItem:
+                    yield k
         except NoAccessToEntity:
             for k in self._d.keys():
-                yield k
+                if self.get(k) is not _MissingItem:
+                    yield k
 
     def get_item(self, item, force_query=True):
         """
@@ -403,7 +406,11 @@ class EntityRef(BaseRef):
                     raise KeyError(item)
                 if lit is self:
                     raise
-                val = lit.get_item(item)
+                try:
+                    val = lit.get_item(item)
+                except KeyError:
+                    self._d[item] = _MissingItem
+                    raise
             except KeyError:
                 self._d[item] = _MissingItem
                 raise
