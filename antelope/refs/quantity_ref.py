@@ -15,6 +15,7 @@ but it depends on the LciaResult implementation, which is irretrievably part of 
 
 """
 
+from ..flows import FlowInterface
 from .base import EntityRef
 from synonym_dict import LowerDict
 
@@ -236,7 +237,13 @@ class QuantityRef(EntityRef):
     def do_lcia(self, inventory, **kwargs):
         return self._query.do_lcia(self, inventory, **kwargs)
 
-    def quantity_relation(self, flowable, ref_quantity, context, locale='GLO', **kwargs):
+    def quantity_relation(self, flowable, ref_quantity=None, context=None, locale='GLO', **kwargs):
+        if isinstance(flowable, FlowInterface):
+            if ref_quantity is None:
+                ref_quantity = flowable.reference_entity
+            if context is None:
+                context = flowable.context
+            flowable = flowable.name
         return self._query.quantity_relation(flowable, ref_quantity, self, context, locale=locale, **kwargs)
 
     def norm(self, **kwargs):

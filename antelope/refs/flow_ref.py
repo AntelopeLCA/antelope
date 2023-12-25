@@ -128,16 +128,24 @@ class FlowRef(EntityRef, Flow):
     def profile(self, **kwargs):
         return self._query.profile(self.external_ref, **kwargs)
 
-    def characterize(self, quantity, value, context=None, location='GLO', **kwargs):
+    def characterize(self, quantity, value, context=None, location='GLO', origin=None, **kwargs):
         if context is None:
             context = self.context
         flowable = self.name
+        if origin is None:
+            origin = self.origin
         self.pop_char(quantity, context, location)
         return self._query.characterize(flowable, self.reference_entity, quantity, value, context=context,
-                                        origin=self.origin, location=location, **kwargs)
+                                        origin=origin, location=location, **kwargs)
 
-    def cf(self, quantity, **kwargs):
-        return quantity.cf(self, **kwargs)
+    def cf(self, quantity, context=None, locale=None, **kwargs):
+        if context is None:
+            context = self.context
+        if locale is None:
+            locale = self.locale
+
+        return self._query.cf(self.external_ref, quantity, ref_quantity=self.reference_entity, context=context,
+                              locale=locale, **kwargs)
 
     '''
     Characterization caching
