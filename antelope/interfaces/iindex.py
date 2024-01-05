@@ -167,6 +167,15 @@ class IndexInterface(AbstractQuery):
         for i in self._perform_query(_interface, 'quantities', IndexRequired, **kwargs):
             yield self.make_ref(i)
 
+    def lcia(self, **kwargs):
+        """
+        Generate LCIA methodologies or collections of LCIA indicators.  type not yet specified
+        :param kwargs: keyword search
+        :return:
+        """
+        for i in self._perform_query(_interface, 'lcia_methods', IndexRequired, **kwargs):
+            yield self.make_ref(i)
+
     def lcia_methods(self, **kwargs):
         """
         Generate LCIA methods (nominally, quantities with an 'Indicator' property)
