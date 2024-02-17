@@ -1,6 +1,6 @@
 from setuptools import setup, find_packages
 
-ANTELOPE_VERSION = '0.2.2'
+ANTELOPE_VERSION = '0.2.3'
 
 requires = [
     "synonym_dict>=0.2.4",
@@ -10,6 +10,7 @@ requires = [
 """
 Version History:
 0.2.3 2024/01/05 - 'lcia' index route; exclude LCIA metadata from quantity manager synonyms
+                   Versions >= 0.2.3 to support 0.3-branch development code (but this package is not branched)
 
 0.2.2 2023/11/30 - oryx debug release
  

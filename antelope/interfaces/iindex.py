@@ -173,7 +173,7 @@ class IndexInterface(AbstractQuery):
         :param kwargs: keyword search
         :return:
         """
-        for i in self._perform_query(_interface, 'lcia_methods', IndexRequired, **kwargs):
+        for i in self._perform_query(_interface, 'lcia', IndexRequired, **kwargs):
             yield self.make_ref(i)
 
     def lcia_methods(self, **kwargs):
