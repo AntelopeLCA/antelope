@@ -89,6 +89,7 @@ class Entity(EntityRef):
 
         if entity.entity_type == 'quantity':
             ent.properties['unit'] = ent.properties.pop('referenceUnit', entity.unit)
+            ent.properties['Synonyms'] = []
             for k in ('Method', 'Category', 'Indicator', 'Synonyms'):
                 if entity.has_property(k):
                     ent.properties[k] = entity[k]

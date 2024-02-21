@@ -117,7 +117,8 @@ class QuantityRef(EntityRef):
     def _addl(self):
         u = self.unit or ''
         if self.is_lcia_method:
-            return '%s] [LCIA' % u
+            m = self.get('Method', 'LCIA')
+            return '%s] [%s' % (u, m)
         return u
 
     @property

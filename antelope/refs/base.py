@@ -362,17 +362,20 @@ class EntityRef(BaseRef):
             return False
         return True
 
-    def properties(self):
-        try:
-            for k in self._query.properties(self):  # this forces a query refresh
-                if self.get(k) is not _MissingItem:
-                    yield k
-        except NoAccessToEntity:
+    def properties(self, force_query=False):
+        if force_query:
+            try:
+                for k in self._query.properties(self):  # this forces a query refresh
+                    if self.get(k) is not _MissingItem:
+                        yield k
+            except NoAccessToEntity:
+                force_query = False
+        if not force_query:  # this could probably be done better with more clever exception catching
             for k in self._d.keys():
                 if self.get(k) is not _MissingItem:
                     yield k
 
-    def get_item(self, item, force_query=True):
+    def get_item(self, item):
         """
 
         This keeps generating recursion errors. Let's think it through.
