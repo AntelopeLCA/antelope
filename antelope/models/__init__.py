@@ -88,7 +88,7 @@ class Entity(EntityRef):
             ent.properties['direction'] = entity.direction
 
         if entity.entity_type == 'quantity':
-            ent.properties['unit'] = ent.properties.pop('referenceUnit', entity.unit)
+            ent.properties['unit'] = str(ent.properties.pop('referenceUnit', entity.unit))
             ent.properties['Synonyms'] = []
             for k in ('Method', 'Category', 'Indicator', 'Synonyms'):
                 if entity.has_property(k):
@@ -97,6 +97,7 @@ class Entity(EntityRef):
             ent.properties['referenceQuantity'] = entity.reference_entity.external_ref
             ent.properties['locale'] = entity.locale
             ent.properties['context'] = list(entity.context)
+            ent.properties['Synonyms'] = [t for t in entity.synonyms if t != entity['name']]  # FlowInterface.synonyms
         elif entity.entity_type == 'process':
             ent.properties['referenceExchange'] = [ReferenceExchange.from_exchange(x) for x in entity.reference_entity]
 
@@ -181,13 +182,12 @@ class FlowEntity(Entity):
     @classmethod
     def from_exchange_model(cls, ex):
         """
-        ExchangeModel includes a FlowSpec instead of a flow
+        ExchangeModel formerly included a FlowSpec instead of a flow-- but now it includes a FlowEntity
         :param ex:
         :return:
         """
         return cls(origin=ex.origin, entity_id=ex.flow.external_ref, entity_type='flow', context=ex.flow.context,
-                   locale=ex.flow.locale, properties={'name': ex.flow.flowable,
-                                                      'referenceQuantity': ex.flow.quantity_ref})
+                   locale=ex.flow.locale, properties=ex.flow.properties)
 
 
 class Context(ResponseModel):
