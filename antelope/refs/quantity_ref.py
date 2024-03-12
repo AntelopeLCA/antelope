@@ -24,7 +24,7 @@ class RefQuantityRequired(Exception):
     pass
 
 
-class NoUnitConversionTable(Exception):
+class ConversionError(Exception):
     pass
 
 
@@ -69,7 +69,7 @@ def convert(quantity, from_unit=None, to=None):
             if quantity.unit not in uc_table:
                 uc_table[quantity.unit] = 1.0
     except KeyError:
-        raise NoUnitConversionTable
+        raise ConversionError('%s: No Unit Conversion Table' % quantity)
 
     if from_unit is None:
         if quantity.unit in uc_table:
@@ -80,7 +80,7 @@ def convert(quantity, from_unit=None, to=None):
         try:
             inbound = uc_table[from_unit]
         except KeyError:
-            raise KeyError('Unknown unit %s for quantity %s' % (from_unit, quantity))
+            raise ConversionError('%s: Unknown from_unit %s' % (quantity, from_unit))
 
     if to is None:
         if quantity.unit in uc_table:
@@ -92,7 +92,7 @@ def convert(quantity, from_unit=None, to=None):
         try:
             outbound = uc_table[to]
         except KeyError:
-            raise KeyError('Unknown unit %s for quantity %s' % (to, quantity))
+            raise ConversionError('%s: Unknown to_unit %s' % (quantity, to))
 
     return round(outbound / inbound, 12)  # round off to curtail numerical / serialization issues
 
