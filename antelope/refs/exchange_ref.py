@@ -128,6 +128,12 @@ class ExchangeRef(object):
             raise ValueError('Unintelligible termination %s' % term)
 
     @property
+    def is_elementary(self):
+        if hasattr(self.termination, 'elementary'):
+            return bool(self.termination.elementary)
+        return False
+
+    @property
     def term_ref(self):
         """
         returns either None, a str external_ref, or a tuple.

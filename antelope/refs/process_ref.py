@@ -8,6 +8,9 @@ class MultipleReferences(Exception):
 
 
 class NoReference(Exception):
+    """
+    Indicates that a process has no reference flow matching a given specification
+    """
     pass
 
 
@@ -88,9 +91,10 @@ class ProcessRef(EntityRef):
             try:
                 return next(x for x in self.reference_entity if x.flow.match(flow))
             except StopIteration:
-                print('%s: references:' % self.link)
-                self._show_ref()
-                raise KeyError(flow)
+                pass
+        print(self.link)
+        self._show_ref()
+        raise NoReference(flow)
 
     def references(self):
         for x in self.reference_entity:

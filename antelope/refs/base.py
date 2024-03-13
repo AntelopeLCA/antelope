@@ -222,6 +222,11 @@ class BaseRef(BaseEntity):
                 if _notprint:
                     print('==Local Fields==')
                     _notprint = False
+                try:
+                    if (isinstance(v, list) or isinstance(v, dict) or isinstance(v, set)) and len(v) > 10:
+                        v = '[%s with %d entries]' % (type(v), len(v))
+                except TypeError:
+                    pass
                 print('%*s: %s' % (ml, k, v))
 
     def serialize(self, **kwargs):
