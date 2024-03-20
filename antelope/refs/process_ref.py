@@ -93,7 +93,7 @@ class ProcessRef(EntityRef):
             except StopIteration:
                 pass
         print(self.link)
-        self._show_ref()
+        # self._show_ref()
         raise NoReference(flow)
 
     def references(self):

@@ -132,6 +132,8 @@ class Flow(FlowInterface):
         :return:
         """
         if key == 'name':
+            if value.lower().startswith('carbon dioxide'):
+                self._is_co2 = True
             self._add_synonym(value, set_name=True)
             return True
         elif key == 'casnumber':
