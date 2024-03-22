@@ -263,9 +263,25 @@ class DirectedFlow(ResponseModel):
     flow: FlowSpec
     direction: str
 
+    @property
+    def origin(self):
+        return self.flow.origin
+
+    @property
+    def external_ref(self):
+        return self.flow.external_ref
+
+    @property
+    def quantity_ref(self):
+        return self.flow.quantity_ref
+
+    @property
+    def name(self):
+        return self.flow.flowable
+
     @classmethod
     def from_exchange(cls, obj):
-        return cls(flow=FlowSpec.from_flow(obj.flow), direction=obj.direction)
+        return cls(flow=FlowSpec.from_exchange(obj), direction=obj.direction)
 
 
 class Exchange(ResponseModel):
@@ -552,13 +568,13 @@ class SummaryLciaScore(AggregatedLciaScore):
 
 
 class LciaDetail(ResponseModel):
-    exchange: Optional[FlowSpec]
+    exchange: Optional[DirectedFlow]
     factor: QuantityConversion
     result: float
 
     @classmethod
     def from_detailed_lcia_result(cls, d):
-        return cls(exchange=FlowSpec.from_exchange(d.exchange),
+        return cls(exchange=DirectedFlow.from_exchange(d.exchange),
                    factor=QuantityConversion.from_qrresult(d.factor),
                    result=d.result)
 
