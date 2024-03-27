@@ -1,6 +1,6 @@
 from setuptools import setup, find_packages
 
-ANTELOPE_VERSION = '0.2.3.1'
+ANTELOPE_VERSION = '0.2.3.2'
 
 requires = [
     "synonym_dict>=0.2.4",
@@ -9,6 +9,8 @@ requires = [
 
 """
 Version History:
+0.2.3.2 2024/03/26 move to src layout
+
 0.2.3.1 2024/03/22 LciaDetail objects now return DirectedFlow instead of FlowSpec (as exchange proxy)
 
 0.2.3 2024/01/05 - 'lcia' index route; exclude LCIA metadata from quantity manager synonyms
@@ -76,5 +78,5 @@ setup(
         "Topic :: Scientific/Engineering"
     ],
     python_requires='>=3.6',
-    packages=find_packages()
+    packages=find_packages('src')
 )

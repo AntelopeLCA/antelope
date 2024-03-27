@@ -1,1 +1,1 @@
-include antelope/flows/openlca_locales.json
+include src/antelope/flows/openlca_locales.json
