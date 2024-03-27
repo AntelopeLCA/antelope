@@ -1,5 +1,5 @@
 What is a Fragment?
-====
+===================
 
 Life cycle inventory data are made up principally of "processes" and "flows," where
 the processes are industrial
@@ -33,12 +33,12 @@ recorded in concert to achieve the measurement.  So a "fragment" colloquially al
 
 
 Nested Fragments
-----
+----------------
 
 The most useful aspect of fragments is that they can be *nested*
 
 Observation
-----
+-----------
 
 
 

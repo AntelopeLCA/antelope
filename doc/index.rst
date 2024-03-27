@@ -1,16 +1,14 @@
-.. Antelope documentation master file, created by
-   sphinx-quickstart on Tue Mar 26 21:43:27 2024.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
-
 Welcome to Antelope's documentation!
 ====================================
+
+.. autoclass:: antelope.interfaces.abstract_query.AbstractQuery
 
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
 
-
+   usage
+   fragments
 
 Indices and tables
 ==================
