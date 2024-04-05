@@ -14,7 +14,7 @@ and it comes in a certain *amount*.
 
 These five pieces of information define a fragment or an observed exchange:
  - The activity being observed (this is called the parent node. This where the
-observation occurred)
+   observation occurred)
  - the identity and characteristics of the flow
  - the flow's direction (input or output)
  - the amount of the flow
