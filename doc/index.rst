@@ -13,6 +13,10 @@ are called :doc:`interfaces` and
    :maxdepth: 2
    :caption: Contents:
 
+   principles
+   data_types
+   relations
+   interfaces
    usage
    fragments
 

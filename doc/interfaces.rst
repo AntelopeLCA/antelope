@@ -22,4 +22,4 @@ data. The Antelope API is divided up into the following seven distinct interface
   linked during background computation
 - **foreground**: Working environment for constructing models through reference to the other interfaces
 
-Each interface is handled by a separate subclass in the Antelope interface.
+Each interface is handled by a separate Antelope subclass. Click on the links to read about them.

@@ -1,7 +1,8 @@
 Key principles of operation
 ---------------------------
 
- *Data-free Models*
+*Data-free Models*
+===================
 
 The structure of product system models that are used in LCA can be described without disclosing
 data considered to be confidential.  The *data-free product model* is a description of an LCA
@@ -16,14 +17,16 @@ generate and inspect the results.
 Data-free models may or may not be copied or shared depending on the restrictions placed
 by the owner.
 
- *Data owners are in control*
+*Data owners are in control*
+============================
 
 The primary function of the Antelope framework is to enable data owners and LCA modelers to
 build and manage life cycle models.  The purpose of the *vault.lc service* is to support
 the generalized access and use of Antelope models, and to provide capabilities for data sharing
 and shared computation.
 
- *Strict privacy is the goal*
+*Strict privacy is the goal*
+=============================
 
 Although the pilot software does not support this, it is the intention of the platform to
 provide strict mechanistic privacy to data owners through segregation of resources, including
@@ -39,7 +42,8 @@ In principle, vault.lc staff and employees should not have access to any computa
 or results unless disclosure of that information is part of the computation terms.
 
 
- *All primary data are extensive*
+*All primary data are extensive*
+================================
 
 The flow measurements that are relevant to LCA practice are all *extensive* -- i.e. they have
 "extent."  The definitive characteristic of a flow is that there can be *more* of it.  Whatever
