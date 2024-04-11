@@ -1,4 +1,4 @@
-from .base import EntityRef
+from .base import EntityRef, _MissingItem
 from .exchange_ref import ExchangeRef
 from itertools import chain
 
@@ -20,6 +20,11 @@ class ProcessRef(EntityRef):
     """
     _etype = 'process'
     _ref_field = 'referenceExchange'
+
+    def signature_fields(self):
+        for k in ('Name', 'Comment', 'SpatialScope', 'TemporalScope'):
+            if self._d[k] is not _MissingItem:
+                yield k
 
     @property
     def _addl(self):

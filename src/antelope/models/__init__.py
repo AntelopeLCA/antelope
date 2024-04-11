@@ -72,7 +72,15 @@ class Entity(EntityRef):
         return self.entity_id
 
     @classmethod
-    def from_entity(cls, entity, **kwargs):
+    def from_search(cls, entity):
+        ent = cls(origin=entity.origin, entity_id=entity.external_ref, entity_type=entity.entity_type,
+                  properties=dict())
+        for k in entity.signature_fields():
+            ent.properties[k] = entity[k]
+        return ent
+
+    @classmethod
+    def from_entity(cls, entity):
         ent = cls(origin=entity.origin, entity_id=entity.external_ref, entity_type=entity.entity_type,
                   properties=dict())
         # ent.properties.update(kwargs)  # I don't know why this was here but I don't think I want it
@@ -162,6 +170,7 @@ class FlowEntity(Entity):
 
         obj.properties['name'] = entity.name
         obj.properties[entity.reference_field] = entity.reference_entity.external_ref
+        obj.properties['unit'] = entity.unit
         obj.properties['Synonyms'] = []
 
         for key, val in kwargs.items():
@@ -312,6 +321,15 @@ class Exchange(ResponseModel):
 class ReferenceExchange(Exchange):
     is_reference: bool = True
     termination: None
+
+    @classmethod
+    def from_exchange(cls, x):
+        if x.termination is not None:
+            cx = list(x.termination)
+        else:
+            cx = None
+        return cls(origin=x.process.origin, process=x.process.external_ref, flow=FlowEntity.from_flow(x.flow),
+                   direction=x.direction, termination=None, context=cx, type=x.type, comment=x.comment, str=str(x))
 
 
 class ReferenceValue(ReferenceExchange):
