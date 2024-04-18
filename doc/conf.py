@@ -12,14 +12,21 @@ sys.path.insert(0, os.path.abspath('../src'))
 project = 'Antelope'
 copyright = '2024, Brandon Kuczenski'
 author = 'Brandon Kuczenski'
-release = '0.2.3'
+release = '0.2.4'
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
 
-extensions = ['sphinx.ext.autodoc', 'sphinx.ext.coverage', 'sphinx.ext.napoleon']
+extensions = [
+    'sphinx.ext.autodoc',
+    'sphinx.ext.autosummary',
+    'sphinx.ext.coverage',
+    'sphinx.ext.napoleon']
+
+autodoc_member_order = 'bysource'
 
 templates_path = ['_templates']
+html_logo = '_static/wordmark-Antelope-fixed.png'
 exclude_patterns = []
 
 
