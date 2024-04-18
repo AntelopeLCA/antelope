@@ -5,6 +5,8 @@ import os
 import re
 import json
 
+from abc import ABC
+
 from synonym_dict import SynonymSet
 from synonym_dict.flowables.cas_number import CasNumber, InvalidCasNumber
 
@@ -36,14 +38,16 @@ with open(os.path.join(os.path.dirname(__file__), 'openlca_locales.json')) as fp
     olca_locales = json.load(fp)
 
 
-class Flow(FlowInterface):
+class Flow(FlowInterface, ABC):
     """
     A partly-abstract class that implements the flow specification but not the entity specification.
 
     Included in this specification is a *detection of biogenic CO2 by regex*
     Each flow has a quell_co2 property which is True if:
+
      - the flow is a synonym for CO2 and
      - the flow's name matches the biogenic regex: '(biotic|biogenic|non-fossil|in air)' (case insensitive)
+
     There are 3 ways for a flow to be identified as a synonym for CO2:
      1. pass is_co2=True at instantiation
      2. set flow.is_co2 = True

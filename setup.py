@@ -1,14 +1,15 @@
-from setuptools import setup, find_packages
+from setuptools import setup
 
-ANTELOPE_VERSION = '0.2.3.2'
+setup()
 
-requires = [
-    "synonym_dict>=0.2.4",
-    "pydantic>=2.5.0"
-]
 
 """
 Version History:
+0.2.4 2024/04/17 - split out BasicInterface from AbstractQuery. 
+                   abandon setup.py except for this changelog.
+                   Redesign ExteriorFlow to have maybe a little bit more logic
+                   First pass at API documentation
+
 0.2.3.2 2024/03/26 move to src layout
 
 0.2.3.1 2024/03/22 LciaDetail objects now return DirectedFlow instead of FlowSpec (as exchange proxy)
@@ -55,28 +56,3 @@ Version History:
                    
 0.1.0 2020/07/31 - Initial release - JIE paper 
 """
-
-setup(
-    name="antelope_interface",
-    version=ANTELOPE_VERSION,
-    author="Brandon Kuczenski",
-    author_email="bkuczenski@ucsb.edu",
-    license="BSD 3-Clause",
-    install_requires=requires,
-    url="https://github.com/AntelopeLCA/antelope",
-    summary="An interface specification for accessing LCA data",
-    long_description_content_type='text/markdown',
-    long_description=open('README.md').read(),
-    include_package_data=True,
-    classifiers=[
-        "Development Status :: 4 - Beta",
-        "Intended Audience :: Science/Research",
-        "License :: OSI Approved :: BSD License",
-        "Natural Language :: English",
-        "Operating System :: OS Independent",
-        "Programming Language :: Python :: 3",
-        "Topic :: Scientific/Engineering"
-    ],
-    python_requires='>=3.6',
-    packages=find_packages('src')
-)

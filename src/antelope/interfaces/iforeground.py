@@ -80,7 +80,7 @@ class ForegroundInterface(AbstractQuery):
 
         :param flow: a flow entity/ref, or an external_ref known to the foreground
         :param direction:
-        :param kwargs: uuid=None, parent=None, comment=None, value=None, balance=False; **kwargs passed to LcFragment
+        :param kwargs: uuid=None, parent=None, comment=None, value=None, balance=False; kwargs passed to LcFragment
         :return: the fragment? or a fragment ref? <== should only be used in the event of a non-local foreground
         """
         return self._perform_query(_interface, 'new_fragment', ForegroundRequired,

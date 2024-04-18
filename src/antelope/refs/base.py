@@ -33,7 +33,7 @@ The CatalogRef can instantiate a grounded reference if supplied with a query obj
 from synonym_dict import LowerDict
 
 from ..flows import BaseEntity
-from ..interfaces.abstract_query import NoAccessToEntity, EntityNotFound
+from ..interfaces import NoAccessToEntity, EntityNotFound
 
 import re
 
@@ -390,8 +390,8 @@ class EntityRef(BaseRef):
            -- which causes recursion error if the query actually gets the entity_ref
            --- attempted solution with NoAccessToEntity exception in BasicImplementation
          - fine. So when do we raise a key error?
+
         :param item:
-        :param force_query:
         :return:
         """
         if item == self._ref_field:
