@@ -254,20 +254,6 @@ class FlowSpec(ResponseModel):
                    context=cx, locale=loc)
 
 
-class ExteriorFlow(ResponseModel):
-    """
-    Do we really need both an ExteriorFlow model and a FlowSpec model? this one has direction, and origin+flow;
-    that one has flowable+ref entity, and locale (but we added locale)
-
-    This is currently unused, but that's because we haven't implemented the {origin}/exterior route yet
-    """
-    origin: str
-    flow: str
-    direction: str  # antelope_interface specifies the direction as w/r/t/ context, as in "Input" "to air". This SEEMS WRONG.
-    context: List[str]
-    locale: Optional[str] = 'GLO'  # ???
-
-
 class DirectedFlow(ResponseModel):
     flow: FlowSpec
     direction: str
@@ -291,6 +277,38 @@ class DirectedFlow(ResponseModel):
     @classmethod
     def from_exchange(cls, obj):
         return cls(flow=FlowSpec.from_exchange(obj), direction=obj.direction)
+
+
+class ExteriorFlow(DirectedFlow):
+    """
+    An ExteriorFlow is essentially a row in the LCI Environment `B` matrix. It consists of a directed flow,
+    enhanced with a context. Now I know a flow already has a context, but (a) context is not required for a flow and
+    (b) flows can be terminated to contexts other than their 'default'
+    """
+    context: List[str]
+
+    @classmethod
+    def from_background(cls, flow, direction, context):
+        if hasattr(context, 'entity_type'):
+            if context.entity_type == 'context':
+                cx = context.as_list()
+            else:
+                raise TypeError('supplied Context %s (type %s)' % (context, context.entity_type))
+        elif context is None:
+            cx = []
+        else:
+            cx = list(context)
+        return cls(flow=FlowSpec.from_flow(flow), direction=direction, context=cx)
+
+    @classmethod
+    def from_exchange(cls, obj):
+        if obj.type == 'context':
+            context = obj.termination.as_list()
+        elif obj.type == 'cutoff':
+            context = []
+        else:
+            raise TypeError('exchange is not exterior (type %s)' % obj.type)
+        return cls(flow=FlowSpec.from_exchange(obj), direction=obj.direction, context=context)
 
 
 class Exchange(ResponseModel):
@@ -601,6 +619,7 @@ class DisaggregatedLciaScore(AggregatedLciaScore):
     details: List[LciaDetail] = []
 
     '''
+    :meta exclude:
     @classmethod
     def from_component(cls, obj, c):
         if hasattr(c.entity, 'name'):

@@ -5,8 +5,9 @@ The abstract classes in this sub-package define what information is made availab
 resource of some kind.  The interfaces must be instantiated in order to be used.  In the core package
 """
 
-from .interfaces.abstract_query import PrivateArchive, EntityNotFound, NoAccessToEntity
+from .interfaces import ANTELOPE_INTERFACES
 
+from .interfaces.ibasic import BasicInterface, EntityNotFound, NoAccessToEntity
 from .interfaces.iconfigure import ConfigureInterface
 from .interfaces.iexchange import ExchangeInterface, ExchangeRequired
 from .interfaces.iindex import IndexInterface, IndexRequired, directions, comp_dir, num_dir, check_direction, valid_sense, comp_sense
@@ -28,8 +29,6 @@ import re
 
 from os.path import splitext
 
-from collections import namedtuple
-
 
 class ValuesAccessRequired(Exception):
     """
@@ -50,14 +49,14 @@ Query classes
 '''
 
 
-class BasicQuery(IndexInterface, ExchangeInterface, QuantityInterface):
+class BasicQuery(BasicInterface, IndexInterface, ExchangeInterface, QuantityInterface):
     """
-    A basic query depends on an archive-- which is not yet well-defined, but which has the following API:
-    archive.make_interface(interface): returns an implementation of the designated interface
-    archive.ref: returns the archive's semantic reference
-    archive.source: returns the physical source for the archive's content
+    A basic query depends on an archive-- which has the following API:
 
-    Note that an alternative abstract query implementation could be imagined
+     - archive.make_interface(interface): returns an implementation of the designated interface
+     - archive.ref: returns the archive's semantic reference
+     - archive.source: returns the physical source (or URI) for the archive's content
+
     """
     def __init__(self, archive, debug=False):
         self._archive = archive
@@ -153,9 +152,10 @@ def q_node_activity(fg):
 
 def enum(iterable, filt=None, invert=True):
     """
-    Enumerate an iterable for interactive use. return it as a list. Optional negative filter supplied as regex
+    Enumerate an iterable for interactive use. return it as a list. Optional negative filter supplied as regex.
+
     :param iterable:
-    :param filt:
+    :param filt: regex to filter out entries from return and enumeration.
     :param invert: [True] sense of filter. note default is negative i.e. to screen *out* matches
      (the thinking is that the input is already positive-filtered)
     :return:
@@ -173,10 +173,10 @@ def enum(iterable, filt=None, invert=True):
         ret.append(v)
     return ret
 
+
 """
-In most LCA software, including the current operational version of lca-tools, a 'flow' is a composite entity
-that is made up of a 'flowable' (substance, product, intervention, or service) and a 'context', which is 
-synonymous with an environmental compartment.
+In most LCA software, a 'flow' is a composite entity that is made up of a 'flowable' (substance, product, 
+intervention, or service) and a 'context', which is synonymous with an environmental compartment.
 
 The US EPA review of elementary flows recommended managing the names of flowables and contexts separately, and that
 is the approach that is done here.  
@@ -196,9 +196,9 @@ CONTEXT_STATUS_ = 'new'  # 'compat': context = flow['Compartment']; 'new': conte
 
 # Exterior exchanges- with contexts outside the db.  Direction is given with respect to the Interior (e.g. "Output" "to air")
 # LciaResults should negate values when an exchange direction and a context are not complementary (i.e. "Input" "to air")
-ExteriorFlow = namedtuple('ExteriorFlow', ('origin', 'flow', 'direction', 'termination'))
+# ExteriorFlow = namedtuple('ExteriorFlow', ('origin', 'flow', 'direction', 'termination'))
 
-EntitySpec = namedtuple('EntitySpec', ('link', 'ref', 'name', 'group'))
+# EntitySpec = namedtuple('EntitySpec', ('link', 'ref', 'name', 'group'))
 
 # packages that contain 'providers'
 antelope_herd = [

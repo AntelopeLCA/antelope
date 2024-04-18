@@ -178,6 +178,7 @@ class QuantityInterface(AbstractQuery):
            (hence the basic interface)
          - either the quantity ref must be known locally or resolvable to a do_lcia operation by the catalog
          - there is also the implied need for sys_lcia which is a POST operation that uses sys_lci
+
         It needs to be rewritten.
 
         :param process:

@@ -1,3 +1,6 @@
+from abc import ABC
+
+
 class BaseEntity(object):
     """
     The very most basic characteristics of entities and entity refs
@@ -81,7 +84,7 @@ class NullEntity(BaseEntity):
         return NotImplemented
 
 
-class FlowInterface(BaseEntity):
+class FlowInterface(BaseEntity, ABC):
     """
     An abstract class that establishes common functionality for OBSERVATIONS OF FLOWS.  A Flow consists of:
      - a reference quantity with a fixed unit
@@ -138,8 +141,8 @@ class FlowInterface(BaseEntity):
 
     def lookup_cf(self, quantity, context, locale, refresh=False, **kwargs):
         """
-        Look for cached characterizations, and retrieve if none is found
-        :param quantity:
+        Look for cached characterizations, and retrieve one from the provided quantity if none is found.
+        :param quantity: a QuantityRef
         :param context:
         :param locale:
         :param refresh: [False] if True, discard cached CF

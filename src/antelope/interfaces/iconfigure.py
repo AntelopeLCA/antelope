@@ -81,7 +81,8 @@ class ConfigureInterface(AbstractQuery):
     def characterize_flow(self, flow_ref, quantity_ref, value, location='GLO', **kwargs):
         """
         Add a characterization to the given flow in the given quantity, with respect to the flow's native reference
-         quantity.  Optional location field.
+        quantity.  Optional location field.
+
         :param flow_ref:
         :param quantity_ref:
         :param value:

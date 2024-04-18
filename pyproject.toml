@@ -21,8 +21,8 @@ classifiers = [
         "Programming Language :: Python :: 3",
         "Topic :: Scientific/Engineering"
 ]
-dependencies = ["synonym_dict", "pydantic"]
-version = "0.2.3.2"
+dependencies = ["synonym_dict >= 0.2.4", "pydantic >= 2.5.0"]
+version = "0.2.4"
 
 [tool.setuptools.packages.find]
 where = ["src"]

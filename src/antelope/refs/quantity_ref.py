@@ -201,30 +201,38 @@ class QuantityRef(EntityRef):
         """
         Enter a characterization factor for the current object (query quantity) w.r.t. the specified reference quantity.
         The characterization value should report the amount of the query quantity (quantity being characterized) that
-         equals a unit of the reference quantity (used to measure the flow). The following is correct,
-         for mass in kg and volume in m3:
+        equals a unit of the reference quantity (used to measure the flow). The following is correct,
+        for mass in kg and volume in m3:
+
         >>> mass.characterize('water', 'volume', 1000.0)
-        "I {characterize} the [mass] of [water] in a unit [volume] to be 1000.0".  The thing being measured is mass.
+        "I {characterize} the [mass] of [water] in a unit [volume] to be 1000.0".
+
+        The thing being measured is mass.
         The flow's reference quantity is volume. a unit reference quantity of water is characterized as 1000.0 kg.
 
         The following is NOT correct, but it may SEEM more semantically natural:
+
         >>> mass.characterize('water', 'volume', 0.001)
         "I {characterize} the unit [mass] of [water] to have a [volume] of 0.001"
+
         The unit of the flow is measured in terms of the query quantity.  But we don't yet know the size of a unit
         of the query quantity because that is what is in fact being characterized.
 
         To see this borne out, imagine using characterize() in its most natural way, for LCIA:
+
         >>> gwp.characterize('methane', 'mass', 25)
         "I characterize the GWP of methane in a unit mass to be 25" <<--- CORRECT
         {I characterize the unit GWP of methane to have a mass of 0.04} <<--- plainly wrong
 
-        REALLY, the MOST natural way to characterize is as follows (see FlowRef.characterize()):
+        REALLY, the MOST natural way to characterize is to use `FlowRef.characterize()`:
+
         >>> m = q.get('methane')
         >>> m.unit
         'kg'
         >>> m.characterize(gwp, 25, context='to air')
 
         generations may determine whether this was a terrible mistake.
+
         :param flowable:
         :param ref_quantity:
         :param value:
