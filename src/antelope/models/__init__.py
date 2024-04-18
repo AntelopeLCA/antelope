@@ -429,10 +429,11 @@ def generate_pydantic_inventory(xs, mode=None, values=False, ref_flow=None):
 
     :param xs: iterable of exchanges
     :param mode: [None] whether to filter the exchanges by type. could be one of:
-     None: generate all exchanges
-     'interior'
-     'exterior'
-     'cutoff'
+     - None: generate all exchanges
+     - 'interior'
+     - 'exterior'
+     - 'cutoff'
+
     :param values: (bool) [False] whether to include exchange values.
     :param ref_flow: (ignored if values=False) the reference flow with which the exchange value was computed. If None,
      this implies the exchange reports un-allocated exchange values

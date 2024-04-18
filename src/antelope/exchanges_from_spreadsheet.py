@@ -1,11 +1,15 @@
 """
 This module provides a routine that generates a list of exchange refs from a properly formatted spreadsheet
 """
+
 from .refs import CatalogRef, ExchangeRef
 from .interfaces import check_direction
 
 
 class ValueIsBalance(Exception):
+    """
+    Used to signal when an exchange is reached that is designated as a balance.
+    """
     pass
 
 
@@ -93,6 +97,7 @@ def exchanges_from_spreadsheet(sheetlike, term_dict=None, node=None, origin=None
      - row(0) returns a header list
      - row(1) is the process's reference flow
      - subsequent rows are dependent flows
+
      !TODO: support multiple references with is_ref or is_reference field
 
     "entries" in the row() return must be "cell-like":
