@@ -341,7 +341,7 @@ class ReferenceExchange(Exchange):
     termination: None
 
     @classmethod
-    def from_exchange(cls, x):
+    def from_exchange(cls, x, **kwargs):
         if x.termination is not None:
             cx = list(x.termination)
         else:
