@@ -287,6 +287,10 @@ class ExteriorFlow(DirectedFlow):
     """
     context: List[str]
 
+    @property
+    def termination(self):
+        return self.context
+
     @classmethod
     def from_background(cls, flow, direction, context):
         if hasattr(context, 'entity_type'):
