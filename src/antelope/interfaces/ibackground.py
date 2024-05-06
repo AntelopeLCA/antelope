@@ -20,7 +20,6 @@ More plugins are yet imagined.
 
 from .abstract_query import AbstractQuery
 from ..refs import ExchangeRef
-from itertools import chain
 
 
 class BackgroundRequired(Exception):
@@ -136,7 +135,7 @@ class BackgroundInterface(AbstractQuery):
                                    process, ref_flow=ref_flow, **kwargs)
 
     def _make_sys_lci_exchange(self, x):
-        return ExchangeRef(self.get(x.process), self.make_ref(x.flow), x.direction, value=x.value,
+        return ExchangeRef(self.make_ref(x.process), self.make_ref(x.flow), x.direction, value=x.value,
                            termination=x.termination, comment='SYS LCI', is_reference=False)
 
     def sys_lci(self, demand, **kwargs):
@@ -160,7 +159,7 @@ class BackgroundInterface(AbstractQuery):
         for i in self._perform_query(_interface, 'sys_lci', BackgroundRequired, demand, **kwargs):
             yield self._make_sys_lci_exchange(i)
 
-    def bg_lcia(self, process, query_qty, observed=None, ref_flow=None, **kwargs):
+    def sys_lcia(self, process, query_qty, observed=None, ref_flow=None, **kwargs):
         """
 
         :param process:
@@ -170,7 +169,7 @@ class BackgroundInterface(AbstractQuery):
         :param kwargs:
         :return:
         """
-        return self._perform_query(_interface, 'bg_lcia', BackgroundRequired,
+        return self._perform_query(_interface, 'sys_lcia', BackgroundRequired,
                                    process, query_qty, observed=observed, ref_flow=ref_flow, **kwargs)
 
     '''

@@ -5,6 +5,8 @@ setup()
 
 """
 Version History:
+0.2.5 2024/05/06 - bg_lcia() becomes a basic interface route; sys_lcia() is the fully-featured background route
+
 0.2.4 2024/04/17 - split out BasicInterface from AbstractQuery. 
                    abandon setup.py except for this changelog.
                    Redesign ExteriorFlow to have maybe a little bit more logic

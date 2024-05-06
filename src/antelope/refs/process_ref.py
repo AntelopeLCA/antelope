@@ -315,4 +315,7 @@ class ProcessRef(EntityRef):
         :return:
         """
         ref_flow = self._use_ref_exch(ref_flow)
-        return self._query.bg_lcia(self.external_ref, lcia_qty, observed=observed, ref_flow=ref_flow, **kwargs)
+        if observed:
+            return self._query.sys_lcia(self.external_ref, lcia_qty, observed=observed, ref_flow=ref_flow, **kwargs)
+        else:
+            return self._query.bg_lcia(self.external_ref, lcia_qty, ref_flow=ref_flow, **kwargs)
