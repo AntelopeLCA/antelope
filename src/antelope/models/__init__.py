@@ -317,7 +317,7 @@ class ExteriorFlow(DirectedFlow):
 
 class Exchange(ResponseModel):
     """
-    Do we need to add locale??
+    Do we need to add locale?? no it's in the flow entity
     """
     origin: str
     process: str
@@ -337,7 +337,8 @@ class Exchange(ResponseModel):
             term = x.termination
             cx = None
         return cls(origin=x.process.origin, process=x.process.external_ref, flow=FlowEntity.from_flow(x.flow),
-                   direction=x.direction, termination=term, context=cx, type=x.type, comment=x.comment, str=str(x), **kwargs)
+                   direction=x.direction, termination=term, context=cx, type=x.type, comment=x.comment, str=str(x),
+                   **kwargs)
 
 
 class ReferenceExchange(Exchange):
@@ -351,7 +352,8 @@ class ReferenceExchange(Exchange):
         else:
             cx = None
         return cls(origin=x.process.origin, process=x.process.external_ref, flow=FlowEntity.from_flow(x.flow),
-                   direction=x.direction, termination=None, context=cx, type=x.type, comment=x.comment, str=str(x))
+                   direction=x.direction, termination=None, context=cx, type=x.type, comment=x.comment, str=str(x),
+                   **kwargs)
 
 
 class ReferenceValue(ReferenceExchange):
