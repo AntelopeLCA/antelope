@@ -275,8 +275,8 @@ class DirectedFlow(ResponseModel):
         return self.flow.flowable
 
     @classmethod
-    def from_exchange(cls, obj):
-        return cls(flow=FlowSpec.from_exchange(obj), direction=obj.direction)
+    def from_observed(cls, obj):
+        return cls(flow=FlowSpec.from_flow(obj.flow), direction=obj.direction)
 
 
 class ExteriorFlow(DirectedFlow):
@@ -305,7 +305,7 @@ class ExteriorFlow(DirectedFlow):
         return cls(flow=FlowSpec.from_flow(flow), direction=direction, context=cx)
 
     @classmethod
-    def from_exchange(cls, obj):
+    def from_exterior(cls, obj):
         if obj.type == 'context':
             context = obj.termination.as_list()
         elif obj.type == 'cutoff':
@@ -611,13 +611,13 @@ class SummaryLciaScore(AggregatedLciaScore):
 
 
 class LciaDetail(ResponseModel):
-    exchange: Optional[DirectedFlow]
+    exchange: Optional[ExteriorFlow]
     factor: QuantityConversion
     result: float
 
     @classmethod
     def from_detailed_lcia_result(cls, d):
-        return cls(exchange=DirectedFlow.from_exchange(d.exchange),
+        return cls(exchange=ExteriorFlow.from_exterior(d.exchange),
                    factor=QuantityConversion.from_qrresult(d.factor),
                    result=d.result)
 

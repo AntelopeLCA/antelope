@@ -3,7 +3,7 @@ The main import.
 """
 
 
-from .base import BaseRef
+from .base import BaseRef, InvalidQuery, NoCatalog
 from .flow_ref import FlowRef
 # from .fragment_ref import FragmentRef
 from .process_ref import ProcessRef
@@ -66,7 +66,7 @@ class CatalogRef(BaseRef):
                 return QuantityRef(external_ref, query, **kwargs)
         # elif etype == 'fragment':
         #     return FragmentRef(external_ref, query, reference_entity, **kwargs)
-        return cls(query.origin, external_ref, entity_type=etype, **kwargs)
+        return cls(query.origin, external_ref, entity_type=etype, query=query, **kwargs)
 
     def __init__(self, origin, external_ref, entity_type=None, reference_entity=None, **kwargs):
         """
@@ -143,3 +143,12 @@ class CatalogRef(BaseRef):
 
     def cf(self, *args, **kwargs):
         return 0.0
+
+    def resolve(self):
+        if self.has_property('query'):
+            try:
+                return self['query'].get(self.external_ref)
+            except InvalidQuery:
+                return self
+        else:
+            raise NoCatalog(self.origin)
