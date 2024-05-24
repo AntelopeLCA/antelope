@@ -78,7 +78,7 @@ class CatalogRef(BaseRef):
         """
         super(CatalogRef, self).__init__(origin, external_ref, **kwargs)
 
-        if 'Name' not in kwargs:
+        if 'Name' not in self._d:
             self['Name'] = self.link
 
         self._asgn_etype = entity_type

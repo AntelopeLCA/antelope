@@ -357,7 +357,7 @@ class ReferenceExchange(Exchange):
 
 
 class ReferenceValue(ReferenceExchange):
-    value: float
+    value: float = 0.0
 
     @classmethod
     def from_rx(cls, x):

@@ -306,6 +306,10 @@ class ProcessRef(EntityRef):
             for i in lci:
                 yield self._to_exch_ref(i, i.value)
 
+    def contrib_lcia(self, quantity=None, ref_flow=None, **kwargs):
+        ref_flow = self._use_ref_exch(ref_flow)
+        return self._query.contrib_lcia(self.external_ref, quantity, ref_flow=ref_flow, **kwargs)
+
     def bg_lcia(self, lcia_qty, observed=None, ref_flow=None, **kwargs):
         """
         :param lcia_qty: should be a quantity ref (or qty), not an external ID

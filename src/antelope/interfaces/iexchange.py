@@ -103,3 +103,17 @@ class ExchangeInterface(AbstractQuery):
         """
         return self._perform_query(_interface, 'exchange_relation', ExchangeRequired,
                                    process, ref_flow, exch_flow, direction, termination=termination, **kwargs)
+
+    def contrib_lcia(self, process, quantity=None, ref_flow=None, **kwargs):
+        """
+        exchange interface provides the ability to perform a contribution analysis of a process's LCIA scores.
+        In core, this is accomplished with ephemeral fragments.
+
+        :param process:
+        :param quantity: if omitted, a catalog may select a default LCIA method
+        :param ref_flow:
+        :param kwargs:
+        :return:
+        """
+        return self._perform_query(_interface, 'contrib_lcia', ExchangeRequired,
+                                   process, quantity, ref_flow, **kwargs)

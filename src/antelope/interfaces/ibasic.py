@@ -144,6 +144,7 @@ class BasicInterface(AbstractQuery):
 
     def bg_lcia(self, process, query_qty=None, ref_flow=None, **kwargs):
         """
+        Basic interface permits cumulative LCIA scores to be retrieved, but only if values=True
 
         :param process:
         :param query_qty: if omitted, a catalog may select a default LCIA method
