@@ -12,7 +12,7 @@ sys.path.insert(0, os.path.abspath('../src'))
 project = 'Antelope'
 copyright = '2024, Brandon Kuczenski'
 author = 'Brandon Kuczenski'
-release = '0.2.4'
+release = '0.2.6'
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration

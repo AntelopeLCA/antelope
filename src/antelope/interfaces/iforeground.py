@@ -95,6 +95,39 @@ class ForegroundInterface(AbstractQuery):
         """
         return self.make_ref(self._perform_query(_interface, 'child_flows', ForegroundRequired, fragment, **kwargs))
 
+    def fragments_with_flow(self, flow, direction=None,**kwargs):
+        """
+        Generates fragments made with the specified flow, optionally filtering by direction, reference status, and
+        background status.  For all three filters, the default None is to generate all fragments.
+        :param flow:
+        :param direction: [None | 'Input' | 'Output']
+        :param kwargs:
+        :return:
+        """
+        return self._perform_query(_interface, 'fragments_with_flow', ForegroundRequired,
+                                   flow, direction=direction, **kwargs)
+
+    def split_subfragment(self, fragment, replacement=None, **kwargs):
+        """
+                Given a non-reference fragment, split it off into a new reference fragment, and create a surrogate child
+        that terminates to it.
+
+        without replacement:
+        Old:   ...parent-->fragment
+        New:   ...parent-->surrogate#fragment;   (fragment)
+
+        with replacement:
+        Old:   ...parent-->fragment;  (replacement)
+        New:   ...parent-->surrogate#replacement;  (fragment);  (replacement)
+
+        :param fragment:
+        :param replacement:
+        :param kwargs:
+        :return:
+        """
+        return self._perform_query(_interface, 'split_subfragment', ForegroundRequired,
+                                   fragment, replacement=replacement, **kwargs)
+
     def anchors(self, fragment, **kwargs):
         """
         List observed anchors for a fragment

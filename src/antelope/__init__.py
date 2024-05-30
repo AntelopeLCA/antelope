@@ -105,6 +105,10 @@ class LcQuery(BasicQuery, BackgroundInterface, ConfigureInterface):
     pass
 
 
+class FgQuery(LcQuery, ForegroundInterface):
+    pass
+
+
 '''
 Utilities
 

@@ -5,6 +5,10 @@ setup()
 
 """
 Version History:
+0.2.6 2024/05/29 - split_subfragment and fragments_with_flow into fg interface
+                   contrib_lcia is an exchange method
+                   un-resolved CatalogRefs can now return their replacement, if provided a query at instantiation 
+                   
 0.2.5 2024/05/06 - bg_lcia() becomes a basic interface route; sys_lcia() is the fully-featured background route
 
 0.2.4 2024/04/17 - split out BasicInterface from AbstractQuery. 
