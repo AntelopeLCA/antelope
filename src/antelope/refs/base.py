@@ -33,7 +33,7 @@ The CatalogRef can instantiate a grounded reference if supplied with a query obj
 from synonym_dict import LowerDict
 
 from ..flows import BaseEntity
-from ..interfaces import NoAccessToEntity, EntityNotFound
+from ..interfaces import NoAccessToEntity, EntityNotFound, ItemNotFound
 
 import re
 
@@ -416,12 +416,12 @@ class EntityRef(BaseRef):
                     raise
                 try:
                     val = lit.get_item(item)
-                except KeyError:
+                except ItemNotFound:
                     self._d[item] = _MissingItem
-                    raise
-            except KeyError:
+                    raise KeyError(item)
+            except ItemNotFound:
                 self._d[item] = _MissingItem
-                raise
+                raise KeyError(item)
             # we used to catch '' too but this is ng- remote will think it's a property but local will raise MissingItem
             if val is not None:  # and val != ''
                 self._d[item] = val

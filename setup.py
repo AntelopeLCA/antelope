@@ -5,6 +5,7 @@ setup()
 
 """
 Version History:
+0.2.6.1 2024/06/06 - ItemNotFound
 0.2.6 2024/05/29 - split_subfragment and fragments_with_flow into fg interface
                    contrib_lcia is an exchange method
                    un-resolved CatalogRefs can now return their replacement, if provided a query at instantiation 

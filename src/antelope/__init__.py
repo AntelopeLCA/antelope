@@ -7,7 +7,7 @@ resource of some kind.  The interfaces must be instantiated in order to be used.
 
 from .interfaces import ANTELOPE_INTERFACES
 
-from .interfaces.ibasic import BasicInterface, EntityNotFound, NoAccessToEntity
+from .interfaces.ibasic import BasicInterface, EntityNotFound, NoAccessToEntity, ItemNotFound
 from .interfaces.iconfigure import ConfigureInterface
 from .interfaces.iexchange import ExchangeInterface, ExchangeRequired
 from .interfaces.iindex import IndexInterface, IndexRequired, directions, comp_dir, num_dir, check_direction, valid_sense, comp_sense

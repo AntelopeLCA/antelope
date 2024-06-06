@@ -30,6 +30,13 @@ class NoAccessToEntity(Exception):
     pass
 
 
+class ItemNotFound(Exception):
+    """
+    not a KeyError
+    """
+    pass
+
+
 class BasicInterface(AbstractQuery):
     """
     BasicInterface core methods.
@@ -95,7 +102,7 @@ class BasicInterface(AbstractQuery):
         :param item: the desired property
         :return:
         """
-        return self._perform_query('basic', 'get_item', EntityNotFound,
+        return self._perform_query('basic', 'get_item', ItemNotFound,
                                    external_ref, item)
 
     def get_uuid(self, external_ref):
