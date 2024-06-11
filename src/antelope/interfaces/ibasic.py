@@ -109,6 +109,16 @@ class BasicInterface(AbstractQuery):
         return self._perform_query('basic', 'get_uuid', EntityNotFound,
                                    external_ref)
 
+    def get_context(self, term, **kwargs):
+        """
+        Return the context matching the specified term
+        :param term:
+        :param kwargs:
+        :return:
+        """
+        return self._perform_query('basic', 'get_context', BasicRequired,
+                                   term, ** kwargs)
+
     def get_reference(self, external_ref):
         return self._perform_query('basic', 'get_reference', EntityNotFound,
                                    external_ref)

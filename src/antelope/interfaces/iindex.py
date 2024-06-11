@@ -148,6 +148,7 @@ class IndexInterface(AbstractQuery):
         return self._perform_query(_interface, 'contexts', IndexRequired,
                                    ** kwargs)
 
+    '''    
     def get_context(self, term, **kwargs):
         """
         Return the context matching the specified term
@@ -157,7 +158,7 @@ class IndexInterface(AbstractQuery):
         """
         return self._perform_query(_interface, 'get_context', IndexRequired,
                                    term, ** kwargs)
-
+    '''
     def quantities(self, **kwargs):
         """
         Generate quantities
