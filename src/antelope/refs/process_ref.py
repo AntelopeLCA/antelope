@@ -323,3 +323,16 @@ class ProcessRef(EntityRef):
             return self._query.sys_lcia(self.external_ref, lcia_qty, observed=observed, ref_flow=ref_flow, **kwargs)
         else:
             return self._query.bg_lcia(self.external_ref, lcia_qty, ref_flow=ref_flow, **kwargs)
+
+    def deep_lcia(self, lcia_qty, ref_flow=None, detailed=False, **kwargs):
+        """
+        Perform LCIA inside the black box, returning an LCIA result whose components are background processes.
+        :param lcia_qty:
+        :param ref_flow:
+        :param detailed: [False] default- report only summaries. [True] - include full details for each component. This
+         can be very data intensive. (approx
+        :param kwargs:
+        :return:
+        """
+        ref_flow = self._use_ref_exch(ref_flow)
+        return self._query.deep_lcia(self.external_ref, lcia_qty, ref_flow=ref_flow, detailed=detailed, **kwargs)

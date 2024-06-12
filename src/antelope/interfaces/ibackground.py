@@ -252,3 +252,15 @@ class BackgroundInterface(AbstractQuery):
         """
         return self._perform_query(_interface, 'bf', BackgroundRequired,
                                    process, ref_flow=ref_flow, **kwargs)
+
+    def deep_lcia(self, process, quantity_ref, ref_flow=None, **kwargs):
+        """
+        Performs LCIA at the A-matrix level
+        :param process:
+        :param quantity_ref: quantity's factors must be accessible to the background's index query
+        :param ref_flow:
+        :param kwargs:
+        :return:
+        """
+        return self._perform_query(_interface, 'deep_lcia', BackgroundRequired,
+                                   process, quantity_ref, ref_flow=ref_flow, **kwargs)
