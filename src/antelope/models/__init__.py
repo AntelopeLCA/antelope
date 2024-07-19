@@ -169,7 +169,8 @@ class FlowEntity(Entity):
                   properties=dict())
 
         obj.properties['name'] = entity.name
-        obj.properties[entity.reference_field] = entity.reference_entity.external_ref
+        if entity.reference_entity:
+            obj.properties[entity.reference_field] = entity.reference_entity.external_ref
         obj.properties['unit'] = entity.unit
         obj.properties['Synonyms'] = []
 

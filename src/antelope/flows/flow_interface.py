@@ -98,7 +98,9 @@ class FlowInterface(BaseEntity, ABC):
     """
     @property
     def unit(self):
-        return self.reference_entity.unit
+        if hasattr(self.reference_entity, 'unit'):
+            return self.reference_entity.unit
+        return ''
 
     @property
     def name(self):

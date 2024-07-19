@@ -5,6 +5,9 @@ setup()
 
 """
 Version History:
+0.2.6.3 xxxx/xx/xx - 
+                   - modify FlowInterface and FlowEntity to not die on missing reference_entity
+
 0.2.6.2 2024/06/11 - get_context into basic interface
 0.2.6.1 2024/06/06 - ItemNotFound
 
