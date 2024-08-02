@@ -46,6 +46,10 @@ class EntityRef(ResponseModel):
     entity_id: str
     entity_type: Optional[str]
 
+    @property
+    def external_ref(self):  # what, was there some taboo against this?
+        return self.entity_id
+
     @classmethod
     def from_entity(cls, entity):
         return cls(origin=entity.origin, entity_id=entity.external_ref, entity_type=entity.entity_type)
@@ -66,10 +70,6 @@ class Entity(EntityRef):
         # refs just return everything they know
         for k in self.properties.keys():
             yield k
-
-    @property
-    def external_ref(self):  # what, was there some taboo against this?
-        return self.entity_id
 
     @classmethod
     def from_search(cls, entity):
@@ -246,7 +246,7 @@ class FlowSpec(ResponseModel):
         if x.type == 'context':
             cx = list(x.termination)
         elif x.type in ('reference', 'cutoff'):
-            cx = None
+            cx = []
         else:
             raise TypeError('%s\nUnknown exchange type %s' % (x, x.type))
         loc = locale or x.flow.locale

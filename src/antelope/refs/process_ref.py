@@ -97,9 +97,9 @@ class ProcessRef(EntityRef):
                 return next(x for x in self.reference_entity if x.flow.match(flow))
             except StopIteration:
                 pass
-        print(self.link)
+        # print(self.link)
         # self._show_ref()
-        raise NoReference(flow)
+        raise NoReference(self.link, flow)
 
     def references(self):
         for x in self.reference_entity:
