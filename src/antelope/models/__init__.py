@@ -199,6 +199,12 @@ class FlowEntity(Entity):
         return cls(origin=ex.origin, entity_id=ex.flow.external_ref, entity_type='flow', context=ex.flow.context,
                    locale=ex.flow.locale, properties=ex.flow.properties)
 
+    def serialize(self):
+        j = super(FlowEntity, self).serialize()
+        j['context'] = self.context
+        j['locale'] = self.locale
+        return j
+
 
 class Context(ResponseModel):
     name: str

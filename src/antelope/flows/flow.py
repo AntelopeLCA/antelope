@@ -20,16 +20,6 @@ def flowname_is_biogenic(flowname):
     return bool(biogenic.search(flowname))
 
 
-class QuelledCO2(object):
-    def __init__(self, flowable, context):
-        self.flowable = flowable
-        self.context = context
-
-    @property
-    def value(self):
-        return 0.0
-
-
 """
 openlca_locales.json file created from: antelope_olca package, gen_locales('openlca_locales.json') 
 """
@@ -242,7 +232,7 @@ class Flow(FlowInterface, ABC):
                 return True
         return False
 
-    def lookup_cf(self, quantity, context, locale, refresh=False, quell_biogenic_co2=None, **kwargs):
+    def lookup_cf(self, quantity, context, locale, refresh=False, **kwargs):
         """
         Cache characterization factors obtained from quantity relation queries.  It is decided to leave this in
         the interface, since it does not depend on anything from outside the interface.
@@ -251,59 +241,27 @@ class Flow(FlowInterface, ABC):
         locale to retrieve a cached result.  Wildcard results, such as with 'None' specified for any of the three,
         are not supported.
 
-        Two, it requires implementations to properly handle the Quell-Biogenic-CO2 feature (see below).  This is
-        enabled EITHER by passing quell_biogenic_co2 as a parameter OR by assigning it as a property to the quantity.
-        The valid values for this parameter are True (suppress biogenic CO2), False (treat all flows the same), or
-        'only' (inverse of True: quell all flows except biogenic CO2).
+        Two, it requires implementations to properly handle the Quell-Biogenic-CO2 feature.
 
         BIOGENIC CO2: This function includes a mechanism to suppress ALL impact scores for biogenic CO2.  Any flow
-        can have the is_co2 flag set-- this happens automatically if the flow is given a CAS number that matches
-        CO2 (124-38-9). It can also be set in client code.  If this flag is true, AND the flow's name matches a
+        can have the is_co2 flag set-- this happens automatically if the flow is given a name that matches
+        'carbon dioxide' or a CAS number that matches CO2 (124-38-9). It can also be set in client code.
+
+        If this flag is true, AND the flow's name matches a
         regexp that describes non-fossil, biogenic, "in air", then the flow is considered to be biogenic CO2 (its
         quell_co2 property is True).
 
-        WHEN performing a lookup, the function determines whether to quell biogenic CO2 in the following two ways:
-        either the quantity has a property 'quell_biogenic_co2' or the lookup_cf receives a kwarg 'quell_biogenic_co2'
-        The kwarg overrides the quantity property.  IF the boolean value of the specification is 'True', AND the flow's
-        quell_co2 property is True, THEN the flow will return a "QuelledCO2" characterization that always equals 0.
-        Otherwise, it will perform the lookup.
-
-          ** Special feature ** setting the quantity's 'quell_biogenic_co2' property to the string "only" will cause it
-          to return the INVERSE of quell=True - will return quelled CF for all NON-quelled flows and ONLY measure
-          biogenic CO2.
+        It is up to implementation code to handle these properties.
 
         :param quantity:
         :param context:
         :param locale:
         :param refresh: drop cached result and re-query.
-        :param quell_biogenic_co2: [None] override quantity specification for this property.
         :param kwargs:
         :return: whatever the implementation's quantity_relation() returns
         """
         locale = locale or self.locale
         key = (quantity, context, locale)
-
-        _invert_bio = False
-
-        if quell_biogenic_co2 is not None:
-            if quell_biogenic_co2 == 'only':
-                qbc = False
-                _invert_bio = True
-            else:
-                qbc = bool(quell_biogenic_co2)
-        else:
-            qbc = quantity.get('quell_biogenic_co2')
-            if qbc == 'only':
-                qbc = False
-                _invert_bio = True
-
-        if _invert_bio:
-            if not self.quell_co2:
-                return QuelledCO2(self._flowable, context)
-        else:
-            if qbc:
-                if self.quell_co2:
-                    return QuelledCO2(self._flowable, context)
 
         if refresh:
             self._chars_seen.pop(key, None)
