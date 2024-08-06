@@ -6,6 +6,7 @@ import re
 import json
 
 from abc import ABC
+from collections import defaultdict
 
 from synonym_dict import SynonymSet
 from synonym_dict.flowables.cas_number import CasNumber, InvalidCasNumber
@@ -222,7 +223,7 @@ class Flow(FlowInterface, ABC):
     @property
     def _chars_seen(self):
         if self.__chars_seen is None:
-            self.__chars_seen = dict()
+            self.__chars_seen = defaultdict(dict)
         return self.__chars_seen
 
     @property
@@ -264,9 +265,9 @@ class Flow(FlowInterface, ABC):
         key = (quantity, context, locale)
 
         if refresh:
-            self._chars_seen.pop(key, None)
+            self.pop_char(*key)
         try:
-            return self._chars_seen.__getitem__(key)
+            return self._check_char(*key)
         except KeyError:
             try:
                 qr = quantity.quantity_relation(self.name, self.reference_entity, context, locale=locale, **kwargs)
@@ -274,11 +275,17 @@ class Flow(FlowInterface, ABC):
                 qr = e.args[0]
             except NoFactorsFound:
                 qr = None
-        self._chars_seen[key] = qr
+        self._chars_seen[quantity][context, locale] = qr
         return qr
 
+    def _check_char(self, qq, cx, loc):
+        return self._chars_seen[qq][cx, loc]
+
     def pop_char(self, qq, cx, loc):
-        return self._chars_seen.pop((qq, cx, loc), None)
+        return self._chars_seen[qq].pop((cx, loc), None)
+
+    def clear_chars(self, quantity):
+        self._chars_seen.pop(quantity, None)
 
     def see_chars(self, qq, cx, cfs):
         """
@@ -289,12 +296,11 @@ class Flow(FlowInterface, ABC):
         :return:
         """
         for cf in cfs:
-            key = qq, cx, cf.locale
-            self._chars_seen[key] = cf
+            self._chars_seen[qq][cx, cf.locale] = cf
 
     def is_seen(self, qq, context=None, locale=None):
         if context is None:
             context = self.context
         if locale is None:
             locale = self.locale
-        return (qq, context, locale) in self._chars_seen
+        return (context, locale) in self._chars_seen[qq]

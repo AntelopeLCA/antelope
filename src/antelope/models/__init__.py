@@ -493,9 +493,9 @@ class Characterization(ResponseModel):
     origin: str
     flowable: str
     ref_quantity: str
-    ref_unit: str
+    ref_unit: Optional[str] = None
     query_quantity: str
-    query_unit: str
+    query_unit: Optional[str] = None
     context: List[str]
     value: Dict
 
@@ -504,6 +504,19 @@ class Characterization(ResponseModel):
         ch = cls.null(cf)
         for loc in cf.locations:
             ch.value[loc] = cf[loc]
+        return ch
+
+    @classmethod
+    def from_cfs(cls, cfs):
+        rq = set(k.ref_quantity for k in cfs)
+        qq = set(k.quantity for k in cfs)
+        fb = set(k.flowable for k in cfs)
+        if len(rq) + len(qq) + len(fb) != 3:
+            raise ValueError('disagreeable CFs')
+        ch = cls.null(cfs[0])
+        for cf in cfs:
+            for loc in cf.locations:
+                ch.value[loc] = cf[loc]
         return ch
 
     @classmethod
