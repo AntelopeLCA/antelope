@@ -56,6 +56,10 @@ class PropertyExists(Exception):
     pass
 
 
+class NoUuid(Exception):
+    pass
+
+
 class BaseRef(BaseEntity):
     """
     A base class for defining entity references.  The base class can also store information, such as properties
@@ -298,12 +302,14 @@ class EntityRef(BaseRef):
                     self._uuid = _uuid
             except InvalidQuery:
                 pass  # a None uuid is fine, but next time we ask, it will check again
+        if self._uuid is NoUuid:
+            return None
         return self._uuid
 
     @uuid.setter
     def uuid(self, value):
         # need to repeat this because uuid is overridden
-        if self._uuid is not None:
+        if self._uuid is not None and self._uuid is not NoUuid:
             raise PropertyExists(self.link, self._uuid)
         if uuid_regex.match(str(value)):
             self._uuid = str(value)
