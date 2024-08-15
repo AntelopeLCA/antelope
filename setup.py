@@ -5,7 +5,7 @@ setup()
 
 """
 Version History:
-0.2.6.3 xxxx/xx/xx - 
+0.2.6.3 2024/08/15 - cutoff_flows and remote traversal compatibility
                    - modify FlowInterface and FlowEntity to not die on missing reference_entity
 
 0.2.6.2 2024/06/11 - get_context into basic interface
