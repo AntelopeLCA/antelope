@@ -220,7 +220,6 @@ class QuantityInterface(AbstractQuery):
     '''
     core required functionality
     NOTE: a foreground interface must have access to a qdb to run get_canonical
-    '''
     def new_quantity(self, name, ref_unit=None, **kwargs):
         """
         Creates a new quantity entity and adds it to the foreground
@@ -245,6 +244,7 @@ class QuantityInterface(AbstractQuery):
                                    name, ref_quantity=ref_quantity, context=context,
                                    **kwargs)
 
+    '''
     '''
     qdb-only queries
     '''

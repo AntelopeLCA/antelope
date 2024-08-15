@@ -25,7 +25,7 @@ class ForegroundInterface(AbstractQuery):
         return self._perform_query(_interface, 'save', ForegroundRequired, **kwargs)
 
     def find_term(self, term_ref, origin=None, **kwargs):
-        """
+        """ # DEPRECATED
         Find a termination for the given reference.  Essentially do type and validity checking and return something
         that can be used as a valid termination.
         :param term_ref: either an entity, entity ref, or string
@@ -170,7 +170,7 @@ class ForegroundInterface(AbstractQuery):
 
         :param fragment:
         :param exchange_value: [this must be the second positional argument for legacy reasons, but can still be None]
-        :param anchor: [renamed from 'termination' - the latter is still accepted in core+]
+        :param anchor: type-agnostic; left to implementation
         :param name:
         :param scenario:
         :param kwargs:
@@ -204,6 +204,17 @@ class ForegroundInterface(AbstractQuery):
         return self._perform_query(_interface, 'traverse', ForegroundRequired,
                                    fragment, scenario, **kwargs)
 
+    def cutoff_flows(self, fragment, scenario=None, **kwargs):
+        """
+        Report cut-off flows (inputs and outputs to the fragment) grouped as exchanges
+        :param fragment:
+        :param scenario:
+        :param kwargs:
+        :return:
+        """
+        return self._perform_query(_interface, 'cutoff_flows', ForegroundRequired,
+                                   fragment, scenario, **kwargs)
+
     def activity(self, fragment, scenario=None, **kwargs):
         """
         Traverse the fragment, returning direct-descendent nodes only. This must be run on an authentic entity and
@@ -229,5 +240,3 @@ class ForegroundInterface(AbstractQuery):
         """
         return self._perform_query(_interface, 'fragment_lcia', ForegroundRequired,
                                    fragment, quantity_ref, scenario, **kwargs)
-
-

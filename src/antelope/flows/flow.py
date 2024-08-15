@@ -284,8 +284,11 @@ class Flow(FlowInterface, ABC):
     def pop_char(self, qq, cx, loc):
         return self._chars_seen[qq].pop((cx, loc), None)
 
-    def clear_chars(self, quantity):
-        self._chars_seen.pop(quantity, None)
+    def clear_chars(self, quantity=None):
+        if quantity:
+            self._chars_seen.pop(quantity, None)
+        else:
+            self.__chars_seen = None
 
     def see_chars(self, qq, cx, cfs):
         """
