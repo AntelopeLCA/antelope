@@ -5,6 +5,12 @@ setup()
 
 """
 Version History:
+0.2.7   2024/09/10 - synchronization release for background / LCI changes 
+                     add make_ref() machinery to a few interface routes
+                     alter extend_process to use dependencies instead of inventory
+                     make deep_lcia() biogenic-aware
+                     (note: folding observations directly into lci() / abandoning sys_lcia() still to come)
+
 0.2.6.3 2024/08/15 - cutoff_flows and remote traversal compatibility
                    - modify FlowInterface and FlowEntity to not die on missing reference_entity
 

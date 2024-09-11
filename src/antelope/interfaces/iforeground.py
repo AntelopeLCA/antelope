@@ -48,8 +48,8 @@ class ForegroundInterface(AbstractQuery):
         :param kwargs:
         :return:
         """
-        return self._perform_query(_interface, 'new_quantity', ForegroundRequired,
-                                   name, ref_unit=ref_unit, **kwargs)
+        return self.make_ref(self._perform_query(_interface, 'new_quantity', ForegroundRequired,
+                                                 name, ref_unit=ref_unit, **kwargs))
 
     def new_flow(self, name, ref_quantity=None, context=None, **kwargs):
         """

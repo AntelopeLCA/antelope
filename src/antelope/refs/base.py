@@ -373,6 +373,9 @@ class EntityRef(BaseRef):
             return False
         return True
 
+    def check_bg(self):
+        return self._query.check_bg()
+
     def properties(self, force_query=False):
         if force_query:
             try:
