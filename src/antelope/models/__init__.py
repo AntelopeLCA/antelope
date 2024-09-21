@@ -340,6 +340,8 @@ class Exchange(ResponseModel):
         if x.type == 'context':
             cx = list(x.termination)
             term = None
+        elif x.type == 'reference':
+            term = cx = None
         else:
             term = x.termination
             cx = None
