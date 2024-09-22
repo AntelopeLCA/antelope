@@ -17,15 +17,15 @@ without access to a query object that can implement the various methods.
 3. Grounded references should behave equivalently to the entities themselves. (except the remote catalogs can act
 as gatekeepers to decide what information can be disclosed)
 
-The inheritance pattern is:
+The inheritance pattern is: ::
 
-BaseRef
-|    |
-|    EntityRef (grounded by a catalog query)
-|      | \ \
-|    ProcessRef, FlowRef, QuantityRef [...]
-|
-CatalogRef (un-grounded)
+    BaseRef
+    |    |
+    |    EntityRef (grounded by a catalog query)
+    |      |            |         |
+    |    ProcessRef, FlowRef, QuantityRef [...]
+    |
+    CatalogRef (un-grounded)
 
 The CatalogRef can instantiate a grounded reference if supplied with a query object that implements the interface.
 
