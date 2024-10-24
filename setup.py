@@ -5,6 +5,8 @@ setup()
 
 """
 Version History:
+0.3.0   2024/10/24 - 0.3.0 release. add comparators.
+
 0.3.0-pre 2024/09/22 - pre-release for workshop (minor bugfix on UnallocatedExchange model)
 
 0.2.7   2024/09/10 - synchronization release for background / LCI changes 
