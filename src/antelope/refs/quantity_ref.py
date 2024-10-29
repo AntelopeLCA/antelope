@@ -193,6 +193,8 @@ class QuantityRef(EntityRef):
                 ref_quantity = flow.reference_entity
             except AttributeError:
                 raise RefQuantityRequired
+            if ref_quantity is None:
+                raise RefQuantityRequired
         if self.is_canonical(ref_quantity):
             return 1.0
         return self._query.cf(flow, self.external_ref, ref_quantity=ref_quantity, **kwargs)
