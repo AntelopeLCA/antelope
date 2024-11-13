@@ -1,5 +1,5 @@
 from .base import EntityRef, _MissingItem
-from .exchange_ref import ExchangeRef
+from .exchange_ref import ExchangeRef, RxRef
 from ..interfaces.iindex import comp_dir
 from itertools import chain
 
@@ -143,6 +143,9 @@ class ProcessRef(EntityRef):
         return ExchangeRef(self, self._query.make_ref(x.flow), x.direction, value=value, termination=x.termination,
                            comment=x.comment, is_reference=x.is_reference)
 
+    def _rx_ref(self, x):
+        return RxRef(self._query.make_ref(x.process), self._query.make_ref(x.flow), x.direction, comment=x.comment)
+
     def exchanges(self, **kwargs):
         for x in self._query.exchanges(self.external_ref, **kwargs):
             yield self._to_exch_ref(x, value=None)
@@ -228,7 +231,7 @@ class ProcessRef(EntityRef):
 
     def consumers(self, ref_flow=None, **kwargs):
         ref_flow = self._use_ref_exch(ref_flow)
-        return [self._to_exch_ref(x, value=None) for x in
+        return [self._rx_ref(x) for x in
                 self._query.consumers(self.external_ref, ref_flow=ref_flow, **kwargs)]
 
     def dependencies(self, ref_flow=None, **kwargs):

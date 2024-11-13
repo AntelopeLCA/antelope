@@ -11,7 +11,10 @@ def _rx_key(rx):
 
 
 def _exch_key(exch):
-    return exch.flow.external_ref, exch.direction, tuple(exch.termination)
+    if exch.type == 'context':
+        return exch.flow.external_ref, exch.direction, tuple(exch.termination)
+    else:
+        return exch.flow.external_ref, exch.direction, exch.termination
 
 
 def compare_ref_exchanges(s1, s2):
