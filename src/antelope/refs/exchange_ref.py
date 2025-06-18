@@ -114,6 +114,9 @@ class ExchangeRef(object):
          - a str
          - a tuple (corresponding to a context)
          - an object with the 'entity_type' property with the value 'context', 'process', or 'fragment'
+
+         Note that by manually setting the termination after instantiation, the ExchangeRef's hash will no longer
+         match the exchange's properties. this is neither feature nor bug, only design confusion.
         :param term:
         :return:
         """
@@ -132,6 +135,10 @@ class ExchangeRef(object):
         if hasattr(self.termination, 'elementary'):
             return bool(self.termination.elementary)
         return False
+
+    @property
+    def is_cutoff(self):
+        return self.termination is None
 
     @property
     def term_ref(self):
