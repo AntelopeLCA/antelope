@@ -140,7 +140,10 @@ class BaseRef(BaseEntity):
         return item in self._d
 
     def __setitem__(self, key, value):
-        self._d[key] = value
+        if value is None:
+            self._d.pop(key, None)
+        else:
+            self._d[key] = value
 
     @property
     def _name(self):
