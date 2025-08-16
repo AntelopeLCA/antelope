@@ -11,7 +11,7 @@ from .interfaces.ibasic import BasicInterface, EntityNotFound, NoAccessToEntity,
 from .interfaces.iconfigure import ConfigureInterface
 from .interfaces.iexchange import ExchangeInterface, ExchangeRequired
 from .interfaces.iindex import IndexInterface, IndexRequired, directions, comp_dir, num_dir, check_direction, valid_sense, comp_sense
-from .interfaces.ibackground import BackgroundInterface, BackgroundRequired
+from .interfaces.ibackground import BackgroundInterface, BackgroundRequired, LinkingError
 from .interfaces.iquantity import QuantityInterface, QuantityRequired, NoFactorsFound, ConversionReferenceMismatch, FlowableMismatch
 from .interfaces.iforeground import ForegroundInterface
 

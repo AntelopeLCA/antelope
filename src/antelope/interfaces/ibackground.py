@@ -26,6 +26,13 @@ class BackgroundRequired(Exception):
     pass
 
 
+class LinkingError(Exception):
+    """
+    To be returned when a strict linking strategy cannot be implemented
+    """
+    pass
+
+
 _interface = 'background'
 
 BACKGROUND_VALUES_REQUIRED = {'dependencies', 'emissions', 'cutoffs', 'lci', 'sys_lci', 'foreground', 'ad', 'bf'}
