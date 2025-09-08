@@ -233,6 +233,36 @@ class ExchangeRef(object):
         except AttributeError:
             return False
 
+    def __lt__(self, other):
+        if EXCHANGE_TYPES.index(self.type) < EXCHANGE_TYPES.index(other.type):
+            return True
+        if self.type == other.type:
+            return (self.flow.external_ref, self.direction, self.value) < \
+                (other.flow.external_ref, other.direction, other.value)
+        return False
+
+    def __le__(self, other):
+        if self.__eq__(other):
+            return True
+        if self.__lt__(other):
+            return True
+        return False
+
+    def __gt__(self, other):
+        if EXCHANGE_TYPES.index(self.type) > EXCHANGE_TYPES.index(other.type):
+            return True
+        if self.type == other.type:
+            return (self.flow.external_ref, self.direction, self.value) > \
+                (other.flow.external_ref, other.direction, other.value)
+        return False
+
+    def __ge__(self, other):
+        if self.__eq__(other):
+            return True
+        if self.__gt__(other):
+            return True
+        return False
+
     @property
     def key(self):
         return self._hash
