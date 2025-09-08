@@ -5,6 +5,8 @@ setup()
 
 """
 Version History:
+0.3.3  2025/09/08 - Apply ordering to exchange refs; pandas-friendly output for process refs
+
 0.3.2  2025/08/01 - 0.3.2 release. better background handling.
 
 0.3.1  2025/06/18 - 0.3.1 release. small tweaks to method signatures.
