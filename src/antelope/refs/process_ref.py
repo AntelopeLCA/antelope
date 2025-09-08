@@ -341,3 +341,36 @@ class ProcessRef(EntityRef):
         """
         ref_flow = self._use_ref_exch(ref_flow)
         return self._query.deep_lcia(self.external_ref, lcia_qty, ref_flow=ref_flow, detailed=detailed, **kwargs)
+
+    @property
+    def inventory_as_series(self):
+        """
+        Use this as generative input to pandas.Series:
+        s = pandas.Series(process_ref.inventory_as_series)
+        :return:
+        """
+        def _tx_cx(_ex):
+            if _ex.type == 'reference':
+                return '*'
+            elif _ex.type == 'node':
+                return '#'
+            elif _ex.type == 'context':
+                return _ex.termination.name
+            else:
+                return None
+        return {(k.flow.name, _tx_cx(k), k.direction, k.unit): k.value for k in self.inventory()}
+
+    @property
+    def inventory_as_dataframe(self):
+        """
+        Use this as generative input to pandas.DataFrame:
+        df = pandas.DataFrame(process_ref.inventory_as_dataframe)
+        :return:
+        """
+        def _cx_of(_ex):
+            if _ex.type == 'context':
+                return _ex.termination.name
+            return None
+        for k in self.inventory():
+            yield {'Flow': k.flow.name, 'Direction': k.direction, 'Type': k.type, 'Unit': k.flow.unit,
+                   'Value': k.value, 'Context': _cx_of(k)}
