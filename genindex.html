@@ -1,0 +1,1993 @@
+<!doctype html>
+<html class="no-js" lang="en" data-content_root="./">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="#" /><link rel="search" title="Search" href="search.html" />
+        <link rel="prefetch" href="_static/wordmark-Antelope-fixed.png" as="image" />
+
+    <!-- Generated with Sphinx 8.2.3 and Furo 2025.07.19 --><title>Index - Antelope 0.3.0 documentation</title>
+<link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=25af2a20" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/furo-extensions.css?v=8dab3a3b" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #eeffcc;
+  --color-code-foreground: black;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #2b2b2b;
+  --color-code-foreground: #f8f8f2;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #2b2b2b;
+  --color-code-foreground: #f8f8f2;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-with-moon" viewBox="0 0 24 24">
+    <title>Auto light/dark, in light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path style="opacity: 50%" d="M 5.411 14.504 C 5.471 14.504 5.532 14.504 5.591 14.504 C 3.639 16.319 4.383 19.569 6.931 20.352 C 7.693 20.586 8.512 20.551 9.25 20.252 C 8.023 23.207 4.056 23.725 2.11 21.184 C 0.166 18.642 1.702 14.949 4.874 14.536 C 5.051 14.512 5.231 14.5 5.411 14.5 L 5.411 14.504 Z"/>
+      <line x1="14.5" y1="3.25" x2="14.5" y2="1.25"/>
+      <line x1="14.5" y1="15.85" x2="14.5" y2="17.85"/>
+      <line x1="10.044" y1="5.094" x2="8.63" y2="3.68"/>
+      <line x1="19" y1="14.05" x2="20.414" y2="15.464"/>
+      <line x1="8.2" y1="9.55" x2="6.2" y2="9.55"/>
+      <line x1="20.8" y1="9.55" x2="22.8" y2="9.55"/>
+      <line x1="10.044" y1="14.006" x2="8.63" y2="15.42"/>
+      <line x1="19" y1="5.05" x2="20.414" y2="3.636"/>
+      <circle cx="14.5" cy="9.55" r="3.6"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon-with-sun" viewBox="0 0 24 24">
+    <title>Auto light/dark, in dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path d="M 8.282 7.007 C 8.385 7.007 8.494 7.007 8.595 7.007 C 5.18 10.184 6.481 15.869 10.942 17.24 C 12.275 17.648 13.706 17.589 15 17.066 C 12.851 22.236 5.91 23.143 2.505 18.696 C -0.897 14.249 1.791 7.786 7.342 7.063 C 7.652 7.021 7.965 7 8.282 7 L 8.282 7.007 Z"/>
+      <line style="opacity: 50%" x1="18" y1="3.705" x2="18" y2="2.5"/>
+      <line style="opacity: 50%" x1="18" y1="11.295" x2="18" y2="12.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="4.816" x2="14.464" y2="3.964"/>
+      <line style="opacity: 50%" x1="20.711" y1="10.212" x2="21.563" y2="11.063"/>
+      <line style="opacity: 50%" x1="14.205" y1="7.5" x2="13.001" y2="7.5"/>
+      <line style="opacity: 50%" x1="21.795" y1="7.5" x2="23" y2="7.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="10.184" x2="14.464" y2="11.036"/>
+      <line style="opacity: 50%" x1="20.711" y1="4.789" x2="21.563" y2="3.937"/>
+      <circle style="opacity: 50%" cx="18" cy="7.5" r="2.169"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-pencil" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-pencil-code">
+      <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+      <path d="M13.5 6.5l4 4" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+  <symbol id="svg-eye" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-eye-code">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+      <path
+        d="M11.11 17.958c-3.209 -.307 -5.91 -2.293 -8.11 -5.958c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6c-.21 .352 -.427 .688 -.647 1.008" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation">
+  <div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+  <div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <div class="visually-hidden">Toggle site navigation sidebar</div>
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="index.html"><div class="brand">Antelope 0.3.0 documentation</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle">
+          <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+          <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+          <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
+        <div class="visually-hidden">Toggle table of contents sidebar</div>
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="index.html">
+  <div class="sidebar-logo-container">
+    <img class="sidebar-logo" src="_static/wordmark-Antelope-fixed.png" alt="Logo"/>
+  </div>
+  
+  <span class="sidebar-brand-text">Antelope 0.3.0 documentation</span>
+  
+</a><form class="sidebar-search-container" method="get" action="search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="principles.html">Key principles of operation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="data_types.html">Basic Data Types</a></li>
+<li class="toctree-l1"><a class="reference internal" href="relations.html">Quantitative Information</a></li>
+<li class="toctree-l1"><a class="reference internal" href="relations.html#semi-quantitative-information">Semi-Quantitative Information</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="interfaces.html">Organizing LCA Data in Antelope</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of Organizing LCA Data in Antelope</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="interfaces/basic.html">Basic Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="interfaces/index.html">Index Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="interfaces/exchange.html">Exchange Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="interfaces/quantity.html">Quantity Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="interfaces/background.html">Background Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="interfaces/configure.html">Configure Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="interfaces/foreground.html">Foreground Interface</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html">Ways to use Antelope</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fragments.html">What is a Fragment?</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="antelope.html">API Documentation</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of API Documentation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="interfaces/abstract.html">Antelope Query and Subclasses</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle navigation of Antelope Query and Subclasses</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="interfaces/basic.html">Basic Interface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="interfaces/exchange.html">Exchange Interface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="interfaces/quantity.html">Quantity Interface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="interfaces/index.html">Index Interface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="interfaces/background.html">Background Interface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="interfaces/configure.html">Configure Interface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="interfaces/foreground.html">Foreground Interface</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="refs/antelope.refs.html">Entity References</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><div class="visually-hidden">Toggle navigation of Entity References</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="refs/quantity_ref.html">QuantityRefs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="refs/flow_ref.html">Flow Refs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="refs/process_ref.html">Process Refs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="refs/exchange_ref.html">ExchangeRefs</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="antelope.flows.html">antelope.flows package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="antelope.models.html">antelope.models package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="exchanges_from_spreadsheet.html">Exchanges From Spreadsheet</a></li>
+</ul>
+</li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          <div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle">
+              <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+              <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+              <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon no-toc" for="__toc">
+            <div class="visually-hidden">Toggle table of contents sidebar</div>
+            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+          </label>
+        </div>
+        <article role="main" id="furo-main-content">
+          
+<section class="genindex-section">
+  <h1 id="index">Index</h1>
+  <div class="genindex-jumpbox"><a href="#A"><strong>A</strong></a> | <a href="#B"><strong>B</strong></a> | <a href="#C"><strong>C</strong></a> | <a href="#D"><strong>D</strong></a> | <a href="#E"><strong>E</strong></a> | <a href="#F"><strong>F</strong></a> | <a href="#G"><strong>G</strong></a> | <a href="#H"><strong>H</strong></a> | <a href="#I"><strong>I</strong></a> | <a href="#J"><strong>J</strong></a> | <a href="#K"><strong>K</strong></a> | <a href="#L"><strong>L</strong></a> | <a href="#M"><strong>M</strong></a> | <a href="#N"><strong>N</strong></a> | <a href="#O"><strong>O</strong></a> | <a href="#P"><strong>P</strong></a> | <a href="#Q"><strong>Q</strong></a> | <a href="#R"><strong>R</strong></a> | <a href="#S"><strong>S</strong></a> | <a href="#T"><strong>T</strong></a> | <a href="#U"><strong>U</strong></a> | <a href="#V"><strong>V</strong></a> | <a href="#W"><strong>W</strong></a></div>
+</section>
+<section id="A" class="genindex-section">
+  <h2>A</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="interfaces/abstract.html#antelope.interfaces.abstract_query.AbstractQuery">AbstractQuery (class in antelope.interfaces.abstract_query)</a>
+</li>
+        <li><a href="antelope.models.html#antelope.models.auth.AuthorizationGrant.access">access (antelope.models.auth.AuthorizationGrant attribute)</a>
+</li>
+        <li><a href="interfaces/foreground.html#antelope.interfaces.iforeground.ForegroundInterface.activity">activity() (antelope.interfaces.iforeground.ForegroundInterface method)</a>
+</li>
+        <li><a href="interfaces/background.html#antelope.interfaces.ibackground.BackgroundInterface.ad">ad() (antelope.interfaces.ibackground.BackgroundInterface method)</a>
+
+        <ul>
+          <li><a href="refs/process_ref.html#antelope.refs.process_ref.ProcessRef.ad">(antelope.refs.process_ref.ProcessRef method)</a>
+</li>
+        </ul></li>
+        <li><a href="antelope.models.html#antelope.models.FlowFactors.add_qr_result">add_qr_result() (antelope.models.FlowFactors method)</a>
+</li>
+        <li><a href="antelope.models.html#antelope.models.AggregatedLciaScore">AggregatedLciaScore (class in antelope.models)</a>
+</li>
+        <li><a href="refs/process_ref.html#antelope.refs.process_ref.ProcessRef.alloc_qty">alloc_qty (antelope.refs.process_ref.ProcessRef property)</a>
+</li>
+        <li><a href="interfaces/configure.html#antelope.interfaces.iconfigure.ConfigureInterface.allocate_by_quantity">allocate_by_quantity() (antelope.interfaces.iconfigure.ConfigureInterface method)</a>
+</li>
+        <li><a href="antelope.models.html#antelope.models.AllocatedExchange">AllocatedExchange (class in antelope.models)</a>
+</li>
+        <li><a href="interfaces/foreground.html#antelope.interfaces.iforeground.ForegroundInterface.anchors">anchors() (antelope.interfaces.iforeground.ForegroundInterface method)</a>
+</li>
+        <li>
+    antelope
+
+        <ul>
+          <li><a href="antelope.html#module-antelope">module</a>
+</li>
+        </ul></li>
+        <li>
+    antelope.exchanges_from_spreadsheet
+
+        <ul>
+          <li><a href="exchanges_from_spreadsheet.html#module-antelope.exchanges_from_spreadsheet">module</a>
+</li>
+        </ul></li>
+        <li>
+    antelope.flows
+
+        <ul>
+          <li><a href="antelope.flows.html#module-antelope.flows">module</a>
+</li>
+        </ul></li>
+        <li>
+    antelope.flows.flow
+
+        <ul>
+          <li><a href="antelope.flows.html#module-antelope.flows.flow">module</a>
+</li>
+        </ul></li>
+        <li>
+    antelope.flows.flow_interface
+
+        <ul>
+          <li><a href="antelope.flows.html#module-antelope.flows.flow_interface">module</a>
+</li>
+        </ul></li>
+        <li>
+    antelope.interfaces.abstract_query
+
+        <ul>
+          <li><a href="interfaces/abstract.html#module-antelope.interfaces.abstract_query">module</a>
+</li>
+        </ul></li>
+        <li>
+    antelope.interfaces.ibackground
+
+        <ul>
+          <li><a href="interfaces/background.html#module-antelope.interfaces.ibackground">module</a>
+</li>
+        </ul></li>
+        <li>
+    antelope.interfaces.ibasic
+
+        <ul>
+          <li><a href="interfaces/basic.html#module-antelope.interfaces.ibasic">module</a>
+</li>
+        </ul></li>
+        <li>
+    antelope.interfaces.iconfigure
+
+        <ul>
+          <li><a href="interfaces/configure.html#module-antelope.interfaces.iconfigure">module</a>
+</li>
+        </ul></li>
+        <li>
+    antelope.interfaces.iexchange
+
+        <ul>
+          <li><a href="interfaces/exchange.html#module-antelope.interfaces.iexchange">module</a>
+</li>
+        </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li>
+    antelope.interfaces.iforeground
+
+        <ul>
+          <li><a href="interfaces/foreground.html#module-antelope.interfaces.iforeground">module</a>
+</li>
+        </ul></li>
+        <li>
+    antelope.interfaces.iindex
+
+        <ul>
+          <li><a href="interfaces/index.html#module-antelope.interfaces.iindex">module</a>
+</li>
+        </ul></li>
+        <li>
+    antelope.interfaces.iquantity
+
+        <ul>
+          <li><a href="interfaces/quantity.html#module-antelope.interfaces.iquantity">module</a>
+</li>
+        </ul></li>
+        <li>
+    antelope.models
+
+        <ul>
+          <li><a href="antelope.models.html#module-antelope.models">module</a>
+</li>
+        </ul></li>
+        <li>
+    antelope.models.auth
+
+        <ul>
+          <li><a href="antelope.models.html#module-antelope.models.auth">module</a>
+</li>
+        </ul></li>
+        <li>
+    antelope.refs
+
+        <ul>
+          <li><a href="refs/antelope.refs.html#module-antelope.refs">module</a>
+</li>
+        </ul></li>
+        <li>
+    antelope.refs.base
+
+        <ul>
+          <li><a href="refs/antelope.refs.html#module-antelope.refs.base">module</a>
+</li>
+        </ul></li>
+        <li>
+    antelope.refs.catalog_ref
+
+        <ul>
+          <li><a href="refs/antelope.refs.html#module-antelope.refs.catalog_ref">module</a>
+</li>
+        </ul></li>
+        <li>
+    antelope.refs.exchange_ref
+
+        <ul>
+          <li><a href="refs/exchange_ref.html#module-antelope.refs.exchange_ref">module</a>
+</li>
+        </ul></li>
+        <li>
+    antelope.refs.flow_ref
+
+        <ul>
+          <li><a href="refs/flow_ref.html#module-antelope.refs.flow_ref">module</a>
+</li>
+        </ul></li>
+        <li>
+    antelope.refs.process_ref
+
+        <ul>
+          <li><a href="refs/process_ref.html#module-antelope.refs.process_ref">module</a>
+</li>
+        </ul></li>
+        <li>
+    antelope.refs.quantity_ref
+
+        <ul>
+          <li><a href="refs/quantity_ref.html#module-antelope.refs.quantity_ref">module</a>
+</li>
+        </ul></li>
+        <li>
+    antelope.xdb_tokens
+
+        <ul>
+          <li><a href="antelope.html#module-antelope.xdb_tokens">module</a>
+</li>
+        </ul></li>
+        <li><a href="interfaces/abstract.html#antelope.interfaces.abstract_query.ANTELOPE_INTERFACES">ANTELOPE_INTERFACES (in module antelope.interfaces.abstract_query)</a>
+</li>
+        <li><a href="antelope.models.html#antelope.models.auth.AuthModel">AuthModel (class in antelope.models.auth)</a>
+</li>
+        <li><a href="antelope.models.html#antelope.models.auth.AuthorizationGrant">AuthorizationGrant (class in antelope.models.auth)</a>
+</li>
+        <li><a href="antelope.models.html#antelope.models.auth.AuthorizationGrant.authorizes">authorizes() (antelope.models.auth.AuthorizationGrant method)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="B" class="genindex-section">
+  <h2>B</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="interfaces/background.html#antelope.interfaces.ibackground.BackgroundInterface.background_flows">background_flows() (antelope.interfaces.ibackground.BackgroundInterface method)</a>
+</li>
+        <li><a href="interfaces/background.html#antelope.interfaces.ibackground.BackgroundInterface">BackgroundInterface (class in antelope.interfaces.ibackground)</a>
+</li>
+        <li><a href="interfaces/background.html#antelope.interfaces.ibackground.BackgroundRequired">BackgroundRequired</a>
+</li>
+        <li><a href="antelope.flows.html#antelope.flows.flow_interface.BaseEntity">BaseEntity (class in antelope.flows.flow_interface)</a>
+</li>
+        <li><a href="refs/antelope.refs.html#antelope.refs.base.BaseRef">BaseRef (class in antelope.refs.base)</a>
+</li>
+        <li><a href="interfaces/basic.html#antelope.interfaces.ibasic.BasicInterface">BasicInterface (class in antelope.interfaces.ibasic)</a>
+</li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="antelope.html#antelope.BasicQuery">BasicQuery (class in antelope)</a>
+</li>
+        <li><a href="interfaces/basic.html#antelope.interfaces.ibasic.BasicRequired">BasicRequired</a>
+</li>
+        <li><a href="interfaces/background.html#antelope.interfaces.ibackground.BackgroundInterface.bf">bf() (antelope.interfaces.ibackground.BackgroundInterface method)</a>
+
+        <ul>
+          <li><a href="refs/process_ref.html#antelope.refs.process_ref.ProcessRef.bf">(antelope.refs.process_ref.ProcessRef method)</a>
+</li>
+        </ul></li>
+        <li><a href="interfaces/basic.html#antelope.interfaces.ibasic.BasicInterface.bg_lcia">bg_lcia() (antelope.interfaces.ibasic.BasicInterface method)</a>
+
+        <ul>
+          <li><a href="refs/process_ref.html#antelope.refs.process_ref.ProcessRef.bg_lcia">(antelope.refs.process_ref.ProcessRef method)</a>
+</li>
+        </ul></li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="C" class="genindex-section">
+  <h2>C</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="refs/antelope.refs.html#antelope.refs.catalog_ref.CatalogRef">CatalogRef (class in antelope.refs.catalog_ref)</a>
+</li>
+        <li><a href="interfaces/quantity.html#antelope.interfaces.iquantity.QuantityInterface.cf">cf() (antelope.interfaces.iquantity.QuantityInterface method)</a>
+
+        <ul>
+          <li><a href="refs/antelope.refs.html#antelope.refs.catalog_ref.CatalogRef.cf">(antelope.refs.catalog_ref.CatalogRef method)</a>
+</li>
+          <li><a href="refs/flow_ref.html#antelope.refs.flow_ref.FlowRef.cf">(antelope.refs.flow_ref.FlowRef method)</a>
+</li>
+          <li><a href="refs/quantity_ref.html#antelope.refs.quantity_ref.QuantityRef.cf">(antelope.refs.quantity_ref.QuantityRef method)</a>
+</li>
+        </ul></li>
+        <li><a href="antelope.models.html#antelope.models.Characterization">Characterization (class in antelope.models)</a>
+</li>
+        <li><a href="interfaces/quantity.html#antelope.interfaces.iquantity.QuantityInterface.characterize">characterize() (antelope.interfaces.iquantity.QuantityInterface method)</a>
+
+        <ul>
+          <li><a href="refs/flow_ref.html#antelope.refs.flow_ref.FlowRef.characterize">(antelope.refs.flow_ref.FlowRef method)</a>
+</li>
+          <li><a href="refs/quantity_ref.html#antelope.refs.quantity_ref.QuantityRef.characterize">(antelope.refs.quantity_ref.QuantityRef method)</a>
+</li>
+        </ul></li>
+        <li><a href="interfaces/configure.html#antelope.interfaces.iconfigure.ConfigureInterface.characterize_flow">characterize_flow() (antelope.interfaces.iconfigure.ConfigureInterface method)</a>
+</li>
+        <li><a href="interfaces/background.html#antelope.interfaces.ibackground.BackgroundInterface.check_bg">check_bg() (antelope.interfaces.ibackground.BackgroundInterface method)</a>
+
+        <ul>
+          <li><a href="refs/antelope.refs.html#antelope.refs.base.EntityRef.check_bg">(antelope.refs.base.EntityRef method)</a>
+</li>
+        </ul></li>
+        <li><a href="interfaces/configure.html#antelope.interfaces.iconfigure.ConfigureInterface.check_config">check_config() (antelope.interfaces.iconfigure.ConfigureInterface method)</a>
+</li>
+        <li><a href="interfaces/index.html#antelope.interfaces.iindex.check_direction">check_direction() (in module antelope.interfaces.iindex)</a>
+</li>
+        <li><a href="interfaces/foreground.html#antelope.interfaces.iforeground.ForegroundInterface.child_flows">child_flows() (antelope.interfaces.iforeground.ForegroundInterface method)</a>
+</li>
+        <li><a href="antelope.flows.html#antelope.flows.flow.Flow.clear_chars">clear_chars() (antelope.flows.flow.Flow method)</a>
+</li>
+        <li><a href="antelope.models.html#antelope.models.Exchange.comment">comment (antelope.models.Exchange attribute)</a>
+
+        <ul>
+          <li><a href="refs/exchange_ref.html#antelope.refs.exchange_ref.ExchangeRef.comment">(antelope.refs.exchange_ref.ExchangeRef property)</a>
+</li>
+        </ul></li>
+        <li><a href="interfaces/index.html#antelope.interfaces.iindex.comp_dir">comp_dir() (in module antelope.interfaces.iindex)</a>
+</li>
+        <li><a href="interfaces/index.html#antelope.interfaces.iindex.comp_sense">comp_sense() (in module antelope.interfaces.iindex)</a>
+</li>
+        <li><a href="antelope.models.html#antelope.models.AggregatedLciaScore.component">component (antelope.models.AggregatedLciaScore attribute)</a>
+</li>
+        <li><a href="antelope.models.html#antelope.models.LciaResult.components">components (antelope.models.LciaResult attribute)</a>
+</li>
+        <li><a href="antelope.html#antelope.xdb_tokens.ResourceSpec.config">config (antelope.xdb_tokens.ResourceSpec attribute)</a>
+</li>
+        <li><a href="interfaces/configure.html#antelope.interfaces.iconfigure.ConfigRequired">ConfigRequired</a>
+</li>
+        <li><a href="interfaces/configure.html#antelope.interfaces.iconfigure.ConfigureInterface">ConfigureInterface (class in antelope.interfaces.iconfigure)</a>
+</li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="interfaces/background.html#antelope.interfaces.ibackground.BackgroundInterface.consumers">consumers() (antelope.interfaces.ibackground.BackgroundInterface method)</a>
+
+        <ul>
+          <li><a href="refs/process_ref.html#antelope.refs.process_ref.ProcessRef.consumers">(antelope.refs.process_ref.ProcessRef method)</a>
+</li>
+        </ul></li>
+        <li><a href="antelope.flows.html#antelope.flows.flow.Flow.context">context (antelope.flows.flow.Flow property)</a>
+
+        <ul>
+          <li><a href="antelope.flows.html#antelope.flows.flow_interface.FlowInterface.context">(antelope.flows.flow_interface.FlowInterface property)</a>
+</li>
+          <li><a href="antelope.models.html#antelope.models.Characterization.context">(antelope.models.Characterization attribute)</a>
+</li>
+          <li><a href="antelope.models.html#antelope.models.Exchange.context">(antelope.models.Exchange attribute)</a>
+</li>
+          <li><a href="antelope.models.html#antelope.models.ExteriorFlow.context">(antelope.models.ExteriorFlow attribute)</a>
+</li>
+          <li><a href="antelope.models.html#antelope.models.FlowEntity.context">(antelope.models.FlowEntity attribute)</a>
+</li>
+          <li><a href="antelope.models.html#antelope.models.FlowFactors.context">(antelope.models.FlowFactors attribute)</a>
+</li>
+          <li><a href="antelope.models.html#antelope.models.FlowSpec.context">(antelope.models.FlowSpec attribute)</a>
+</li>
+          <li><a href="antelope.models.html#antelope.models.QuantityConversion.context">(antelope.models.QuantityConversion attribute)</a>
+</li>
+          <li><a href="refs/flow_ref.html#antelope.refs.flow_ref.FlowRef.context">(antelope.refs.flow_ref.FlowRef property)</a>
+</li>
+        </ul></li>
+        <li><a href="antelope.models.html#antelope.models.Context">Context (class in antelope.models)</a>
+</li>
+        <li><a href="interfaces/configure.html#antelope.interfaces.iconfigure.ConfigureInterface.context_hint">context_hint() (antelope.interfaces.iconfigure.ConfigureInterface method)</a>
+</li>
+        <li><a href="interfaces/index.html#antelope.interfaces.iindex.IndexInterface.contexts">contexts() (antelope.interfaces.iindex.IndexInterface method)</a>
+</li>
+        <li><a href="interfaces/exchange.html#antelope.interfaces.iexchange.ExchangeInterface.contrib_lcia">contrib_lcia() (antelope.interfaces.iexchange.ExchangeInterface method)</a>
+
+        <ul>
+          <li><a href="refs/process_ref.html#antelope.refs.process_ref.ProcessRef.contrib_lcia">(antelope.refs.process_ref.ProcessRef method)</a>
+</li>
+        </ul></li>
+        <li><a href="refs/quantity_ref.html#antelope.refs.quantity_ref.ConversionError">ConversionError</a>
+</li>
+        <li><a href="interfaces/quantity.html#antelope.interfaces.iquantity.ConversionReferenceMismatch">ConversionReferenceMismatch</a>
+</li>
+        <li><a href="refs/quantity_ref.html#antelope.refs.quantity_ref.QuantityRef.convert">convert() (antelope.refs.quantity_ref.QuantityRef method)</a>
+
+        <ul>
+          <li><a href="refs/quantity_ref.html#antelope.refs.quantity_ref.convert">(in module antelope.refs.quantity_ref)</a>
+</li>
+        </ul></li>
+        <li><a href="antelope.models.html#antelope.models.OriginCount.count">count (antelope.models.OriginCount attribute)</a>
+</li>
+        <li><a href="interfaces/index.html#antelope.interfaces.iindex.IndexInterface.count">count() (antelope.interfaces.iindex.IndexInterface method)</a>
+</li>
+        <li><a href="interfaces/foreground.html#antelope.interfaces.iforeground.ForegroundInterface.cutoff_flows">cutoff_flows() (antelope.interfaces.iforeground.ForegroundInterface method)</a>
+</li>
+        <li><a href="interfaces/background.html#antelope.interfaces.ibackground.BackgroundInterface.cutoffs">cutoffs() (antelope.interfaces.ibackground.BackgroundInterface method)</a>
+
+        <ul>
+          <li><a href="refs/process_ref.html#antelope.refs.process_ref.ProcessRef.cutoffs">(antelope.refs.process_ref.ProcessRef method)</a>
+</li>
+        </ul></li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="D" class="genindex-section">
+  <h2>D</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="interfaces/background.html#antelope.interfaces.ibackground.BackgroundInterface.deep_lcia">deep_lcia() (antelope.interfaces.ibackground.BackgroundInterface method)</a>
+
+        <ul>
+          <li><a href="refs/process_ref.html#antelope.refs.process_ref.ProcessRef.deep_lcia">(antelope.refs.process_ref.ProcessRef method)</a>
+</li>
+        </ul></li>
+        <li><a href="refs/process_ref.html#antelope.refs.process_ref.ProcessRef.default_rx">default_rx (antelope.refs.process_ref.ProcessRef property)</a>
+</li>
+        <li><a href="interfaces/background.html#antelope.interfaces.ibackground.BackgroundInterface.dependencies">dependencies() (antelope.interfaces.ibackground.BackgroundInterface method)</a>
+
+        <ul>
+          <li><a href="refs/process_ref.html#antelope.refs.process_ref.ProcessRef.dependencies">(antelope.refs.process_ref.ProcessRef method)</a>
+</li>
+        </ul></li>
+        <li><a href="antelope.models.html#antelope.models.LciaResult.detailed">detailed() (antelope.models.LciaResult class method)</a>
+</li>
+        <li><a href="antelope.models.html#antelope.models.DisaggregatedLciaScore.details">details (antelope.models.DisaggregatedLciaScore attribute)</a>
+</li>
+        <li><a href="antelope.models.html#antelope.models.DirectedFlow">DirectedFlow (class in antelope.models)</a>
+</li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="antelope.models.html#antelope.models.DirectedFlow.direction">direction (antelope.models.DirectedFlow attribute)</a>
+
+        <ul>
+          <li><a href="antelope.models.html#antelope.models.Exchange.direction">(antelope.models.Exchange attribute)</a>
+</li>
+          <li><a href="refs/exchange_ref.html#antelope.refs.exchange_ref.ExchangeRef.direction">(antelope.refs.exchange_ref.ExchangeRef property)</a>
+</li>
+        </ul></li>
+        <li><a href="antelope.models.html#antelope.models.DisaggregatedLciaScore">DisaggregatedLciaScore (class in antelope.models)</a>
+</li>
+        <li><a href="antelope.models.html#antelope.models.auth.AuthorizationGrant.display">display (antelope.models.auth.AuthorizationGrant property)</a>
+</li>
+        <li><a href="interfaces/quantity.html#antelope.interfaces.iquantity.QuantityInterface.do_lcia">do_lcia() (antelope.interfaces.iquantity.QuantityInterface method)</a>
+
+        <ul>
+          <li><a href="refs/quantity_ref.html#antelope.refs.quantity_ref.QuantityRef.do_lcia">(antelope.refs.quantity_ref.QuantityRef method)</a>
+</li>
+        </ul></li>
+        <li><a href="antelope.html#antelope.xdb_tokens.ResourceSpec.ds_type">ds_type (antelope.xdb_tokens.ResourceSpec attribute)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="E" class="genindex-section">
+  <h2>E</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="antelope.models.html#antelope.models.Context.elementary">elementary (antelope.models.Context attribute)</a>
+</li>
+        <li><a href="interfaces/background.html#antelope.interfaces.ibackground.BackgroundInterface.emissions">emissions() (antelope.interfaces.ibackground.BackgroundInterface method)</a>
+
+        <ul>
+          <li><a href="refs/process_ref.html#antelope.refs.process_ref.ProcessRef.emissions">(antelope.refs.process_ref.ProcessRef method)</a>
+</li>
+        </ul></li>
+        <li><a href="interfaces/background.html#antelope.interfaces.ibackground.BackgroundInterface.emitters">emitters() (antelope.interfaces.ibackground.BackgroundInterface method)</a>
+
+        <ul>
+          <li><a href="refs/flow_ref.html#antelope.refs.flow_ref.FlowRef.emitters">(antelope.refs.flow_ref.FlowRef method)</a>
+</li>
+        </ul></li>
+        <li><a href="antelope.models.html#antelope.models.Entity">Entity (class in antelope.models)</a>
+</li>
+        <li><a href="antelope.models.html#antelope.models.AggregatedLciaScore.entity_id">entity_id (antelope.models.AggregatedLciaScore attribute)</a>
+
+        <ul>
+          <li><a href="antelope.models.html#antelope.models.EntityRef.entity_id">(antelope.models.EntityRef attribute)</a>
+</li>
+        </ul></li>
+        <li><a href="antelope.flows.html#antelope.flows.flow_interface.BaseEntity.entity_type">entity_type (antelope.flows.flow_interface.BaseEntity property)</a>
+
+        <ul>
+          <li><a href="antelope.flows.html#antelope.flows.flow_interface.NullEntity.entity_type">(antelope.flows.flow_interface.NullEntity attribute)</a>
+</li>
+          <li><a href="antelope.models.html#antelope.models.Entity.entity_type">(antelope.models.Entity attribute)</a>
+</li>
+          <li><a href="antelope.models.html#antelope.models.EntityRef.entity_type">(antelope.models.EntityRef attribute)</a>
+</li>
+          <li><a href="refs/antelope.refs.html#antelope.refs.base.BaseRef.entity_type">(antelope.refs.base.BaseRef property)</a>
+</li>
+          <li><a href="refs/antelope.refs.html#antelope.refs.catalog_ref.CatalogRef.entity_type">(antelope.refs.catalog_ref.CatalogRef property)</a>
+</li>
+          <li><a href="refs/exchange_ref.html#antelope.refs.exchange_ref.ExchangeRef.entity_type">(antelope.refs.exchange_ref.ExchangeRef attribute)</a>
+</li>
+        </ul></li>
+        <li><a href="interfaces/basic.html#antelope.interfaces.ibasic.EntityNotFound">EntityNotFound</a>
+</li>
+        <li><a href="antelope.models.html#antelope.models.EntityRef">EntityRef (class in antelope.models)</a>
+
+        <ul>
+          <li><a href="refs/antelope.refs.html#antelope.refs.base.EntityRef">(class in antelope.refs.base)</a>
+</li>
+        </ul></li>
+        <li><a href="refs/antelope.refs.html#antelope.refs.base.EntityRefMergeError">EntityRefMergeError</a>
+</li>
+        <li><a href="antelope.html#antelope.enum">enum() (in module antelope)</a>
+</li>
+        <li><a href="interfaces/exchange.html#antelope.interfaces.iexchange.ExchangeInterface.ev">ev() (antelope.interfaces.iexchange.ExchangeInterface method)</a>
+</li>
+        <li><a href="antelope.models.html#antelope.models.LciaDetail.exchange">exchange (antelope.models.LciaDetail attribute)</a>
+</li>
+        <li><a href="antelope.models.html#antelope.models.Exchange">Exchange (class in antelope.models)</a>
+</li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="interfaces/exchange.html#antelope.interfaces.iexchange.ExchangeInterface.exchange_relation">exchange_relation() (antelope.interfaces.iexchange.ExchangeInterface method)</a>
+
+        <ul>
+          <li><a href="refs/process_ref.html#antelope.refs.process_ref.ProcessRef.exchange_relation">(antelope.refs.process_ref.ProcessRef method)</a>
+</li>
+        </ul></li>
+        <li><a href="interfaces/exchange.html#antelope.interfaces.iexchange.ExchangeInterface.exchange_values">exchange_values() (antelope.interfaces.iexchange.ExchangeInterface method)</a>
+
+        <ul>
+          <li><a href="refs/process_ref.html#antelope.refs.process_ref.ProcessRef.exchange_values">(antelope.refs.process_ref.ProcessRef method)</a>
+</li>
+        </ul></li>
+        <li><a href="interfaces/exchange.html#antelope.interfaces.iexchange.ExchangeInterface">ExchangeInterface (class in antelope.interfaces.iexchange)</a>
+</li>
+        <li><a href="refs/exchange_ref.html#antelope.refs.exchange_ref.ExchangeRef">ExchangeRef (class in antelope.refs.exchange_ref)</a>
+</li>
+        <li><a href="interfaces/exchange.html#antelope.interfaces.iexchange.ExchangeRequired">ExchangeRequired</a>
+</li>
+        <li><a href="interfaces/exchange.html#antelope.interfaces.iexchange.ExchangeInterface.exchanges">exchanges() (antelope.interfaces.iexchange.ExchangeInterface method)</a>
+
+        <ul>
+          <li><a href="refs/process_ref.html#antelope.refs.process_ref.ProcessRef.exchanges">(antelope.refs.process_ref.ProcessRef method)</a>
+</li>
+        </ul></li>
+        <li><a href="exchanges_from_spreadsheet.html#antelope.exchanges_from_spreadsheet.exchanges_from_spreadsheet">exchanges_from_spreadsheet() (in module antelope.exchanges_from_spreadsheet)</a>
+</li>
+        <li><a href="antelope.models.html#antelope.models.ExchangeValues">ExchangeValues (class in antelope.models)</a>
+</li>
+        <li><a href="antelope.html#antelope.xdb_tokens.JwtGrant.exp">exp (antelope.xdb_tokens.JwtGrant attribute)</a>
+</li>
+        <li><a href="antelope.html#antelope.xdb_tokens.IssuerKey.expiry">expiry (antelope.xdb_tokens.IssuerKey attribute)</a>
+</li>
+        <li><a href="interfaces/background.html#antelope.interfaces.ibackground.BackgroundInterface.exterior_flows">exterior_flows() (antelope.interfaces.ibackground.BackgroundInterface method)</a>
+</li>
+        <li><a href="antelope.models.html#antelope.models.ExteriorFlow">ExteriorFlow (class in antelope.models)</a>
+</li>
+        <li><a href="antelope.flows.html#antelope.flows.flow_interface.BaseEntity.external_ref">external_ref (antelope.flows.flow_interface.BaseEntity property)</a>
+
+        <ul>
+          <li><a href="antelope.flows.html#antelope.flows.flow_interface.NullEntity.external_ref">(antelope.flows.flow_interface.NullEntity attribute)</a>
+</li>
+          <li><a href="antelope.models.html#antelope.models.DirectedFlow.external_ref">(antelope.models.DirectedFlow property)</a>
+</li>
+          <li><a href="antelope.models.html#antelope.models.EntityRef.external_ref">(antelope.models.EntityRef property)</a>
+</li>
+          <li><a href="antelope.models.html#antelope.models.FlowFactors.external_ref">(antelope.models.FlowFactors attribute)</a>
+</li>
+          <li><a href="antelope.models.html#antelope.models.FlowSpec.external_ref">(antelope.models.FlowSpec attribute)</a>
+</li>
+          <li><a href="refs/antelope.refs.html#antelope.refs.base.BaseRef.external_ref">(antelope.refs.base.BaseRef property)</a>
+</li>
+          <li><a href="refs/exchange_ref.html#antelope.refs.exchange_ref.RxRef.external_ref">(antelope.refs.exchange_ref.RxRef property)</a>
+</li>
+        </ul></li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="F" class="genindex-section">
+  <h2>F</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="antelope.models.html#antelope.models.LciaDetail.factor">factor (antelope.models.LciaDetail attribute)</a>
+</li>
+        <li><a href="antelope.models.html#antelope.models.FlowFactors.factors">factors (antelope.models.FlowFactors attribute)</a>
+</li>
+        <li><a href="interfaces/quantity.html#antelope.interfaces.iquantity.QuantityInterface.factors">factors() (antelope.interfaces.iquantity.QuantityInterface method)</a>
+
+        <ul>
+          <li><a href="refs/quantity_ref.html#antelope.refs.quantity_ref.QuantityRef.factors">(antelope.refs.quantity_ref.QuantityRef method)</a>
+</li>
+        </ul></li>
+        <li><a href="refs/process_ref.html#antelope.refs.process_ref.ProcessRef.fg_lcia">fg_lcia() (antelope.refs.process_ref.ProcessRef method)</a>
+</li>
+        <li><a href="antelope.html#antelope.FgQuery">FgQuery (class in antelope)</a>
+</li>
+        <li><a href="interfaces/foreground.html#antelope.interfaces.iforeground.ForegroundInterface.find_term">find_term() (antelope.interfaces.iforeground.ForegroundInterface method)</a>
+</li>
+        <li><a href="antelope.models.html#antelope.models.DirectedFlow.flow">flow (antelope.models.DirectedFlow attribute)</a>
+
+        <ul>
+          <li><a href="antelope.models.html#antelope.models.Exchange.flow">(antelope.models.Exchange attribute)</a>
+</li>
+          <li><a href="refs/exchange_ref.html#antelope.refs.exchange_ref.ExchangeRef.flow">(antelope.refs.exchange_ref.ExchangeRef property)</a>
+</li>
+        </ul></li>
+        <li><a href="antelope.flows.html#antelope.flows.flow.Flow">Flow (class in antelope.flows.flow)</a>
+</li>
+        <li><a href="antelope.models.html#antelope.models.Characterization.flowable">flowable (antelope.models.Characterization attribute)</a>
+
+        <ul>
+          <li><a href="antelope.models.html#antelope.models.FlowSpec.flowable">(antelope.models.FlowSpec attribute)</a>
+</li>
+          <li><a href="antelope.models.html#antelope.models.QuantityConversion.flowable">(antelope.models.QuantityConversion attribute)</a>
+</li>
+        </ul></li>
+        <li><a href="interfaces/quantity.html#antelope.interfaces.iquantity.FlowableMismatch">FlowableMismatch</a>
+</li>
+        <li><a href="interfaces/index.html#antelope.interfaces.iindex.IndexInterface.flowables">flowables() (antelope.interfaces.iindex.IndexInterface method)</a>
+
+        <ul>
+          <li><a href="refs/quantity_ref.html#antelope.refs.quantity_ref.QuantityRef.flowables">(antelope.refs.quantity_ref.QuantityRef method)</a>
+</li>
+        </ul></li>
+        <li><a href="antelope.models.html#antelope.models.FlowEntity">FlowEntity (class in antelope.models)</a>
+</li>
+        <li><a href="antelope.models.html#antelope.models.FlowFactors">FlowFactors (class in antelope.models)</a>
+</li>
+        <li><a href="antelope.flows.html#antelope.flows.flow_interface.FlowInterface">FlowInterface (class in antelope.flows.flow_interface)</a>
+</li>
+        <li><a href="antelope.flows.html#antelope.flows.flow.flowname_is_biogenic">flowname_is_biogenic() (in module antelope.flows.flow)</a>
+</li>
+        <li><a href="refs/flow_ref.html#antelope.refs.flow_ref.FlowRef">FlowRef (class in antelope.refs.flow_ref)</a>
+</li>
+        <li><a href="interfaces/index.html#antelope.interfaces.iindex.IndexInterface.flows">flows() (antelope.interfaces.iindex.IndexInterface method)</a>
+</li>
+        <li><a href="interfaces/quantity.html#antelope.interfaces.iquantity.QuantityInterface.flows_with_origin">flows_with_origin() (antelope.interfaces.iquantity.QuantityInterface method)</a>
+</li>
+        <li><a href="antelope.models.html#antelope.models.FlowSpec">FlowSpec (class in antelope.models)</a>
+</li>
+        <li><a href="interfaces/background.html#antelope.interfaces.ibackground.BackgroundInterface.foreground">foreground() (antelope.interfaces.ibackground.BackgroundInterface method)</a>
+
+        <ul>
+          <li><a href="refs/process_ref.html#antelope.refs.process_ref.ProcessRef.foreground">(antelope.refs.process_ref.ProcessRef method)</a>
+</li>
+        </ul></li>
+        <li><a href="interfaces/background.html#antelope.interfaces.ibackground.BackgroundInterface.foreground_flows">foreground_flows() (antelope.interfaces.ibackground.BackgroundInterface method)</a>
+</li>
+        <li><a href="interfaces/foreground.html#antelope.interfaces.iforeground.ForegroundInterface">ForegroundInterface (class in antelope.interfaces.iforeground)</a>
+</li>
+        <li><a href="interfaces/foreground.html#antelope.interfaces.iforeground.ForegroundRequired">ForegroundRequired</a>
+</li>
+        <li><a href="interfaces/foreground.html#antelope.interfaces.iforeground.ForegroundInterface.fragment_lcia">fragment_lcia() (antelope.interfaces.iforeground.ForegroundInterface method)</a>
+</li>
+        <li><a href="interfaces/foreground.html#antelope.interfaces.iforeground.ForegroundInterface.fragments_with_flow">fragments_with_flow() (antelope.interfaces.iforeground.ForegroundInterface method)</a>
+</li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="antelope.models.html#antelope.models.ExteriorFlow.from_background">from_background() (antelope.models.ExteriorFlow class method)</a>
+</li>
+        <li><a href="antelope.models.html#antelope.models.Characterization.from_cf">from_cf() (antelope.models.Characterization class method)</a>
+</li>
+        <li><a href="antelope.models.html#antelope.models.Characterization.from_cfs">from_cfs() (antelope.models.Characterization class method)</a>
+</li>
+        <li><a href="antelope.models.html#antelope.models.Context.from_context">from_context() (antelope.models.Context class method)</a>
+</li>
+        <li><a href="antelope.html#antelope.xdb_tokens.IssuerKey.from_db_issuer">from_db_issuer() (antelope.xdb_tokens.IssuerKey class method)</a>
+</li>
+        <li><a href="antelope.models.html#antelope.models.LciaDetail.from_detailed_lcia_result">from_detailed_lcia_result() (antelope.models.LciaDetail class method)</a>
+</li>
+        <li><a href="antelope.models.html#antelope.models.Entity.from_entity">from_entity() (antelope.models.Entity class method)</a>
+
+        <ul>
+          <li><a href="antelope.models.html#antelope.models.EntityRef.from_entity">(antelope.models.EntityRef class method)</a>
+</li>
+        </ul></li>
+        <li><a href="antelope.models.html#antelope.models.ExchangeValues.from_ev">from_ev() (antelope.models.ExchangeValues class method)</a>
+</li>
+        <li><a href="antelope.models.html#antelope.models.Exchange.from_exchange">from_exchange() (antelope.models.Exchange class method)</a>
+
+        <ul>
+          <li><a href="antelope.models.html#antelope.models.FlowEntity.from_exchange">(antelope.models.FlowEntity class method)</a>
+</li>
+          <li><a href="antelope.models.html#antelope.models.FlowSpec.from_exchange">(antelope.models.FlowSpec class method)</a>
+</li>
+          <li><a href="antelope.models.html#antelope.models.ReferenceExchange.from_exchange">(antelope.models.ReferenceExchange class method)</a>
+</li>
+        </ul></li>
+        <li><a href="antelope.models.html#antelope.models.FlowEntity.from_exchange_model">from_exchange_model() (antelope.models.FlowEntity class method)</a>
+</li>
+        <li><a href="antelope.models.html#antelope.models.ExteriorFlow.from_exterior">from_exterior() (antelope.models.ExteriorFlow class method)</a>
+</li>
+        <li><a href="antelope.models.html#antelope.models.Entity.from_flow">from_flow() (antelope.models.Entity class method)</a>
+
+        <ul>
+          <li><a href="antelope.models.html#antelope.models.FlowEntity.from_flow">(antelope.models.FlowEntity class method)</a>
+</li>
+          <li><a href="antelope.models.html#antelope.models.FlowSpec.from_flow">(antelope.models.FlowSpec class method)</a>
+</li>
+        </ul></li>
+        <li><a href="antelope.html#antelope.xdb_tokens.JwtGrant.from_grants">from_grants() (antelope.xdb_tokens.JwtGrant class method)</a>
+</li>
+        <li><a href="antelope.models.html#antelope.models.AllocatedExchange.from_inv">from_inv() (antelope.models.AllocatedExchange class method)</a>
+
+        <ul>
+          <li><a href="antelope.models.html#antelope.models.UnallocatedExchange.from_inv">(antelope.models.UnallocatedExchange class method)</a>
+</li>
+        </ul></li>
+        <li><a href="antelope.html#antelope.xdb_tokens.IssuerKey.from_issuer">from_issuer() (antelope.xdb_tokens.IssuerKey class method)</a>
+</li>
+        <li><a href="antelope.models.html#antelope.models.Entity.from_json">from_json() (antelope.models.Entity class method)</a>
+
+        <ul>
+          <li><a href="refs/antelope.refs.html#antelope.refs.catalog_ref.CatalogRef.from_json">(antelope.refs.catalog_ref.CatalogRef class method)</a>
+</li>
+        </ul></li>
+        <li><a href="antelope.models.html#antelope.models.auth.AuthorizationGrant.from_jwt">from_jwt() (antelope.models.auth.AuthorizationGrant class method)</a>
+</li>
+        <li><a href="antelope.models.html#antelope.models.LciaResult.from_lcia_result">from_lcia_result() (antelope.models.LciaResult class method)</a>
+</li>
+        <li><a href="antelope.models.html#antelope.models.DirectedFlow.from_observed">from_observed() (antelope.models.DirectedFlow class method)</a>
+</li>
+        <li><a href="antelope.models.html#antelope.models.Normalizations.from_q">from_q() (antelope.models.Normalizations class method)</a>
+</li>
+        <li><a href="antelope.models.html#antelope.models.QuantityConversion.from_qrresult">from_qrresult() (antelope.models.QuantityConversion class method)</a>
+</li>
+        <li><a href="refs/antelope.refs.html#antelope.refs.catalog_ref.CatalogRef.from_query">from_query() (antelope.refs.catalog_ref.CatalogRef class method)</a>
+</li>
+        <li><a href="antelope.models.html#antelope.models.ReferenceValue.from_rx">from_rx() (antelope.models.ReferenceValue class method)</a>
+</li>
+        <li><a href="antelope.models.html#antelope.models.Entity.from_search">from_search() (antelope.models.Entity class method)</a>
+</li>
+        <li><a href="antelope.models.html#antelope.models.FlowSpec.from_termination">from_termination() (antelope.models.FlowSpec class method)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="G" class="genindex-section">
+  <h2>G</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="antelope.models.html#antelope.models.generate_pydantic_exchanges">generate_pydantic_exchanges() (in module antelope.models)</a>
+</li>
+        <li><a href="antelope.models.html#antelope.models.generate_pydantic_inventory">generate_pydantic_inventory() (in module antelope.models)</a>
+</li>
+        <li><a href="antelope.flows.html#antelope.flows.flow_interface.BaseEntity.get">get() (antelope.flows.flow_interface.BaseEntity method)</a>
+
+        <ul>
+          <li><a href="antelope.flows.html#antelope.flows.flow_interface.NullEntity.get">(antelope.flows.flow_interface.NullEntity method)</a>
+</li>
+          <li><a href="interfaces/basic.html#antelope.interfaces.ibasic.BasicInterface.get">(antelope.interfaces.ibasic.BasicInterface method)</a>
+</li>
+          <li><a href="refs/antelope.refs.html#antelope.refs.base.BaseRef.get">(antelope.refs.base.BaseRef method)</a>
+</li>
+        </ul></li>
+        <li><a href="interfaces/quantity.html#antelope.interfaces.iquantity.QuantityInterface.get_canonical">get_canonical() (antelope.interfaces.iquantity.QuantityInterface method)</a>
+</li>
+        <li><a href="antelope.flows.html#antelope.flows.flow_interface.FlowInterface.get_context">get_context() (antelope.flows.flow_interface.FlowInterface method)</a>
+
+        <ul>
+          <li><a href="interfaces/basic.html#antelope.interfaces.ibasic.BasicInterface.get_context">(antelope.interfaces.ibasic.BasicInterface method)</a>
+</li>
+          <li><a href="refs/flow_ref.html#antelope.refs.flow_ref.FlowRef.get_context">(antelope.refs.flow_ref.FlowRef method)</a>
+</li>
+        </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="refs/process_ref.html#antelope.refs.process_ref.ProcessRef.get_exchange">get_exchange() (antelope.refs.process_ref.ProcessRef method)</a>
+</li>
+        <li><a href="interfaces/quantity.html#antelope.interfaces.iquantity.QuantityInterface.get_factors">get_factors() (antelope.interfaces.iquantity.QuantityInterface method)</a>
+
+        <ul>
+          <li><a href="refs/quantity_ref.html#antelope.refs.quantity_ref.QuantityRef.get_factors">(antelope.refs.quantity_ref.QuantityRef method)</a>
+</li>
+        </ul></li>
+        <li><a href="interfaces/basic.html#antelope.interfaces.ibasic.BasicInterface.get_item">get_item() (antelope.interfaces.ibasic.BasicInterface method)</a>
+
+        <ul>
+          <li><a href="refs/antelope.refs.html#antelope.refs.base.EntityRef.get_item">(antelope.refs.base.EntityRef method)</a>
+</li>
+        </ul></li>
+        <li><a href="interfaces/basic.html#antelope.interfaces.ibasic.BasicInterface.get_reference">get_reference() (antelope.interfaces.ibasic.BasicInterface method)</a>
+
+        <ul>
+          <li><a href="refs/antelope.refs.html#antelope.refs.base.EntityRef.get_reference">(antelope.refs.base.EntityRef method)</a>
+</li>
+        </ul></li>
+        <li><a href="interfaces/basic.html#antelope.interfaces.ibasic.BasicInterface.get_uuid">get_uuid() (antelope.interfaces.ibasic.BasicInterface method)</a>
+</li>
+        <li><a href="antelope.html#antelope.xdb_tokens.GrantSpec.grant_duration">grant_duration (antelope.xdb_tokens.GrantSpec attribute)</a>
+</li>
+        <li><a href="antelope.html#antelope.xdb_tokens.JwtGrant.grants">grants (antelope.xdb_tokens.JwtGrant attribute)</a>
+</li>
+        <li><a href="antelope.html#antelope.xdb_tokens.GrantSpec">GrantSpec (class in antelope.xdb_tokens)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="H" class="genindex-section">
+  <h2>H</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="refs/antelope.refs.html#antelope.refs.catalog_ref.CatalogRef.has_lcia_engine">has_lcia_engine() (antelope.refs.catalog_ref.CatalogRef method)</a>
+
+        <ul>
+          <li><a href="refs/quantity_ref.html#antelope.refs.quantity_ref.QuantityRef.has_lcia_engine">(antelope.refs.quantity_ref.QuantityRef method)</a>
+</li>
+        </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="refs/antelope.refs.html#antelope.refs.base.BaseRef.has_property">has_property() (antelope.refs.base.BaseRef method)</a>
+
+        <ul>
+          <li><a href="refs/antelope.refs.html#antelope.refs.base.EntityRef.has_property">(antelope.refs.base.EntityRef method)</a>
+</li>
+        </ul></li>
+        <li><a href="antelope.html#antelope.xdb_tokens.GrantSpec.has_quota">has_quota (antelope.xdb_tokens.GrantSpec attribute)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="I" class="genindex-section">
+  <h2>I</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="refs/exchange_ref.html#antelope.refs.exchange_ref.InaccessibleExchangeValue">InaccessibleExchangeValue</a>
+</li>
+        <li><a href="interfaces/index.html#antelope.interfaces.iindex.IndexInterface">IndexInterface (class in antelope.interfaces.iindex)</a>
+</li>
+        <li><a href="interfaces/index.html#antelope.interfaces.iindex.IndexRequired">IndexRequired</a>
+</li>
+        <li><a href="antelope.html#antelope.xdb_tokens.GrantSpec.interface">interface (antelope.xdb_tokens.GrantSpec attribute)</a>
+</li>
+        <li><a href="antelope.models.html#antelope.models.OriginMeta.interfaces">interfaces (antelope.models.OriginMeta attribute)</a>
+
+        <ul>
+          <li><a href="antelope.html#antelope.xdb_tokens.ResourceSpec.interfaces">(antelope.xdb_tokens.ResourceSpec attribute)</a>
+</li>
+        </ul></li>
+        <li><a href="interfaces/index.html#antelope.interfaces.iindex.InvalidDirection">InvalidDirection</a>
+</li>
+        <li><a href="refs/antelope.refs.html#antelope.refs.base.InvalidQuery">InvalidQuery</a>
+</li>
+        <li><a href="interfaces/index.html#antelope.interfaces.iindex.InvalidSense">InvalidSense</a>
+</li>
+        <li><a href="interfaces/exchange.html#antelope.interfaces.iexchange.ExchangeInterface.inventory">inventory() (antelope.interfaces.iexchange.ExchangeInterface method)</a>
+
+        <ul>
+          <li><a href="refs/process_ref.html#antelope.refs.process_ref.ProcessRef.inventory">(antelope.refs.process_ref.ProcessRef method)</a>
+</li>
+        </ul></li>
+        <li><a href="refs/process_ref.html#antelope.refs.process_ref.ProcessRef.inventory_as_dataframe">inventory_as_dataframe (antelope.refs.process_ref.ProcessRef property)</a>
+</li>
+        <li><a href="refs/process_ref.html#antelope.refs.process_ref.ProcessRef.inventory_as_series">inventory_as_series (antelope.refs.process_ref.ProcessRef property)</a>
+</li>
+        <li><a href="refs/quantity_ref.html#antelope.refs.quantity_ref.QuantityRef.is_canonical">is_canonical() (antelope.refs.quantity_ref.QuantityRef method)</a>
+</li>
+        <li><a href="antelope.flows.html#antelope.flows.flow.Flow.is_co2">is_co2 (antelope.flows.flow.Flow property)</a>
+</li>
+        <li><a href="refs/exchange_ref.html#antelope.refs.exchange_ref.ExchangeRef.is_cutoff">is_cutoff (antelope.refs.exchange_ref.ExchangeRef property)</a>
+</li>
+        <li><a href="refs/exchange_ref.html#antelope.refs.exchange_ref.ExchangeRef.is_elementary">is_elementary (antelope.refs.exchange_ref.ExchangeRef property)</a>
+</li>
+        <li><a href="antelope.flows.html#antelope.flows.flow_interface.BaseEntity.is_entity">is_entity (antelope.flows.flow_interface.BaseEntity property)</a>
+
+        <ul>
+          <li><a href="refs/exchange_ref.html#antelope.refs.exchange_ref.ExchangeRef.is_entity">(antelope.refs.exchange_ref.ExchangeRef attribute)</a>
+</li>
+        </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="interfaces/background.html#antelope.interfaces.ibackground.BackgroundInterface.is_in_background">is_in_background() (antelope.interfaces.ibackground.BackgroundInterface method)</a>
+
+        <ul>
+          <li><a href="refs/process_ref.html#antelope.refs.process_ref.ProcessRef.is_in_background">(antelope.refs.process_ref.ProcessRef method)</a>
+</li>
+        </ul></li>
+        <li><a href="interfaces/background.html#antelope.interfaces.ibackground.BackgroundInterface.is_in_scc">is_in_scc() (antelope.interfaces.ibackground.BackgroundInterface method)</a>
+</li>
+        <li><a href="antelope.models.html#antelope.models.OriginMeta.is_lcia_engine">is_lcia_engine (antelope.models.OriginMeta attribute)</a>
+</li>
+        <li><a href="interfaces/basic.html#antelope.interfaces.ibasic.BasicInterface.is_lcia_engine">is_lcia_engine() (antelope.interfaces.ibasic.BasicInterface method)</a>
+</li>
+        <li><a href="refs/antelope.refs.html#antelope.refs.catalog_ref.CatalogRef.is_lcia_method">is_lcia_method (antelope.refs.catalog_ref.CatalogRef property)</a>
+
+        <ul>
+          <li><a href="refs/quantity_ref.html#antelope.refs.quantity_ref.QuantityRef.is_lcia_method">(antelope.refs.quantity_ref.QuantityRef property)</a>
+</li>
+        </ul></li>
+        <li><a href="refs/quantity_ref.html#antelope.refs.quantity_ref.QuantityRef.is_local">is_local (antelope.refs.quantity_ref.QuantityRef property)</a>
+</li>
+        <li><a href="antelope.models.html#antelope.models.AllocatedExchange.is_reference">is_reference (antelope.models.AllocatedExchange property)</a>
+
+        <ul>
+          <li><a href="antelope.models.html#antelope.models.ReferenceExchange.is_reference">(antelope.models.ReferenceExchange attribute)</a>
+</li>
+          <li><a href="antelope.models.html#antelope.models.UnallocatedExchange.is_reference">(antelope.models.UnallocatedExchange attribute)</a>
+</li>
+          <li><a href="refs/exchange_ref.html#antelope.refs.exchange_ref.ExchangeRef.is_reference">(antelope.refs.exchange_ref.ExchangeRef attribute)</a>
+</li>
+        </ul></li>
+        <li><a href="antelope.flows.html#antelope.flows.flow.Flow.is_seen">is_seen() (antelope.flows.flow.Flow method)</a>
+</li>
+        <li><a href="antelope.html#antelope.xdb_tokens.JwtGrant.iss">iss (antelope.xdb_tokens.JwtGrant attribute)</a>
+</li>
+        <li><a href="antelope.models.html#antelope.models.auth.AuthorizationGrant.issuer">issuer (antelope.models.auth.AuthorizationGrant attribute)</a>
+
+        <ul>
+          <li><a href="antelope.html#antelope.xdb_tokens.IssuerKey.issuer">(antelope.xdb_tokens.IssuerKey attribute)</a>
+</li>
+        </ul></li>
+        <li><a href="antelope.html#antelope.xdb_tokens.IssuerKey">IssuerKey (class in antelope.xdb_tokens)</a>
+</li>
+        <li><a href="interfaces/basic.html#antelope.interfaces.ibasic.ItemNotFound">ItemNotFound</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="J" class="genindex-section">
+  <h2>J</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="antelope.html#antelope.xdb_tokens.JwtGrant">JwtGrant (class in antelope.xdb_tokens)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="K" class="genindex-section">
+  <h2>K</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="refs/exchange_ref.html#antelope.refs.exchange_ref.ExchangeRef.key">key (antelope.refs.exchange_ref.ExchangeRef property)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="L" class="genindex-section">
+  <h2>L</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="interfaces/background.html#antelope.interfaces.ibackground.BackgroundInterface.lci">lci() (antelope.interfaces.ibackground.BackgroundInterface method)</a>
+
+        <ul>
+          <li><a href="refs/process_ref.html#antelope.refs.process_ref.ProcessRef.lci">(antelope.refs.process_ref.ProcessRef method)</a>
+</li>
+        </ul></li>
+        <li><a href="interfaces/index.html#antelope.interfaces.iindex.IndexInterface.lcia">lcia() (antelope.interfaces.iindex.IndexInterface method)</a>
+
+        <ul>
+          <li><a href="interfaces/quantity.html#antelope.interfaces.iquantity.QuantityInterface.lcia">(antelope.interfaces.iquantity.QuantityInterface method)</a>
+</li>
+        </ul></li>
+        <li><a href="interfaces/index.html#antelope.interfaces.iindex.IndexInterface.lcia_methods">lcia_methods() (antelope.interfaces.iindex.IndexInterface method)</a>
+</li>
+        <li><a href="antelope.models.html#antelope.models.LciaDetail">LciaDetail (class in antelope.models)</a>
+</li>
+        <li><a href="antelope.models.html#antelope.models.LciaResult">LciaResult (class in antelope.models)</a>
+</li>
+        <li><a href="antelope.html#antelope.LcQuery">LcQuery (class in antelope)</a>
+</li>
+        <li><a href="antelope.flows.html#antelope.flows.flow_interface.BaseEntity.link">link (antelope.flows.flow_interface.BaseEntity property)</a>
+
+        <ul>
+          <li><a href="antelope.models.html#antelope.models.EntityRef.link">(antelope.models.EntityRef property)</a>
+</li>
+        </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="interfaces/background.html#antelope.interfaces.ibackground.LinkingError">LinkingError</a>
+</li>
+        <li><a href="refs/exchange_ref.html#antelope.refs.exchange_ref.ExchangeRef.lkey">lkey (antelope.refs.exchange_ref.ExchangeRef property)</a>
+</li>
+        <li><a href="antelope.html#antelope.local_ref">local_ref() (in module antelope)</a>
+</li>
+        <li><a href="antelope.flows.html#antelope.flows.flow.Flow.locale">locale (antelope.flows.flow.Flow property)</a>
+
+        <ul>
+          <li><a href="antelope.flows.html#antelope.flows.flow_interface.FlowInterface.locale">(antelope.flows.flow_interface.FlowInterface property)</a>
+</li>
+          <li><a href="antelope.models.html#antelope.models.FlowEntity.locale">(antelope.models.FlowEntity attribute)</a>
+</li>
+          <li><a href="antelope.models.html#antelope.models.FlowSpec.locale">(antelope.models.FlowSpec attribute)</a>
+</li>
+          <li><a href="antelope.models.html#antelope.models.QuantityConversion.locale">(antelope.models.QuantityConversion attribute)</a>
+</li>
+          <li><a href="refs/exchange_ref.html#antelope.refs.exchange_ref.ExchangeRef.locale">(antelope.refs.exchange_ref.ExchangeRef property)</a>
+</li>
+        </ul></li>
+        <li><a href="antelope.flows.html#antelope.flows.flow.Flow.lookup_cf">lookup_cf() (antelope.flows.flow.Flow method)</a>
+
+        <ul>
+          <li><a href="antelope.flows.html#antelope.flows.flow_interface.FlowInterface.lookup_cf">(antelope.flows.flow_interface.FlowInterface method)</a>
+</li>
+        </ul></li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="M" class="genindex-section">
+  <h2>M</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="antelope.html#antelope.BasicQuery.make_ref">make_ref() (antelope.BasicQuery method)</a>
+
+        <ul>
+          <li><a href="antelope.flows.html#antelope.flows.flow_interface.BaseEntity.make_ref">(antelope.flows.flow_interface.BaseEntity method)</a>
+</li>
+          <li><a href="antelope.flows.html#antelope.flows.flow_interface.NullEntity.make_ref">(antelope.flows.flow_interface.NullEntity method)</a>
+</li>
+          <li><a href="interfaces/abstract.html#antelope.interfaces.abstract_query.AbstractQuery.make_ref">(antelope.interfaces.abstract_query.AbstractQuery method)</a>
+</li>
+          <li><a href="refs/antelope.refs.html#antelope.refs.base.EntityRef.make_ref">(antelope.refs.base.EntityRef method)</a>
+</li>
+        </ul></li>
+        <li><a href="antelope.flows.html#antelope.flows.flow.Flow.match">match() (antelope.flows.flow.Flow method)</a>
+
+        <ul>
+          <li><a href="antelope.flows.html#antelope.flows.flow_interface.FlowInterface.match">(antelope.flows.flow_interface.FlowInterface method)</a>
+</li>
+        </ul></li>
+        <li><a href="refs/antelope.refs.html#antelope.refs.base.BaseRef.merge">merge() (antelope.refs.base.BaseRef method)</a>
+</li>
+        <li><a href="antelope.models.html#antelope.models.AggregatedLciaScore.model_config">model_config (antelope.models.AggregatedLciaScore attribute)</a>
+
+        <ul>
+          <li><a href="antelope.models.html#antelope.models.AllocatedExchange.model_config">(antelope.models.AllocatedExchange attribute)</a>
+</li>
+          <li><a href="antelope.models.html#antelope.models.auth.AuthModel.model_config">(antelope.models.auth.AuthModel attribute)</a>
+</li>
+          <li><a href="antelope.models.html#antelope.models.auth.AuthorizationGrant.model_config">(antelope.models.auth.AuthorizationGrant attribute)</a>
+</li>
+          <li><a href="antelope.models.html#antelope.models.Characterization.model_config">(antelope.models.Characterization attribute)</a>
+</li>
+          <li><a href="antelope.models.html#antelope.models.Context.model_config">(antelope.models.Context attribute)</a>
+</li>
+          <li><a href="antelope.models.html#antelope.models.DirectedFlow.model_config">(antelope.models.DirectedFlow attribute)</a>
+</li>
+          <li><a href="antelope.models.html#antelope.models.DisaggregatedLciaScore.model_config">(antelope.models.DisaggregatedLciaScore attribute)</a>
+</li>
+          <li><a href="antelope.models.html#antelope.models.Entity.model_config">(antelope.models.Entity attribute)</a>
+</li>
+          <li><a href="antelope.models.html#antelope.models.EntityRef.model_config">(antelope.models.EntityRef attribute)</a>
+</li>
+          <li><a href="antelope.models.html#antelope.models.Exchange.model_config">(antelope.models.Exchange attribute)</a>
+</li>
+          <li><a href="antelope.models.html#antelope.models.ExchangeValues.model_config">(antelope.models.ExchangeValues attribute)</a>
+</li>
+          <li><a href="antelope.models.html#antelope.models.ExteriorFlow.model_config">(antelope.models.ExteriorFlow attribute)</a>
+</li>
+          <li><a href="antelope.models.html#antelope.models.FlowEntity.model_config">(antelope.models.FlowEntity attribute)</a>
+</li>
+          <li><a href="antelope.models.html#antelope.models.FlowFactors.model_config">(antelope.models.FlowFactors attribute)</a>
+</li>
+          <li><a href="antelope.models.html#antelope.models.FlowSpec.model_config">(antelope.models.FlowSpec attribute)</a>
+</li>
+          <li><a href="antelope.models.html#antelope.models.LciaDetail.model_config">(antelope.models.LciaDetail attribute)</a>
+</li>
+          <li><a href="antelope.models.html#antelope.models.LciaResult.model_config">(antelope.models.LciaResult attribute)</a>
+</li>
+          <li><a href="antelope.models.html#antelope.models.Normalizations.model_config">(antelope.models.Normalizations attribute)</a>
+</li>
+          <li><a href="antelope.models.html#antelope.models.OriginCount.model_config">(antelope.models.OriginCount attribute)</a>
+</li>
+          <li><a href="antelope.models.html#antelope.models.OriginMeta.model_config">(antelope.models.OriginMeta attribute)</a>
+</li>
+          <li><a href="antelope.models.html#antelope.models.QuantityConversion.model_config">(antelope.models.QuantityConversion attribute)</a>
+</li>
+          <li><a href="antelope.models.html#antelope.models.ReferenceExchange.model_config">(antelope.models.ReferenceExchange attribute)</a>
+</li>
+          <li><a href="antelope.models.html#antelope.models.ReferenceValue.model_config">(antelope.models.ReferenceValue attribute)</a>
+</li>
+          <li><a href="antelope.models.html#antelope.models.ResponseModel.model_config">(antelope.models.ResponseModel attribute)</a>
+</li>
+          <li><a href="antelope.models.html#antelope.models.SummaryLciaScore.model_config">(antelope.models.SummaryLciaScore attribute)</a>
+</li>
+          <li><a href="antelope.models.html#antelope.models.UnallocatedExchange.model_config">(antelope.models.UnallocatedExchange attribute)</a>
+</li>
+          <li><a href="antelope.html#antelope.xdb_tokens.GrantSpec.model_config">(antelope.xdb_tokens.GrantSpec attribute)</a>
+</li>
+          <li><a href="antelope.html#antelope.xdb_tokens.IssuerKey.model_config">(antelope.xdb_tokens.IssuerKey attribute)</a>
+</li>
+          <li><a href="antelope.html#antelope.xdb_tokens.JwtGrant.model_config">(antelope.xdb_tokens.JwtGrant attribute)</a>
+</li>
+          <li><a href="antelope.html#antelope.xdb_tokens.ResourceSpec.model_config">(antelope.xdb_tokens.ResourceSpec attribute)</a>
+</li>
+        </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li>
+    module
+
+        <ul>
+          <li><a href="antelope.html#module-antelope">antelope</a>
+</li>
+          <li><a href="exchanges_from_spreadsheet.html#module-antelope.exchanges_from_spreadsheet">antelope.exchanges_from_spreadsheet</a>
+</li>
+          <li><a href="antelope.flows.html#module-antelope.flows">antelope.flows</a>
+</li>
+          <li><a href="antelope.flows.html#module-antelope.flows.flow">antelope.flows.flow</a>
+</li>
+          <li><a href="antelope.flows.html#module-antelope.flows.flow_interface">antelope.flows.flow_interface</a>
+</li>
+          <li><a href="interfaces/abstract.html#module-antelope.interfaces.abstract_query">antelope.interfaces.abstract_query</a>
+</li>
+          <li><a href="interfaces/background.html#module-antelope.interfaces.ibackground">antelope.interfaces.ibackground</a>
+</li>
+          <li><a href="interfaces/basic.html#module-antelope.interfaces.ibasic">antelope.interfaces.ibasic</a>
+</li>
+          <li><a href="interfaces/configure.html#module-antelope.interfaces.iconfigure">antelope.interfaces.iconfigure</a>
+</li>
+          <li><a href="interfaces/exchange.html#module-antelope.interfaces.iexchange">antelope.interfaces.iexchange</a>
+</li>
+          <li><a href="interfaces/foreground.html#module-antelope.interfaces.iforeground">antelope.interfaces.iforeground</a>
+</li>
+          <li><a href="interfaces/index.html#module-antelope.interfaces.iindex">antelope.interfaces.iindex</a>
+</li>
+          <li><a href="interfaces/quantity.html#module-antelope.interfaces.iquantity">antelope.interfaces.iquantity</a>
+</li>
+          <li><a href="antelope.models.html#module-antelope.models">antelope.models</a>
+</li>
+          <li><a href="antelope.models.html#module-antelope.models.auth">antelope.models.auth</a>
+</li>
+          <li><a href="refs/antelope.refs.html#module-antelope.refs">antelope.refs</a>
+</li>
+          <li><a href="refs/antelope.refs.html#module-antelope.refs.base">antelope.refs.base</a>
+</li>
+          <li><a href="refs/antelope.refs.html#module-antelope.refs.catalog_ref">antelope.refs.catalog_ref</a>
+</li>
+          <li><a href="refs/exchange_ref.html#module-antelope.refs.exchange_ref">antelope.refs.exchange_ref</a>
+</li>
+          <li><a href="refs/flow_ref.html#module-antelope.refs.flow_ref">antelope.refs.flow_ref</a>
+</li>
+          <li><a href="refs/process_ref.html#module-antelope.refs.process_ref">antelope.refs.process_ref</a>
+</li>
+          <li><a href="refs/quantity_ref.html#module-antelope.refs.quantity_ref">antelope.refs.quantity_ref</a>
+</li>
+          <li><a href="antelope.html#module-antelope.xdb_tokens">antelope.xdb_tokens</a>
+</li>
+        </ul></li>
+        <li><a href="refs/process_ref.html#antelope.refs.process_ref.MultipleReferences">MultipleReferences</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="N" class="genindex-section">
+  <h2>N</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="antelope.flows.html#antelope.flows.flow.Flow.name">name (antelope.flows.flow.Flow property)</a>
+
+        <ul>
+          <li><a href="antelope.flows.html#antelope.flows.flow_interface.FlowInterface.name">(antelope.flows.flow_interface.FlowInterface property)</a>
+</li>
+          <li><a href="antelope.models.html#antelope.models.Context.name">(antelope.models.Context attribute)</a>
+</li>
+          <li><a href="antelope.models.html#antelope.models.DirectedFlow.name">(antelope.models.DirectedFlow property)</a>
+</li>
+          <li><a href="refs/antelope.refs.html#antelope.refs.catalog_ref.CatalogRef.name">(antelope.refs.catalog_ref.CatalogRef property)</a>
+</li>
+          <li><a href="refs/process_ref.html#antelope.refs.process_ref.ProcessRef.name">(antelope.refs.process_ref.ProcessRef property)</a>
+</li>
+          <li><a href="refs/quantity_ref.html#antelope.refs.quantity_ref.QuantityRef.name">(antelope.refs.quantity_ref.QuantityRef property)</a>
+</li>
+        </ul></li>
+        <li><a href="interfaces/foreground.html#antelope.interfaces.iforeground.ForegroundInterface.new_flow">new_flow() (antelope.interfaces.iforeground.ForegroundInterface method)</a>
+</li>
+        <li><a href="interfaces/foreground.html#antelope.interfaces.iforeground.ForegroundInterface.new_fragment">new_fragment() (antelope.interfaces.iforeground.ForegroundInterface method)</a>
+</li>
+        <li><a href="interfaces/foreground.html#antelope.interfaces.iforeground.ForegroundInterface.new_quantity">new_quantity() (antelope.interfaces.iforeground.ForegroundInterface method)</a>
+</li>
+        <li><a href="interfaces/basic.html#antelope.interfaces.ibasic.NoAccessToEntity">NoAccessToEntity</a>
+</li>
+        <li><a href="antelope.models.html#antelope.models.auth.NoAuthorization">NoAuthorization</a>
+</li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="refs/antelope.refs.html#antelope.refs.base.NoCatalog">NoCatalog</a>
+</li>
+        <li><a href="antelope.models.html#antelope.models.SummaryLciaScore.node_weight">node_weight (antelope.models.SummaryLciaScore attribute)</a>
+</li>
+        <li><a href="interfaces/quantity.html#antelope.interfaces.iquantity.NoFactorsFound">NoFactorsFound</a>
+</li>
+        <li><a href="refs/process_ref.html#antelope.refs.process_ref.NoReference">NoReference</a>
+</li>
+        <li><a href="antelope.models.html#antelope.models.Normalizations.norm">norm (antelope.models.Normalizations attribute)</a>
+</li>
+        <li><a href="interfaces/quantity.html#antelope.interfaces.iquantity.QuantityInterface.norm">norm() (antelope.interfaces.iquantity.QuantityInterface method)</a>
+
+        <ul>
+          <li><a href="refs/quantity_ref.html#antelope.refs.quantity_ref.QuantityRef.norm">(antelope.refs.quantity_ref.QuantityRef method)</a>
+</li>
+        </ul></li>
+        <li><a href="antelope.models.html#antelope.models.Normalizations">Normalizations (class in antelope.models)</a>
+</li>
+        <li><a href="refs/antelope.refs.html#antelope.refs.base.NoUuid">NoUuid</a>
+</li>
+        <li><a href="antelope.models.html#antelope.models.Characterization.null">null() (antelope.models.Characterization class method)</a>
+</li>
+        <li><a href="antelope.flows.html#antelope.flows.flow_interface.NullEntity">NullEntity (class in antelope.flows.flow_interface)</a>
+</li>
+        <li><a href="interfaces/index.html#antelope.interfaces.iindex.num_dir">num_dir() (in module antelope.interfaces.iindex)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="O" class="genindex-section">
+  <h2>O</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="antelope.models.html#antelope.models.LciaResult.object">object (antelope.models.LciaResult attribute)</a>
+</li>
+        <li><a href="interfaces/foreground.html#antelope.interfaces.iforeground.ForegroundInterface.observe">observe() (antelope.interfaces.iforeground.ForegroundInterface method)</a>
+</li>
+        <li><a href="interfaces/foreground.html#antelope.interfaces.iforeground.ForegroundInterface.observe_unit_score">observe_unit_score() (antelope.interfaces.iforeground.ForegroundInterface method)</a>
+</li>
+        <li><a href="antelope.html#antelope.xdb_tokens.ResourceSpec.options">options (antelope.xdb_tokens.ResourceSpec attribute)</a>
+</li>
+        <li><a href="antelope.html#antelope.BasicQuery.origin">origin (antelope.BasicQuery property)</a>
+
+        <ul>
+          <li><a href="antelope.flows.html#antelope.flows.flow_interface.BaseEntity.origin">(antelope.flows.flow_interface.BaseEntity property)</a>
+</li>
+          <li><a href="antelope.flows.html#antelope.flows.flow_interface.NullEntity.origin">(antelope.flows.flow_interface.NullEntity property)</a>
+</li>
+          <li><a href="interfaces/abstract.html#antelope.interfaces.abstract_query.AbstractQuery.origin">(antelope.interfaces.abstract_query.AbstractQuery property)</a>
+</li>
+          <li><a href="antelope.models.html#antelope.models.AggregatedLciaScore.origin">(antelope.models.AggregatedLciaScore attribute)</a>
+</li>
+          <li><a href="antelope.models.html#antelope.models.auth.AuthorizationGrant.origin">(antelope.models.auth.AuthorizationGrant attribute)</a>
+</li>
+          <li><a href="antelope.models.html#antelope.models.Characterization.origin">(antelope.models.Characterization attribute)</a>
+</li>
+          <li><a href="antelope.models.html#antelope.models.DirectedFlow.origin">(antelope.models.DirectedFlow property)</a>
+</li>
+          <li><a href="antelope.models.html#antelope.models.EntityRef.origin">(antelope.models.EntityRef attribute)</a>
+</li>
+          <li><a href="antelope.models.html#antelope.models.Exchange.origin">(antelope.models.Exchange attribute)</a>
+</li>
+          <li><a href="antelope.models.html#antelope.models.FlowFactors.origin">(antelope.models.FlowFactors attribute)</a>
+</li>
+          <li><a href="antelope.models.html#antelope.models.FlowSpec.origin">(antelope.models.FlowSpec attribute)</a>
+</li>
+          <li><a href="antelope.models.html#antelope.models.Normalizations.origin">(antelope.models.Normalizations attribute)</a>
+</li>
+          <li><a href="antelope.models.html#antelope.models.OriginCount.origin">(antelope.models.OriginCount attribute)</a>
+</li>
+          <li><a href="antelope.models.html#antelope.models.OriginMeta.origin">(antelope.models.OriginMeta attribute)</a>
+</li>
+          <li><a href="antelope.models.html#antelope.models.QuantityConversion.origin">(antelope.models.QuantityConversion attribute)</a>
+</li>
+          <li><a href="refs/antelope.refs.html#antelope.refs.base.BaseRef.origin">(antelope.refs.base.BaseRef property)</a>
+</li>
+          <li><a href="refs/exchange_ref.html#antelope.refs.exchange_ref.ExchangeRef.origin">(antelope.refs.exchange_ref.ExchangeRef property)</a>
+</li>
+          <li><a href="antelope.html#antelope.xdb_tokens.GrantSpec.origin">(antelope.xdb_tokens.GrantSpec attribute)</a>
+</li>
+          <li><a href="antelope.html#antelope.xdb_tokens.ResourceSpec.origin">(antelope.xdb_tokens.ResourceSpec attribute)</a>
+</li>
+        </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="interfaces/index.html#antelope.interfaces.iindex.IndexInterface.originate">originate() (antelope.interfaces.iindex.IndexInterface method)</a>
+
+        <ul>
+          <li><a href="refs/flow_ref.html#antelope.refs.flow_ref.FlowRef.originate">(antelope.refs.flow_ref.FlowRef method)</a>
+</li>
+        </ul></li>
+        <li><a href="antelope.models.html#antelope.models.OriginCount">OriginCount (class in antelope.models)</a>
+</li>
+        <li><a href="antelope.models.html#antelope.models.OriginMeta">OriginMeta (class in antelope.models)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="P" class="genindex-section">
+  <h2>P</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="interfaces/foreground.html#antelope.interfaces.iforeground.ForegroundInterface.parameters">parameters() (antelope.interfaces.iforeground.ForegroundInterface method)</a>
+</li>
+        <li><a href="antelope.models.html#antelope.models.Context.parent">parent (antelope.models.Context attribute)</a>
+</li>
+        <li><a href="antelope.flows.html#antelope.flows.flow.Flow.pop_char">pop_char() (antelope.flows.flow.Flow method)</a>
+
+        <ul>
+          <li><a href="antelope.flows.html#antelope.flows.flow_interface.FlowInterface.pop_char">(antelope.flows.flow_interface.FlowInterface method)</a>
+</li>
+        </ul></li>
+        <li><a href="interfaces/quantity.html#antelope.interfaces.iquantity.QuantityInterface.post_flows">post_flows() (antelope.interfaces.iquantity.QuantityInterface method)</a>
+</li>
+        <li><a href="interfaces/abstract.html#antelope.interfaces.abstract_query.PrivateArchive">PrivateArchive</a>
+</li>
+        <li><a href="antelope.models.html#antelope.models.Exchange.process">process (antelope.models.Exchange attribute)</a>
+
+        <ul>
+          <li><a href="refs/exchange_ref.html#antelope.refs.exchange_ref.ExchangeRef.process">(antelope.refs.exchange_ref.ExchangeRef property)</a>
+</li>
+        </ul></li>
+        <li><a href="interfaces/index.html#antelope.interfaces.iindex.IndexInterface.processes">processes() (antelope.interfaces.iindex.IndexInterface method)</a>
+</li>
+        <li><a href="refs/process_ref.html#antelope.refs.process_ref.ProcessRef">ProcessRef (class in antelope.refs.process_ref)</a>
+</li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="interfaces/quantity.html#antelope.interfaces.iquantity.QuantityInterface.profile">profile() (antelope.interfaces.iquantity.QuantityInterface method)</a>
+
+        <ul>
+          <li><a href="refs/flow_ref.html#antelope.refs.flow_ref.FlowRef.profile">(antelope.refs.flow_ref.FlowRef method)</a>
+</li>
+        </ul></li>
+        <li><a href="antelope.models.html#antelope.models.Entity.properties">properties (antelope.models.Entity attribute)</a>
+</li>
+        <li><a href="antelope.flows.html#antelope.flows.flow_interface.BaseEntity.properties">properties() (antelope.flows.flow_interface.BaseEntity method)</a>
+
+        <ul>
+          <li><a href="antelope.flows.html#antelope.flows.flow_interface.NullEntity.properties">(antelope.flows.flow_interface.NullEntity method)</a>
+</li>
+          <li><a href="interfaces/basic.html#antelope.interfaces.ibasic.BasicInterface.properties">(antelope.interfaces.ibasic.BasicInterface method)</a>
+</li>
+          <li><a href="refs/antelope.refs.html#antelope.refs.base.BaseRef.properties">(antelope.refs.base.BaseRef method)</a>
+</li>
+          <li><a href="refs/antelope.refs.html#antelope.refs.base.EntityRef.properties">(antelope.refs.base.EntityRef method)</a>
+</li>
+        </ul></li>
+        <li><a href="refs/antelope.refs.html#antelope.refs.base.PropertyExists">PropertyExists</a>
+</li>
+        <li><a href="antelope.html#antelope.xdb_tokens.IssuerKey.public_key">public_key (antelope.xdb_tokens.IssuerKey attribute)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="Q" class="genindex-section">
+  <h2>Q</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="antelope.html#antelope.q_node_activity">q_node_activity() (in module antelope)</a>
+</li>
+        <li><a href="antelope.html#antelope.xdb_tokens.GrantSpec.qdb">qdb (antelope.xdb_tokens.GrantSpec attribute)</a>
+</li>
+        <li><a href="interfaces/index.html#antelope.interfaces.iindex.IndexInterface.quantities">quantities() (antelope.interfaces.iindex.IndexInterface method)</a>
+</li>
+        <li><a href="antelope.models.html#antelope.models.LciaResult.quantity">quantity (antelope.models.LciaResult attribute)</a>
+
+        <ul>
+          <li><a href="antelope.models.html#antelope.models.Normalizations.quantity">(antelope.models.Normalizations attribute)</a>
+</li>
+        </ul></li>
+        <li><a href="antelope.models.html#antelope.models.DirectedFlow.quantity_ref">quantity_ref (antelope.models.DirectedFlow property)</a>
+
+        <ul>
+          <li><a href="antelope.models.html#antelope.models.FlowSpec.quantity_ref">(antelope.models.FlowSpec attribute)</a>
+</li>
+        </ul></li>
+        <li><a href="interfaces/quantity.html#antelope.interfaces.iquantity.QuantityInterface.quantity_relation">quantity_relation() (antelope.interfaces.iquantity.QuantityInterface method)</a>
+
+        <ul>
+          <li><a href="refs/quantity_ref.html#antelope.refs.quantity_ref.QuantityRef.quantity_relation">(antelope.refs.quantity_ref.QuantityRef method)</a>
+</li>
+        </ul></li>
+        <li><a href="refs/antelope.refs.html#antelope.refs.catalog_ref.CatalogRef.quantity_terms">quantity_terms() (antelope.refs.catalog_ref.CatalogRef method)</a>
+
+        <ul>
+          <li><a href="refs/quantity_ref.html#antelope.refs.quantity_ref.QuantityRef.quantity_terms">(antelope.refs.quantity_ref.QuantityRef method)</a>
+</li>
+        </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="antelope.models.html#antelope.models.QuantityConversion">QuantityConversion (class in antelope.models)</a>
+</li>
+        <li><a href="interfaces/quantity.html#antelope.interfaces.iquantity.QuantityInterface">QuantityInterface (class in antelope.interfaces.iquantity)</a>
+</li>
+        <li><a href="refs/quantity_ref.html#antelope.refs.quantity_ref.QuantityRef">QuantityRef (class in antelope.refs.quantity_ref)</a>
+</li>
+        <li><a href="interfaces/quantity.html#antelope.interfaces.iquantity.QuantityRequired">QuantityRequired</a>
+</li>
+        <li><a href="antelope.flows.html#antelope.flows.flow.Flow.quell_co2">quell_co2 (antelope.flows.flow.Flow property)</a>
+</li>
+        <li><a href="antelope.models.html#antelope.models.Characterization.query_quantity">query_quantity (antelope.models.Characterization attribute)</a>
+
+        <ul>
+          <li><a href="antelope.models.html#antelope.models.QuantityConversion.query_quantity">(antelope.models.QuantityConversion attribute)</a>
+</li>
+        </ul></li>
+        <li><a href="refs/antelope.refs.html#antelope.refs.base.EntityRef.query_synonyms">query_synonyms() (antelope.refs.base.EntityRef method)</a>
+</li>
+        <li><a href="antelope.models.html#antelope.models.Characterization.query_unit">query_unit (antelope.models.Characterization attribute)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="R" class="genindex-section">
+  <h2>R</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="antelope.models.html#antelope.models.AllocatedExchange.ref_flow">ref_flow (antelope.models.AllocatedExchange attribute)</a>
+</li>
+        <li><a href="antelope.models.html#antelope.models.Characterization.ref_quantity">ref_quantity (antelope.models.Characterization attribute)</a>
+
+        <ul>
+          <li><a href="antelope.models.html#antelope.models.QuantityConversion.ref_quantity">(antelope.models.QuantityConversion attribute)</a>
+</li>
+        </ul></li>
+        <li><a href="antelope.models.html#antelope.models.Characterization.ref_unit">ref_unit (antelope.models.Characterization attribute)</a>
+</li>
+        <li><a href="refs/process_ref.html#antelope.refs.process_ref.ProcessRef.reference">reference() (antelope.refs.process_ref.ProcessRef method)</a>
+</li>
+        <li><a href="antelope.flows.html#antelope.flows.flow_interface.BaseEntity.reference_entity">reference_entity (antelope.flows.flow_interface.BaseEntity property)</a>
+
+        <ul>
+          <li><a href="antelope.flows.html#antelope.flows.flow_interface.NullEntity.reference_entity">(antelope.flows.flow_interface.NullEntity attribute)</a>
+</li>
+          <li><a href="refs/antelope.refs.html#antelope.refs.base.EntityRef.reference_entity">(antelope.refs.base.EntityRef property)</a>
+</li>
+          <li><a href="refs/antelope.refs.html#antelope.refs.catalog_ref.CatalogRef.reference_entity">(antelope.refs.catalog_ref.CatalogRef property)</a>
+</li>
+          <li><a href="refs/process_ref.html#antelope.refs.process_ref.ProcessRef.reference_entity">(antelope.refs.process_ref.ProcessRef property)</a>
+</li>
+        </ul></li>
+        <li><a href="refs/antelope.refs.html#antelope.refs.base.EntityRef.reference_field">reference_field (antelope.refs.base.EntityRef property)</a>
+</li>
+        <li><a href="refs/process_ref.html#antelope.refs.process_ref.ProcessRef.reference_value">reference_value() (antelope.refs.process_ref.ProcessRef method)</a>
+</li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="antelope.models.html#antelope.models.ReferenceExchange">ReferenceExchange (class in antelope.models)</a>
+</li>
+        <li><a href="refs/process_ref.html#antelope.refs.process_ref.ProcessRef.references">references() (antelope.refs.process_ref.ProcessRef method)</a>
+</li>
+        <li><a href="antelope.models.html#antelope.models.ReferenceValue">ReferenceValue (class in antelope.models)</a>
+</li>
+        <li><a href="refs/quantity_ref.html#antelope.refs.quantity_ref.RefQuantityRequired">RefQuantityRequired</a>
+</li>
+        <li><a href="refs/antelope.refs.html#antelope.refs.catalog_ref.CatalogRef.resolve">resolve() (antelope.refs.catalog_ref.CatalogRef method)</a>
+</li>
+        <li><a href="refs/antelope.refs.html#antelope.refs.base.BaseRef.resolved">resolved (antelope.refs.base.BaseRef property)</a>
+
+        <ul>
+          <li><a href="refs/antelope.refs.html#antelope.refs.base.EntityRef.resolved">(antelope.refs.base.EntityRef property)</a>
+</li>
+        </ul></li>
+        <li><a href="antelope.html#antelope.xdb_tokens.ResourceSpec">ResourceSpec (class in antelope.xdb_tokens)</a>
+</li>
+        <li><a href="antelope.models.html#antelope.models.ResponseModel">ResponseModel (class in antelope.models)</a>
+</li>
+        <li><a href="antelope.models.html#antelope.models.AggregatedLciaScore.result">result (antelope.models.AggregatedLciaScore attribute)</a>
+
+        <ul>
+          <li><a href="antelope.models.html#antelope.models.LciaDetail.result">(antelope.models.LciaDetail attribute)</a>
+</li>
+        </ul></li>
+        <li><a href="refs/exchange_ref.html#antelope.refs.exchange_ref.RxRef">RxRef (class in antelope.refs.exchange_ref)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="S" class="genindex-section">
+  <h2>S</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="interfaces/foreground.html#antelope.interfaces.iforeground.ForegroundInterface.save">save() (antelope.interfaces.iforeground.ForegroundInterface method)</a>
+</li>
+        <li><a href="antelope.models.html#antelope.models.LciaResult.scale">scale (antelope.models.LciaResult attribute)</a>
+</li>
+        <li><a href="antelope.models.html#antelope.models.LciaResult.scenario">scenario (antelope.models.LciaResult attribute)</a>
+</li>
+        <li><a href="antelope.flows.html#antelope.flows.flow.Flow.see_chars">see_chars() (antelope.flows.flow.Flow method)</a>
+</li>
+        <li><a href="antelope.models.html#antelope.models.Context.sense">sense (antelope.models.Context attribute)</a>
+</li>
+        <li><a href="antelope.models.html#antelope.models.auth.AuthorizationGrant.serialize">serialize() (antelope.models.auth.AuthorizationGrant method)</a>
+
+        <ul>
+          <li><a href="antelope.models.html#antelope.models.Entity.serialize">(antelope.models.Entity method)</a>
+</li>
+          <li><a href="antelope.models.html#antelope.models.FlowEntity.serialize">(antelope.models.FlowEntity method)</a>
+</li>
+          <li><a href="refs/antelope.refs.html#antelope.refs.base.BaseRef.serialize">(antelope.refs.base.BaseRef method)</a>
+</li>
+          <li><a href="refs/antelope.refs.html#antelope.refs.base.EntityRef.serialize">(antelope.refs.base.EntityRef method)</a>
+</li>
+          <li><a href="refs/flow_ref.html#antelope.refs.flow_ref.FlowRef.serialize">(antelope.refs.flow_ref.FlowRef method)</a>
+</li>
+          <li><a href="refs/quantity_ref.html#antelope.refs.quantity_ref.QuantityRef.serialize">(antelope.refs.quantity_ref.QuantityRef method)</a>
+</li>
+          <li><a href="antelope.html#antelope.xdb_tokens.GrantSpec.serialize">(antelope.xdb_tokens.GrantSpec method)</a>
+</li>
+        </ul></li>
+        <li><a href="interfaces/configure.html#antelope.interfaces.iconfigure.ConfigureInterface.set_reference">set_reference() (antelope.interfaces.iconfigure.ConfigureInterface method)</a>
+</li>
+        <li><a href="interfaces/background.html#antelope.interfaces.ibackground.BackgroundInterface.setup_bm">setup_bm() (antelope.interfaces.ibackground.BackgroundInterface method)</a>
+</li>
+        <li><a href="refs/antelope.refs.html#antelope.refs.base.BaseRef.show">show() (antelope.refs.base.BaseRef method)</a>
+</li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="antelope.models.html#antelope.models.Entity.signature_fields">signature_fields() (antelope.models.Entity method)</a>
+
+        <ul>
+          <li><a href="refs/antelope.refs.html#antelope.refs.base.EntityRef.signature_fields">(antelope.refs.base.EntityRef method)</a>
+</li>
+          <li><a href="refs/process_ref.html#antelope.refs.process_ref.ProcessRef.signature_fields">(antelope.refs.process_ref.ProcessRef method)</a>
+</li>
+        </ul></li>
+        <li><a href="antelope.html#antelope.xdb_tokens.ResourceSpec.source">source (antelope.xdb_tokens.ResourceSpec attribute)</a>
+</li>
+        <li><a href="interfaces/foreground.html#antelope.interfaces.iforeground.ForegroundInterface.split_subfragment">split_subfragment() (antelope.interfaces.iforeground.ForegroundInterface method)</a>
+</li>
+        <li><a href="antelope.html#antelope.xdb_tokens.ResourceSpec.static">static (antelope.xdb_tokens.ResourceSpec attribute)</a>
+</li>
+        <li><a href="antelope.html#antelope.xdb_tokens.JwtGrant.sub">sub (antelope.xdb_tokens.JwtGrant attribute)</a>
+</li>
+        <li><a href="antelope.models.html#antelope.models.Context.subcontexts">subcontexts (antelope.models.Context attribute)</a>
+</li>
+        <li><a href="antelope.models.html#antelope.models.LciaResult.summaries">summaries (antelope.models.LciaResult attribute)</a>
+</li>
+        <li><a href="antelope.models.html#antelope.models.LciaResult.summary">summary() (antelope.models.LciaResult class method)</a>
+</li>
+        <li><a href="antelope.models.html#antelope.models.SummaryLciaScore">SummaryLciaScore (class in antelope.models)</a>
+</li>
+        <li><a href="antelope.flows.html#antelope.flows.flow.Flow.synonyms">synonyms (antelope.flows.flow.Flow property)</a>
+
+        <ul>
+          <li><a href="antelope.flows.html#antelope.flows.flow_interface.FlowInterface.synonyms">(antelope.flows.flow_interface.FlowInterface property)</a>
+</li>
+        </ul></li>
+        <li><a href="interfaces/basic.html#antelope.interfaces.ibasic.BasicInterface.synonyms">synonyms() (antelope.interfaces.ibasic.BasicInterface method)</a>
+</li>
+        <li><a href="interfaces/background.html#antelope.interfaces.ibackground.BackgroundInterface.sys_lci">sys_lci() (antelope.interfaces.ibackground.BackgroundInterface method)</a>
+</li>
+        <li><a href="interfaces/background.html#antelope.interfaces.ibackground.BackgroundInterface.sys_lcia">sys_lcia() (antelope.interfaces.ibackground.BackgroundInterface method)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="T" class="genindex-section">
+  <h2>T</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="interfaces/index.html#antelope.interfaces.iindex.IndexInterface.targets">targets() (antelope.interfaces.iindex.IndexInterface method)</a>
+
+        <ul>
+          <li><a href="refs/flow_ref.html#antelope.refs.flow_ref.FlowRef.targets">(antelope.refs.flow_ref.FlowRef method)</a>
+</li>
+        </ul></li>
+        <li><a href="refs/exchange_ref.html#antelope.refs.exchange_ref.ExchangeRef.term_ref">term_ref (antelope.refs.exchange_ref.ExchangeRef property)</a>
+</li>
+        <li><a href="exchanges_from_spreadsheet.html#antelope.exchanges_from_spreadsheet.TermDictDeprecated">TermDictDeprecated</a>
+</li>
+        <li><a href="refs/flow_ref.html#antelope.refs.flow_ref.FlowRef.terminate">terminate() (antelope.refs.flow_ref.FlowRef method)</a>
+</li>
+        <li><a href="antelope.models.html#antelope.models.Exchange.termination">termination (antelope.models.Exchange attribute)</a>
+
+        <ul>
+          <li><a href="antelope.models.html#antelope.models.ExteriorFlow.termination">(antelope.models.ExteriorFlow property)</a>
+</li>
+          <li><a href="antelope.models.html#antelope.models.ReferenceExchange.termination">(antelope.models.ReferenceExchange attribute)</a>
+</li>
+          <li><a href="refs/exchange_ref.html#antelope.refs.exchange_ref.ExchangeRef.termination">(antelope.refs.exchange_ref.ExchangeRef property)</a>
+</li>
+        </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="antelope.html#antelope.xdb_tokens.JwtGrant.tid">tid (antelope.xdb_tokens.JwtGrant attribute)</a>
+</li>
+        <li><a href="antelope.models.html#antelope.models.LciaResult.total">total (antelope.models.LciaResult attribute)</a>
+</li>
+        <li><a href="interfaces/foreground.html#antelope.interfaces.iforeground.ForegroundInterface.traverse">traverse() (antelope.interfaces.iforeground.ForegroundInterface method)</a>
+</li>
+        <li><a href="interfaces/foreground.html#antelope.interfaces.iforeground.ForegroundInterface.tree">tree() (antelope.interfaces.iforeground.ForegroundInterface method)</a>
+</li>
+        <li><a href="antelope.models.html#antelope.models.Exchange.type">type (antelope.models.Exchange attribute)</a>
+
+        <ul>
+          <li><a href="refs/exchange_ref.html#antelope.refs.exchange_ref.ExchangeRef.type">(antelope.refs.exchange_ref.ExchangeRef property)</a>
+</li>
+        </ul></li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="U" class="genindex-section">
+  <h2>U</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="antelope.models.html#antelope.models.UnallocatedExchange">UnallocatedExchange (class in antelope.models)</a>
+</li>
+        <li><a href="refs/exchange_ref.html#antelope.refs.exchange_ref.UnallocatedExchangeError">UnallocatedExchangeError</a>
+</li>
+        <li><a href="antelope.models.html#antelope.models.AllocatedExchange.uncertainty">uncertainty (antelope.models.AllocatedExchange attribute)</a>
+
+        <ul>
+          <li><a href="antelope.models.html#antelope.models.ExchangeValues.uncertainty">(antelope.models.ExchangeValues attribute)</a>
+</li>
+          <li><a href="antelope.models.html#antelope.models.UnallocatedExchange.uncertainty">(antelope.models.UnallocatedExchange attribute)</a>
+</li>
+        </ul></li>
+        <li><a href="antelope.flows.html#antelope.flows.flow_interface.FlowInterface.unit">unit (antelope.flows.flow_interface.FlowInterface property)</a>
+
+        <ul>
+          <li><a href="refs/antelope.refs.html#antelope.refs.catalog_ref.CatalogRef.unit">(antelope.refs.catalog_ref.CatalogRef property)</a>
+</li>
+          <li><a href="refs/exchange_ref.html#antelope.refs.exchange_ref.ExchangeRef.unit">(antelope.refs.exchange_ref.ExchangeRef property)</a>
+</li>
+          <li><a href="refs/quantity_ref.html#antelope.refs.quantity_ref.QuantityRef.unit">(antelope.refs.quantity_ref.QuantityRef property)</a>
+</li>
+        </ul></li>
+        <li><a href="antelope.models.html#antelope.models.SummaryLciaScore.unit_score">unit_score (antelope.models.SummaryLciaScore attribute)</a>
+</li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="refs/antelope.refs.html#antelope.refs.catalog_ref.UnknownOrigin">UnknownOrigin</a>
+</li>
+        <li><a href="interfaces/index.html#antelope.interfaces.iindex.IndexInterface.unmatched_flows">unmatched_flows() (antelope.interfaces.iindex.IndexInterface method)</a>
+</li>
+        <li><a href="refs/process_ref.html#antelope.refs.process_ref.ProcessRef.unobserved_lci">unobserved_lci() (antelope.refs.process_ref.ProcessRef method)</a>
+</li>
+        <li><a href="interfaces/configure.html#antelope.interfaces.iconfigure.ConfigureInterface.unset_reference">unset_reference() (antelope.interfaces.iconfigure.ConfigureInterface method)</a>
+</li>
+        <li><a href="antelope.models.html#antelope.models.auth.AuthorizationGrant.update">update (antelope.models.auth.AuthorizationGrant attribute)</a>
+
+        <ul>
+          <li><a href="antelope.html#antelope.xdb_tokens.GrantSpec.update">(antelope.xdb_tokens.GrantSpec attribute)</a>
+</li>
+        </ul></li>
+        <li><a href="antelope.html#antelope.UpdateAccessRequired">UpdateAccessRequired</a>
+</li>
+        <li><a href="antelope.models.html#antelope.models.auth.AuthorizationGrant.user">user (antelope.models.auth.AuthorizationGrant attribute)</a>
+</li>
+        <li><a href="antelope.html#antelope.xdb_tokens.GrantSpec.username">username (antelope.xdb_tokens.GrantSpec attribute)</a>
+</li>
+        <li><a href="refs/antelope.refs.html#antelope.refs.base.BaseRef.uuid">uuid (antelope.refs.base.BaseRef property)</a>
+
+        <ul>
+          <li><a href="refs/antelope.refs.html#antelope.refs.base.EntityRef.uuid">(antelope.refs.base.EntityRef property)</a>
+</li>
+        </ul></li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="V" class="genindex-section">
+  <h2>V</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="interfaces/index.html#antelope.interfaces.iindex.valid_sense">valid_sense() (in module antelope.interfaces.iindex)</a>
+</li>
+        <li><a href="interfaces/basic.html#antelope.interfaces.ibasic.BasicInterface.validate">validate() (antelope.interfaces.ibasic.BasicInterface method)</a>
+
+        <ul>
+          <li><a href="refs/antelope.refs.html#antelope.refs.base.EntityRef.validate">(antelope.refs.base.EntityRef method)</a>
+</li>
+          <li><a href="refs/antelope.refs.html#antelope.refs.catalog_ref.CatalogRef.validate">(antelope.refs.catalog_ref.CatalogRef method)</a>
+</li>
+        </ul></li>
+        <li><a href="antelope.models.html#antelope.models.AllocatedExchange.value">value (antelope.models.AllocatedExchange attribute)</a>
+
+        <ul>
+          <li><a href="antelope.models.html#antelope.models.Characterization.value">(antelope.models.Characterization attribute)</a>
+</li>
+          <li><a href="antelope.models.html#antelope.models.QuantityConversion.value">(antelope.models.QuantityConversion attribute)</a>
+</li>
+          <li><a href="antelope.models.html#antelope.models.ReferenceValue.value">(antelope.models.ReferenceValue attribute)</a>
+</li>
+          <li><a href="antelope.models.html#antelope.models.UnallocatedExchange.value">(antelope.models.UnallocatedExchange attribute)</a>
+</li>
+          <li><a href="refs/exchange_ref.html#antelope.refs.exchange_ref.ExchangeRef.value">(antelope.refs.exchange_ref.ExchangeRef property)</a>
+</li>
+        </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="exchanges_from_spreadsheet.html#antelope.exchanges_from_spreadsheet.ValueIsBalance">ValueIsBalance</a>
+</li>
+        <li><a href="antelope.models.html#antelope.models.auth.AuthorizationGrant.values">values (antelope.models.auth.AuthorizationGrant attribute)</a>
+
+        <ul>
+          <li><a href="antelope.models.html#antelope.models.ExchangeValues.values">(antelope.models.ExchangeValues attribute)</a>
+</li>
+          <li><a href="refs/exchange_ref.html#antelope.refs.exchange_ref.ExchangeRef.values">(antelope.refs.exchange_ref.ExchangeRef property)</a>
+</li>
+          <li><a href="antelope.html#antelope.xdb_tokens.GrantSpec.values">(antelope.xdb_tokens.GrantSpec attribute)</a>
+</li>
+        </ul></li>
+        <li><a href="antelope.html#antelope.ValuesAccessRequired">ValuesAccessRequired</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="W" class="genindex-section">
+  <h2>W</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="antelope.models.html#antelope.models.Normalizations.weight">weight (antelope.models.Normalizations attribute)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          
+          
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2024, Brandon Kuczenski
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer no-toc">
+      
+      
+      
+    </aside>
+  </div>
+</div><script src="_static/documentation_options.js?v=e259d695"></script>
+    <script src="_static/doctools.js?v=9bcbadda"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/scripts/furo.js?v=46bd48cc"></script>
+    </body>
+</html>

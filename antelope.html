@@ -1,0 +1,873 @@
+<!doctype html>
+<html class="no-js" lang="en" data-content_root="./">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="Antelope Query and Subclasses" href="interfaces/abstract.html" /><link rel="prev" title="What is a Fragment?" href="fragments.html" />
+        <link rel="prefetch" href="_static/wordmark-Antelope-fixed.png" as="image" />
+
+    <!-- Generated with Sphinx 8.2.3 and Furo 2025.07.19 -->
+        <title>API Documentation - Antelope 0.3.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=25af2a20" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/furo-extensions.css?v=8dab3a3b" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #eeffcc;
+  --color-code-foreground: black;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #2b2b2b;
+  --color-code-foreground: #f8f8f2;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #2b2b2b;
+  --color-code-foreground: #f8f8f2;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-with-moon" viewBox="0 0 24 24">
+    <title>Auto light/dark, in light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path style="opacity: 50%" d="M 5.411 14.504 C 5.471 14.504 5.532 14.504 5.591 14.504 C 3.639 16.319 4.383 19.569 6.931 20.352 C 7.693 20.586 8.512 20.551 9.25 20.252 C 8.023 23.207 4.056 23.725 2.11 21.184 C 0.166 18.642 1.702 14.949 4.874 14.536 C 5.051 14.512 5.231 14.5 5.411 14.5 L 5.411 14.504 Z"/>
+      <line x1="14.5" y1="3.25" x2="14.5" y2="1.25"/>
+      <line x1="14.5" y1="15.85" x2="14.5" y2="17.85"/>
+      <line x1="10.044" y1="5.094" x2="8.63" y2="3.68"/>
+      <line x1="19" y1="14.05" x2="20.414" y2="15.464"/>
+      <line x1="8.2" y1="9.55" x2="6.2" y2="9.55"/>
+      <line x1="20.8" y1="9.55" x2="22.8" y2="9.55"/>
+      <line x1="10.044" y1="14.006" x2="8.63" y2="15.42"/>
+      <line x1="19" y1="5.05" x2="20.414" y2="3.636"/>
+      <circle cx="14.5" cy="9.55" r="3.6"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon-with-sun" viewBox="0 0 24 24">
+    <title>Auto light/dark, in dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path d="M 8.282 7.007 C 8.385 7.007 8.494 7.007 8.595 7.007 C 5.18 10.184 6.481 15.869 10.942 17.24 C 12.275 17.648 13.706 17.589 15 17.066 C 12.851 22.236 5.91 23.143 2.505 18.696 C -0.897 14.249 1.791 7.786 7.342 7.063 C 7.652 7.021 7.965 7 8.282 7 L 8.282 7.007 Z"/>
+      <line style="opacity: 50%" x1="18" y1="3.705" x2="18" y2="2.5"/>
+      <line style="opacity: 50%" x1="18" y1="11.295" x2="18" y2="12.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="4.816" x2="14.464" y2="3.964"/>
+      <line style="opacity: 50%" x1="20.711" y1="10.212" x2="21.563" y2="11.063"/>
+      <line style="opacity: 50%" x1="14.205" y1="7.5" x2="13.001" y2="7.5"/>
+      <line style="opacity: 50%" x1="21.795" y1="7.5" x2="23" y2="7.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="10.184" x2="14.464" y2="11.036"/>
+      <line style="opacity: 50%" x1="20.711" y1="4.789" x2="21.563" y2="3.937"/>
+      <circle style="opacity: 50%" cx="18" cy="7.5" r="2.169"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-pencil" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-pencil-code">
+      <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+      <path d="M13.5 6.5l4 4" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+  <symbol id="svg-eye" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-eye-code">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+      <path
+        d="M11.11 17.958c-3.209 -.307 -5.91 -2.293 -8.11 -5.958c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6c-.21 .352 -.427 .688 -.647 1.008" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation">
+  <div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+  <div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <div class="visually-hidden">Toggle site navigation sidebar</div>
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="index.html"><div class="brand">Antelope 0.3.0 documentation</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle">
+          <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+          <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+          <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <div class="visually-hidden">Toggle table of contents sidebar</div>
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="index.html">
+  <div class="sidebar-logo-container">
+    <img class="sidebar-logo" src="_static/wordmark-Antelope-fixed.png" alt="Logo"/>
+  </div>
+  
+  <span class="sidebar-brand-text">Antelope 0.3.0 documentation</span>
+  
+</a><form class="sidebar-search-container" method="get" action="search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="principles.html">Key principles of operation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="data_types.html">Basic Data Types</a></li>
+<li class="toctree-l1"><a class="reference internal" href="relations.html">Quantitative Information</a></li>
+<li class="toctree-l1"><a class="reference internal" href="relations.html#semi-quantitative-information">Semi-Quantitative Information</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="interfaces.html">Organizing LCA Data in Antelope</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of Organizing LCA Data in Antelope</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="interfaces/basic.html">Basic Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="interfaces/index.html">Index Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="interfaces/exchange.html">Exchange Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="interfaces/quantity.html">Quantity Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="interfaces/background.html">Background Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="interfaces/configure.html">Configure Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="interfaces/foreground.html">Foreground Interface</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html">Ways to use Antelope</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fragments.html">What is a Fragment?</a></li>
+<li class="toctree-l1 current has-children current-page"><a class="current reference internal" href="#">API Documentation</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of API Documentation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="interfaces/abstract.html">Antelope Query and Subclasses</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle navigation of Antelope Query and Subclasses</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="interfaces/basic.html">Basic Interface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="interfaces/exchange.html">Exchange Interface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="interfaces/quantity.html">Quantity Interface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="interfaces/index.html">Index Interface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="interfaces/background.html">Background Interface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="interfaces/configure.html">Configure Interface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="interfaces/foreground.html">Foreground Interface</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="refs/antelope.refs.html">Entity References</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><div class="visually-hidden">Toggle navigation of Entity References</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="refs/quantity_ref.html">QuantityRefs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="refs/flow_ref.html">Flow Refs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="refs/process_ref.html">Process Refs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="refs/exchange_ref.html">ExchangeRefs</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="antelope.flows.html">antelope.flows package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="antelope.models.html">antelope.models package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="exchanges_from_spreadsheet.html">Exchanges From Spreadsheet</a></li>
+</ul>
+</li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          <div class="view-this-page">
+  <a class="muted-link" href="_sources/antelope.rst.txt" title="View this page">
+    <svg><use href="#svg-eye"></use></svg>
+    <span class="visually-hidden">View this page</span>
+  </a>
+</div>
+<div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle">
+              <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+              <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+              <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <div class="visually-hidden">Toggle table of contents sidebar</div>
+            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+          </label>
+        </div>
+        <article role="main" id="furo-main-content">
+          <section id="api-documentation">
+<h1>API Documentation<a class="headerlink" href="#api-documentation" title="Link to this heading">¶</a></h1>
+<section id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Link to this heading">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="interfaces/abstract.html">Antelope Query and Subclasses</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="interfaces/abstract.html#antelope.interfaces.abstract_query.ANTELOPE_INTERFACES"><code class="docutils literal notranslate"><span class="pre">ANTELOPE_INTERFACES</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="interfaces/abstract.html#antelope.interfaces.abstract_query.PrivateArchive"><code class="docutils literal notranslate"><span class="pre">PrivateArchive</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="interfaces/abstract.html#antelope.interfaces.abstract_query.AbstractQuery"><code class="docutils literal notranslate"><span class="pre">AbstractQuery</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="interfaces/abstract.html#antelope.interfaces.abstract_query.AbstractQuery.origin"><code class="docutils literal notranslate"><span class="pre">AbstractQuery.origin</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="interfaces/abstract.html#antelope.interfaces.abstract_query.AbstractQuery.make_ref"><code class="docutils literal notranslate"><span class="pre">AbstractQuery.make_ref()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="interfaces/abstract.html#subclasses">Subclasses</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="interfaces/basic.html">Basic Interface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="interfaces/exchange.html">Exchange Interface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="interfaces/quantity.html">Quantity Interface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="interfaces/index.html">Index Interface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="interfaces/background.html">Background Interface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="interfaces/configure.html">Configure Interface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="interfaces/foreground.html">Foreground Interface</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="refs/antelope.refs.html">Entity References</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="refs/quantity_ref.html">QuantityRefs</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="refs/quantity_ref.html#module-antelope.refs.quantity_ref">antelope.refs.quantity_ref module</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="refs/flow_ref.html">Flow Refs</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="refs/flow_ref.html#module-antelope.refs.flow_ref">antelope.refs.flow_ref module</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="refs/process_ref.html">Process Refs</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="refs/process_ref.html#module-antelope.refs.process_ref">antelope.refs.process_ref module</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="refs/exchange_ref.html">ExchangeRefs</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="refs/exchange_ref.html#antelope.refs.exchange_ref.UnallocatedExchangeError"><code class="docutils literal notranslate"><span class="pre">UnallocatedExchangeError</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="refs/exchange_ref.html#antelope.refs.exchange_ref.InaccessibleExchangeValue"><code class="docutils literal notranslate"><span class="pre">InaccessibleExchangeValue</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="refs/exchange_ref.html#antelope.refs.exchange_ref.ExchangeRef"><code class="docutils literal notranslate"><span class="pre">ExchangeRef</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="refs/exchange_ref.html#antelope.refs.exchange_ref.RxRef"><code class="docutils literal notranslate"><span class="pre">RxRef</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="refs/antelope.refs.html#module-antelope.refs.base">antelope.refs.base module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="refs/antelope.refs.html#antelope.refs.base.NoCatalog"><code class="docutils literal notranslate"><span class="pre">NoCatalog</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="refs/antelope.refs.html#antelope.refs.base.InvalidQuery"><code class="docutils literal notranslate"><span class="pre">InvalidQuery</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="refs/antelope.refs.html#antelope.refs.base.EntityRefMergeError"><code class="docutils literal notranslate"><span class="pre">EntityRefMergeError</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="refs/antelope.refs.html#antelope.refs.base.PropertyExists"><code class="docutils literal notranslate"><span class="pre">PropertyExists</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="refs/antelope.refs.html#antelope.refs.base.NoUuid"><code class="docutils literal notranslate"><span class="pre">NoUuid</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="refs/antelope.refs.html#antelope.refs.base.BaseRef"><code class="docutils literal notranslate"><span class="pre">BaseRef</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="refs/antelope.refs.html#antelope.refs.base.EntityRef"><code class="docutils literal notranslate"><span class="pre">EntityRef</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="refs/antelope.refs.html#module-antelope.refs.catalog_ref">antelope.refs.catalog_ref module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="refs/antelope.refs.html#antelope.refs.catalog_ref.UnknownOrigin"><code class="docutils literal notranslate"><span class="pre">UnknownOrigin</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="refs/antelope.refs.html#antelope.refs.catalog_ref.CatalogRef"><code class="docutils literal notranslate"><span class="pre">CatalogRef</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="refs/antelope.refs.html#module-antelope.refs">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="antelope.flows.html">antelope.flows package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="antelope.flows.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="antelope.flows.html#module-antelope.flows.flow">antelope.flows.flow module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="antelope.flows.html#antelope.flows.flow.flowname_is_biogenic"><code class="docutils literal notranslate"><span class="pre">flowname_is_biogenic()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="antelope.flows.html#antelope.flows.flow.Flow"><code class="docutils literal notranslate"><span class="pre">Flow</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="antelope.flows.html#module-antelope.flows.flow_interface">antelope.flows.flow_interface module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="antelope.flows.html#antelope.flows.flow_interface.BaseEntity"><code class="docutils literal notranslate"><span class="pre">BaseEntity</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="antelope.flows.html#antelope.flows.flow_interface.NullEntity"><code class="docutils literal notranslate"><span class="pre">NullEntity</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="antelope.flows.html#antelope.flows.flow_interface.FlowInterface"><code class="docutils literal notranslate"><span class="pre">FlowInterface</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="antelope.flows.html#module-antelope.flows">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="antelope.models.html">antelope.models package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="antelope.models.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="antelope.models.html#module-antelope.models.auth">antelope.models.auth module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="antelope.models.html#antelope.models.auth.NoAuthorization"><code class="docutils literal notranslate"><span class="pre">NoAuthorization</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="antelope.models.html#antelope.models.auth.AuthModel"><code class="docutils literal notranslate"><span class="pre">AuthModel</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="antelope.models.html#antelope.models.auth.AuthorizationGrant"><code class="docutils literal notranslate"><span class="pre">AuthorizationGrant</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="antelope.models.html#module-antelope.models">Module contents</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="antelope.models.html#antelope.models.ResponseModel"><code class="docutils literal notranslate"><span class="pre">ResponseModel</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="antelope.models.html#antelope.models.OriginMeta"><code class="docutils literal notranslate"><span class="pre">OriginMeta</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="antelope.models.html#antelope.models.OriginCount"><code class="docutils literal notranslate"><span class="pre">OriginCount</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="antelope.models.html#antelope.models.EntityRef"><code class="docutils literal notranslate"><span class="pre">EntityRef</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="antelope.models.html#antelope.models.Entity"><code class="docutils literal notranslate"><span class="pre">Entity</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="antelope.models.html#antelope.models.FlowEntity"><code class="docutils literal notranslate"><span class="pre">FlowEntity</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="antelope.models.html#antelope.models.Context"><code class="docutils literal notranslate"><span class="pre">Context</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="antelope.models.html#antelope.models.FlowSpec"><code class="docutils literal notranslate"><span class="pre">FlowSpec</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="antelope.models.html#antelope.models.DirectedFlow"><code class="docutils literal notranslate"><span class="pre">DirectedFlow</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="antelope.models.html#antelope.models.ExteriorFlow"><code class="docutils literal notranslate"><span class="pre">ExteriorFlow</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="antelope.models.html#antelope.models.Exchange"><code class="docutils literal notranslate"><span class="pre">Exchange</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="antelope.models.html#antelope.models.ReferenceExchange"><code class="docutils literal notranslate"><span class="pre">ReferenceExchange</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="antelope.models.html#antelope.models.ReferenceValue"><code class="docutils literal notranslate"><span class="pre">ReferenceValue</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="antelope.models.html#antelope.models.ExchangeValues"><code class="docutils literal notranslate"><span class="pre">ExchangeValues</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="antelope.models.html#antelope.models.UnallocatedExchange"><code class="docutils literal notranslate"><span class="pre">UnallocatedExchange</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="antelope.models.html#antelope.models.AllocatedExchange"><code class="docutils literal notranslate"><span class="pre">AllocatedExchange</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="antelope.models.html#antelope.models.generate_pydantic_exchanges"><code class="docutils literal notranslate"><span class="pre">generate_pydantic_exchanges()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="antelope.models.html#antelope.models.generate_pydantic_inventory"><code class="docutils literal notranslate"><span class="pre">generate_pydantic_inventory()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="antelope.models.html#antelope.models.Characterization"><code class="docutils literal notranslate"><span class="pre">Characterization</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="antelope.models.html#antelope.models.Normalizations"><code class="docutils literal notranslate"><span class="pre">Normalizations</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="antelope.models.html#antelope.models.QuantityConversion"><code class="docutils literal notranslate"><span class="pre">QuantityConversion</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="antelope.models.html#antelope.models.FlowFactors"><code class="docutils literal notranslate"><span class="pre">FlowFactors</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="antelope.models.html#antelope.models.AggregatedLciaScore"><code class="docutils literal notranslate"><span class="pre">AggregatedLciaScore</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="antelope.models.html#antelope.models.SummaryLciaScore"><code class="docutils literal notranslate"><span class="pre">SummaryLciaScore</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="antelope.models.html#antelope.models.LciaDetail"><code class="docutils literal notranslate"><span class="pre">LciaDetail</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="antelope.models.html#antelope.models.DisaggregatedLciaScore"><code class="docutils literal notranslate"><span class="pre">DisaggregatedLciaScore</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="antelope.models.html#antelope.models.LciaResult"><code class="docutils literal notranslate"><span class="pre">LciaResult</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="exchanges_from_spreadsheet.html">Exchanges From Spreadsheet</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="exchanges_from_spreadsheet.html#module-antelope.exchanges_from_spreadsheet">antelope.exchanges_from_spreadsheet module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="exchanges_from_spreadsheet.html#antelope.exchanges_from_spreadsheet.ValueIsBalance"><code class="docutils literal notranslate"><span class="pre">ValueIsBalance</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="exchanges_from_spreadsheet.html#antelope.exchanges_from_spreadsheet.TermDictDeprecated"><code class="docutils literal notranslate"><span class="pre">TermDictDeprecated</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="exchanges_from_spreadsheet.html#antelope.exchanges_from_spreadsheet.exchanges_from_spreadsheet"><code class="docutils literal notranslate"><span class="pre">exchanges_from_spreadsheet()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading">¶</a></h2>
+</section>
+<section id="module-antelope.xdb_tokens">
+<span id="antelope-xdb-tokens-module"></span><h2>antelope.xdb_tokens module<a class="headerlink" href="#module-antelope.xdb_tokens" title="Link to this heading">¶</a></h2>
+<p>Authorization Tokens for XDB access</p>
+<p>This file contains a routine for constructing JWT grant payloads from a set of grant specifications that satisfy
+the class definition below.  These methods can be used to construct and interpret JWTs generated for interaction with
+xdb and qdb servers.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="antelope.xdb_tokens.ResourceSpec">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">antelope.xdb_tokens.</span></span><span class="sig-name descname"><span class="pre">ResourceSpec</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">origin</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">source</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ds_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">interfaces</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">static</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">options</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#antelope.xdb_tokens.ResourceSpec" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">BaseModel</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="antelope.xdb_tokens.ResourceSpec.origin">
+<span class="sig-name descname"><span class="pre">origin</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#antelope.xdb_tokens.ResourceSpec.origin" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="antelope.xdb_tokens.ResourceSpec.source">
+<span class="sig-name descname"><span class="pre">source</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#antelope.xdb_tokens.ResourceSpec.source" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="antelope.xdb_tokens.ResourceSpec.ds_type">
+<span class="sig-name descname"><span class="pre">ds_type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#antelope.xdb_tokens.ResourceSpec.ds_type" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="antelope.xdb_tokens.ResourceSpec.interfaces">
+<span class="sig-name descname"><span class="pre">interfaces</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#antelope.xdb_tokens.ResourceSpec.interfaces" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="antelope.xdb_tokens.ResourceSpec.static">
+<span class="sig-name descname"><span class="pre">static</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#antelope.xdb_tokens.ResourceSpec.static" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="antelope.xdb_tokens.ResourceSpec.options">
+<span class="sig-name descname"><span class="pre">options</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Dict</span></em><a class="headerlink" href="#antelope.xdb_tokens.ResourceSpec.options" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="antelope.xdb_tokens.ResourceSpec.config">
+<span class="sig-name descname"><span class="pre">config</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#antelope.xdb_tokens.ResourceSpec.config" title="Link to this definition">¶</a></dt>
+<dd><p>[[‘air’, ‘to air’], [‘water’, ‘to water’]]}</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>n.b. the canonical config is {‘hints’</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="antelope.xdb_tokens.ResourceSpec.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar</span><span class="p"><span class="pre">[</span></span><span class="pre">ConfigDict</span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{}</span></em><a class="headerlink" href="#antelope.xdb_tokens.ResourceSpec.model_config" title="Link to this definition">¶</a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="antelope.xdb_tokens.GrantSpec">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">antelope.xdb_tokens.</span></span><span class="sig-name descname"><span class="pre">GrantSpec</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">username</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">origin</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">interface</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">grant_duration</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">qdb</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">values</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">update</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">has_quota</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#antelope.xdb_tokens.GrantSpec" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">BaseModel</span></code></p>
+<p>A grant is assigned to an authorized user for a specific origin (including sub-origins) and interface.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="antelope.xdb_tokens.GrantSpec.username">
+<span class="sig-name descname"><span class="pre">username</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#antelope.xdb_tokens.GrantSpec.username" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="antelope.xdb_tokens.GrantSpec.origin">
+<span class="sig-name descname"><span class="pre">origin</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#antelope.xdb_tokens.GrantSpec.origin" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="antelope.xdb_tokens.GrantSpec.interface">
+<span class="sig-name descname"><span class="pre">interface</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#antelope.xdb_tokens.GrantSpec.interface" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="antelope.xdb_tokens.GrantSpec.grant_duration">
+<span class="sig-name descname"><span class="pre">grant_duration</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#antelope.xdb_tokens.GrantSpec.grant_duration" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="antelope.xdb_tokens.GrantSpec.qdb">
+<span class="sig-name descname"><span class="pre">qdb</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#antelope.xdb_tokens.GrantSpec.qdb" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="antelope.xdb_tokens.GrantSpec.values">
+<span class="sig-name descname"><span class="pre">values</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#antelope.xdb_tokens.GrantSpec.values" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="antelope.xdb_tokens.GrantSpec.update">
+<span class="sig-name descname"><span class="pre">update</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#antelope.xdb_tokens.GrantSpec.update" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="antelope.xdb_tokens.GrantSpec.has_quota">
+<span class="sig-name descname"><span class="pre">has_quota</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#antelope.xdb_tokens.GrantSpec.has_quota" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="antelope.xdb_tokens.GrantSpec.serialize">
+<span class="sig-name descname"><span class="pre">serialize</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#antelope.xdb_tokens.GrantSpec.serialize" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="antelope.xdb_tokens.GrantSpec.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar</span><span class="p"><span class="pre">[</span></span><span class="pre">ConfigDict</span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{}</span></em><a class="headerlink" href="#antelope.xdb_tokens.GrantSpec.model_config" title="Link to this definition">¶</a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="antelope.xdb_tokens.JwtGrant">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">antelope.xdb_tokens.</span></span><span class="sig-name descname"><span class="pre">JwtGrant</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">tid</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">iss</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sub</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exp</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">grants</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#antelope.xdb_tokens.JwtGrant" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">BaseModel</span></code></p>
+<p>The contents of the JWT payload granted in response to a successful access request</p>
+<p>xdb must have or obtain a publickey from an established keyserver, corresponding with the contents of the iss field</p>
+<p>The signature is prepared using the private key associated with the issuer; xdb then verifies the signature
+with the public key</p>
+<p>the grants are used authorize the query</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="antelope.xdb_tokens.JwtGrant.tid">
+<span class="sig-name descname"><span class="pre">tid</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#antelope.xdb_tokens.JwtGrant.tid" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="antelope.xdb_tokens.JwtGrant.iss">
+<span class="sig-name descname"><span class="pre">iss</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#antelope.xdb_tokens.JwtGrant.iss" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="antelope.xdb_tokens.JwtGrant.sub">
+<span class="sig-name descname"><span class="pre">sub</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#antelope.xdb_tokens.JwtGrant.sub" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="antelope.xdb_tokens.JwtGrant.exp">
+<span class="sig-name descname"><span class="pre">exp</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#antelope.xdb_tokens.JwtGrant.exp" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="antelope.xdb_tokens.JwtGrant.grants">
+<span class="sig-name descname"><span class="pre">grants</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#antelope.xdb_tokens.JwtGrant.grants" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="antelope.xdb_tokens.JwtGrant.from_grants">
+<em class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_grants</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">grants</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#antelope.xdb_tokens.GrantSpec" title="antelope.xdb_tokens.GrantSpec"><span class="pre">GrantSpec</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">issuer</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#antelope.xdb_tokens.JwtGrant.from_grants" title="Link to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>grants</strong> – Should be a list of GrantSpec subclasses</p></li>
+<li><p><strong>issuer</strong></p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="antelope.xdb_tokens.JwtGrant.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar</span><span class="p"><span class="pre">[</span></span><span class="pre">ConfigDict</span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{}</span></em><a class="headerlink" href="#antelope.xdb_tokens.JwtGrant.model_config" title="Link to this definition">¶</a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="antelope.xdb_tokens.IssuerKey">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">antelope.xdb_tokens.</span></span><span class="sig-name descname"><span class="pre">IssuerKey</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">issuer</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">public_key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">expiry</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#antelope.xdb_tokens.IssuerKey" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">BaseModel</span></code></p>
+<p>An object of this class is exchanged to transmit information required to validate issuer tokens.
+I suppose this entire thing could be stored in a JWT. but storing a pubkey inside a JWT seems silly. But:
+it is done, as long as the pubkey being stored is NOT the one used to validate the token! that would be useless.</p>
+<p>Anyway, we will stick to our existing plan: an instance of this class used as POST data.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="antelope.xdb_tokens.IssuerKey.issuer">
+<span class="sig-name descname"><span class="pre">issuer</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#antelope.xdb_tokens.IssuerKey.issuer" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="antelope.xdb_tokens.IssuerKey.public_key">
+<span class="sig-name descname"><span class="pre">public_key</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#antelope.xdb_tokens.IssuerKey.public_key" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="antelope.xdb_tokens.IssuerKey.expiry">
+<span class="sig-name descname"><span class="pre">expiry</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#antelope.xdb_tokens.IssuerKey.expiry" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="antelope.xdb_tokens.IssuerKey.from_issuer">
+<em class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_issuer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">issuer</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#antelope.xdb_tokens.IssuerKey.from_issuer" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="antelope.xdb_tokens.IssuerKey.from_db_issuer">
+<em class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_db_issuer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">db_issuer</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#antelope.xdb_tokens.IssuerKey.from_db_issuer" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="antelope.xdb_tokens.IssuerKey.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar</span><span class="p"><span class="pre">[</span></span><span class="pre">ConfigDict</span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{}</span></em><a class="headerlink" href="#antelope.xdb_tokens.IssuerKey.model_config" title="Link to this definition">¶</a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-antelope">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-antelope" title="Link to this heading">¶</a></h2>
+<p>Antelope Interface Definitions</p>
+<p>The abstract classes in this sub-package define what information is made available via a stateless query to an Antelope
+resource of some kind.  The interfaces must be instantiated in order to be used.  In the core package</p>
+<dl class="py exception">
+<dt class="sig sig-object py" id="antelope.ValuesAccessRequired">
+<em class="property"><span class="k"><span class="pre">exception</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">antelope.</span></span><span class="sig-name descname"><span class="pre">ValuesAccessRequired</span></span><a class="headerlink" href="#antelope.ValuesAccessRequired" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></p>
+<p>The requested route requires a grant that has values=True</p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="antelope.UpdateAccessRequired">
+<em class="property"><span class="k"><span class="pre">exception</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">antelope.</span></span><span class="sig-name descname"><span class="pre">UpdateAccessRequired</span></span><a class="headerlink" href="#antelope.UpdateAccessRequired" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></p>
+<p>The requested route requires a grant that has updates=True</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="antelope.BasicQuery">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">antelope.</span></span><span class="sig-name descname"><span class="pre">BasicQuery</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">archive</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">debug</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cached</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#antelope.BasicQuery" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="interfaces/basic.html#antelope.interfaces.ibasic.BasicInterface" title="antelope.interfaces.ibasic.BasicInterface"><code class="xref py py-class docutils literal notranslate"><span class="pre">BasicInterface</span></code></a>, <a class="reference internal" href="interfaces/index.html#antelope.interfaces.iindex.IndexInterface" title="antelope.interfaces.iindex.IndexInterface"><code class="xref py py-class docutils literal notranslate"><span class="pre">IndexInterface</span></code></a>, <a class="reference internal" href="interfaces/exchange.html#antelope.interfaces.iexchange.ExchangeInterface" title="antelope.interfaces.iexchange.ExchangeInterface"><code class="xref py py-class docutils literal notranslate"><span class="pre">ExchangeInterface</span></code></a>, <a class="reference internal" href="interfaces/quantity.html#antelope.interfaces.iquantity.QuantityInterface" title="antelope.interfaces.iquantity.QuantityInterface"><code class="xref py py-class docutils literal notranslate"><span class="pre">QuantityInterface</span></code></a></p>
+<p>A basic query depends on an archive– which has the following API:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>archive.make_interface(interface): returns an implementation of the designated interface</p></li>
+<li><p>archive.ref: returns the archive’s semantic reference</p></li>
+<li><p>archive.source: returns the physical source (or URI) for the archive’s content</p></li>
+</ul>
+</div></blockquote>
+<dl class="py property">
+<dt class="sig sig-object py" id="antelope.BasicQuery.origin">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">origin</span></span><a class="headerlink" href="#antelope.BasicQuery.origin" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="antelope.BasicQuery.make_ref">
+<span class="sig-name descname"><span class="pre">make_ref</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">entity</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#antelope.BasicQuery.make_ref" title="Link to this definition">¶</a></dt>
+<dd><p>Query subclasses can return abstracted versions of query results.
+:param entity:
+:return: an entity that could have a reference to a grounded query</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="antelope.LcQuery">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">antelope.</span></span><span class="sig-name descname"><span class="pre">LcQuery</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">archive</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">debug</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cached</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#antelope.LcQuery" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#antelope.BasicQuery" title="antelope.BasicQuery"><code class="xref py py-class docutils literal notranslate"><span class="pre">BasicQuery</span></code></a>, <a class="reference internal" href="interfaces/background.html#antelope.interfaces.ibackground.BackgroundInterface" title="antelope.interfaces.ibackground.BackgroundInterface"><code class="xref py py-class docutils literal notranslate"><span class="pre">BackgroundInterface</span></code></a>, <a class="reference internal" href="interfaces/configure.html#antelope.interfaces.iconfigure.ConfigureInterface" title="antelope.interfaces.iconfigure.ConfigureInterface"><code class="xref py py-class docutils literal notranslate"><span class="pre">ConfigureInterface</span></code></a></p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="antelope.FgQuery">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">antelope.</span></span><span class="sig-name descname"><span class="pre">FgQuery</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">archive</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">debug</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cached</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#antelope.FgQuery" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#antelope.LcQuery" title="antelope.LcQuery"><code class="xref py py-class docutils literal notranslate"><span class="pre">LcQuery</span></code></a>, <a class="reference internal" href="interfaces/foreground.html#antelope.interfaces.iforeground.ForegroundInterface" title="antelope.interfaces.iforeground.ForegroundInterface"><code class="xref py py-class docutils literal notranslate"><span class="pre">ForegroundInterface</span></code></a></p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="antelope.local_ref">
+<span class="sig-prename descclassname"><span class="pre">antelope.</span></span><span class="sig-name descname"><span class="pre">local_ref</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">source</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prefix</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#antelope.local_ref" title="Link to this definition">¶</a></dt>
+<dd><p>Create a semantic ref for a local filename.  Just uses basename.  what kind of monster would access multiple
+different files with the same basename without specifying ref?</p>
+<p>alternative is splitext(source)[0].translate(maketrans(‘/',’..’), ‘:~’) but ugghh…</p>
+<p>Okay, FINE.  I’ll use the full path.  WITH leading ‘.’ removed.</p>
+<p>Anyway, to be clear, local semantic references are not supposed to be distributed.
+:param source:
+:param prefix: [None] default ‘local’
+:return:</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="antelope.q_node_activity">
+<span class="sig-prename descclassname"><span class="pre">antelope.</span></span><span class="sig-name descname"><span class="pre">q_node_activity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fg</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#antelope.q_node_activity" title="Link to this definition">¶</a></dt>
+<dd><p>A reference quantity for dimensionless node activity. This should be part of Qdb reference quantities (but isn’t)
+:param fg:
+:return:</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="antelope.enum">
+<span class="sig-prename descclassname"><span class="pre">antelope.</span></span><span class="sig-name descname"><span class="pre">enum</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">iterable</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filt</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">invert</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#antelope.enum" title="Link to this definition">¶</a></dt>
+<dd><p>Enumerate an iterable for interactive use. return it as a list. Optional negative filter supplied as regex.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>iterable</strong></p></li>
+<li><p><strong>filt</strong> – regex to filter out entries from return and enumeration.</p></li>
+<li><p><strong>invert</strong> – [True] sense of filter. note default is negative i.e. to screen <em>out</em> matches
+(the thinking is that the input is already positive-filtered)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p></p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          <a class="next-page" href="interfaces/abstract.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">Antelope Query and Subclasses</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="fragments.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">What is a Fragment?</div>
+                
+              </div>
+            </a>
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2024, Brandon Kuczenski
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">API Documentation</a><ul>
+<li><a class="reference internal" href="#subpackages">Subpackages</a></li>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-antelope.xdb_tokens">antelope.xdb_tokens module</a><ul>
+<li><a class="reference internal" href="#antelope.xdb_tokens.ResourceSpec"><code class="docutils literal notranslate"><span class="pre">ResourceSpec</span></code></a><ul>
+<li><a class="reference internal" href="#antelope.xdb_tokens.ResourceSpec.origin"><code class="docutils literal notranslate"><span class="pre">ResourceSpec.origin</span></code></a></li>
+<li><a class="reference internal" href="#antelope.xdb_tokens.ResourceSpec.source"><code class="docutils literal notranslate"><span class="pre">ResourceSpec.source</span></code></a></li>
+<li><a class="reference internal" href="#antelope.xdb_tokens.ResourceSpec.ds_type"><code class="docutils literal notranslate"><span class="pre">ResourceSpec.ds_type</span></code></a></li>
+<li><a class="reference internal" href="#antelope.xdb_tokens.ResourceSpec.interfaces"><code class="docutils literal notranslate"><span class="pre">ResourceSpec.interfaces</span></code></a></li>
+<li><a class="reference internal" href="#antelope.xdb_tokens.ResourceSpec.static"><code class="docutils literal notranslate"><span class="pre">ResourceSpec.static</span></code></a></li>
+<li><a class="reference internal" href="#antelope.xdb_tokens.ResourceSpec.options"><code class="docutils literal notranslate"><span class="pre">ResourceSpec.options</span></code></a></li>
+<li><a class="reference internal" href="#antelope.xdb_tokens.ResourceSpec.config"><code class="docutils literal notranslate"><span class="pre">ResourceSpec.config</span></code></a></li>
+<li><a class="reference internal" href="#antelope.xdb_tokens.ResourceSpec.model_config"><code class="docutils literal notranslate"><span class="pre">ResourceSpec.model_config</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#antelope.xdb_tokens.GrantSpec"><code class="docutils literal notranslate"><span class="pre">GrantSpec</span></code></a><ul>
+<li><a class="reference internal" href="#antelope.xdb_tokens.GrantSpec.username"><code class="docutils literal notranslate"><span class="pre">GrantSpec.username</span></code></a></li>
+<li><a class="reference internal" href="#antelope.xdb_tokens.GrantSpec.origin"><code class="docutils literal notranslate"><span class="pre">GrantSpec.origin</span></code></a></li>
+<li><a class="reference internal" href="#antelope.xdb_tokens.GrantSpec.interface"><code class="docutils literal notranslate"><span class="pre">GrantSpec.interface</span></code></a></li>
+<li><a class="reference internal" href="#antelope.xdb_tokens.GrantSpec.grant_duration"><code class="docutils literal notranslate"><span class="pre">GrantSpec.grant_duration</span></code></a></li>
+<li><a class="reference internal" href="#antelope.xdb_tokens.GrantSpec.qdb"><code class="docutils literal notranslate"><span class="pre">GrantSpec.qdb</span></code></a></li>
+<li><a class="reference internal" href="#antelope.xdb_tokens.GrantSpec.values"><code class="docutils literal notranslate"><span class="pre">GrantSpec.values</span></code></a></li>
+<li><a class="reference internal" href="#antelope.xdb_tokens.GrantSpec.update"><code class="docutils literal notranslate"><span class="pre">GrantSpec.update</span></code></a></li>
+<li><a class="reference internal" href="#antelope.xdb_tokens.GrantSpec.has_quota"><code class="docutils literal notranslate"><span class="pre">GrantSpec.has_quota</span></code></a></li>
+<li><a class="reference internal" href="#antelope.xdb_tokens.GrantSpec.serialize"><code class="docutils literal notranslate"><span class="pre">GrantSpec.serialize()</span></code></a></li>
+<li><a class="reference internal" href="#antelope.xdb_tokens.GrantSpec.model_config"><code class="docutils literal notranslate"><span class="pre">GrantSpec.model_config</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#antelope.xdb_tokens.JwtGrant"><code class="docutils literal notranslate"><span class="pre">JwtGrant</span></code></a><ul>
+<li><a class="reference internal" href="#antelope.xdb_tokens.JwtGrant.tid"><code class="docutils literal notranslate"><span class="pre">JwtGrant.tid</span></code></a></li>
+<li><a class="reference internal" href="#antelope.xdb_tokens.JwtGrant.iss"><code class="docutils literal notranslate"><span class="pre">JwtGrant.iss</span></code></a></li>
+<li><a class="reference internal" href="#antelope.xdb_tokens.JwtGrant.sub"><code class="docutils literal notranslate"><span class="pre">JwtGrant.sub</span></code></a></li>
+<li><a class="reference internal" href="#antelope.xdb_tokens.JwtGrant.exp"><code class="docutils literal notranslate"><span class="pre">JwtGrant.exp</span></code></a></li>
+<li><a class="reference internal" href="#antelope.xdb_tokens.JwtGrant.grants"><code class="docutils literal notranslate"><span class="pre">JwtGrant.grants</span></code></a></li>
+<li><a class="reference internal" href="#antelope.xdb_tokens.JwtGrant.from_grants"><code class="docutils literal notranslate"><span class="pre">JwtGrant.from_grants()</span></code></a></li>
+<li><a class="reference internal" href="#antelope.xdb_tokens.JwtGrant.model_config"><code class="docutils literal notranslate"><span class="pre">JwtGrant.model_config</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#antelope.xdb_tokens.IssuerKey"><code class="docutils literal notranslate"><span class="pre">IssuerKey</span></code></a><ul>
+<li><a class="reference internal" href="#antelope.xdb_tokens.IssuerKey.issuer"><code class="docutils literal notranslate"><span class="pre">IssuerKey.issuer</span></code></a></li>
+<li><a class="reference internal" href="#antelope.xdb_tokens.IssuerKey.public_key"><code class="docutils literal notranslate"><span class="pre">IssuerKey.public_key</span></code></a></li>
+<li><a class="reference internal" href="#antelope.xdb_tokens.IssuerKey.expiry"><code class="docutils literal notranslate"><span class="pre">IssuerKey.expiry</span></code></a></li>
+<li><a class="reference internal" href="#antelope.xdb_tokens.IssuerKey.from_issuer"><code class="docutils literal notranslate"><span class="pre">IssuerKey.from_issuer()</span></code></a></li>
+<li><a class="reference internal" href="#antelope.xdb_tokens.IssuerKey.from_db_issuer"><code class="docutils literal notranslate"><span class="pre">IssuerKey.from_db_issuer()</span></code></a></li>
+<li><a class="reference internal" href="#antelope.xdb_tokens.IssuerKey.model_config"><code class="docutils literal notranslate"><span class="pre">IssuerKey.model_config</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-antelope">Module contents</a><ul>
+<li><a class="reference internal" href="#antelope.ValuesAccessRequired"><code class="docutils literal notranslate"><span class="pre">ValuesAccessRequired</span></code></a></li>
+<li><a class="reference internal" href="#antelope.UpdateAccessRequired"><code class="docutils literal notranslate"><span class="pre">UpdateAccessRequired</span></code></a></li>
+<li><a class="reference internal" href="#antelope.BasicQuery"><code class="docutils literal notranslate"><span class="pre">BasicQuery</span></code></a><ul>
+<li><a class="reference internal" href="#antelope.BasicQuery.origin"><code class="docutils literal notranslate"><span class="pre">BasicQuery.origin</span></code></a></li>
+<li><a class="reference internal" href="#antelope.BasicQuery.make_ref"><code class="docutils literal notranslate"><span class="pre">BasicQuery.make_ref()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#antelope.LcQuery"><code class="docutils literal notranslate"><span class="pre">LcQuery</span></code></a></li>
+<li><a class="reference internal" href="#antelope.FgQuery"><code class="docutils literal notranslate"><span class="pre">FgQuery</span></code></a></li>
+<li><a class="reference internal" href="#antelope.local_ref"><code class="docutils literal notranslate"><span class="pre">local_ref()</span></code></a></li>
+<li><a class="reference internal" href="#antelope.q_node_activity"><code class="docutils literal notranslate"><span class="pre">q_node_activity()</span></code></a></li>
+<li><a class="reference internal" href="#antelope.enum"><code class="docutils literal notranslate"><span class="pre">enum()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div><script src="_static/documentation_options.js?v=e259d695"></script>
+    <script src="_static/doctools.js?v=9bcbadda"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/scripts/furo.js?v=46bd48cc"></script>
+    </body>
+</html>
