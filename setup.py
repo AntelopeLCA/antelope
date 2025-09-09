@@ -5,6 +5,7 @@ setup()
 
 """
 Version History:
+0.3.3.1           - sanitize process reference exchange in entity model; cached basic queries
 0.3.3  2025/09/08 - Apply ordering to exchange refs; pandas-friendly output for process refs
 
 0.3.2  2025/08/01 - 0.3.2 release. better background handling.

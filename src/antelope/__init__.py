@@ -58,9 +58,10 @@ class BasicQuery(BasicInterface, IndexInterface, ExchangeInterface, QuantityInte
      - archive.source: returns the physical source (or URI) for the archive's content
 
     """
-    def __init__(self, archive, debug=False):
+    def __init__(self, archive, debug=False, cached=True):
         self._archive = archive
         self._dbg = debug
+        self.cached = cached
 
     def _perform_query(self, itype, attrname, exc, *args, **kwargs):
         if itype is None:
