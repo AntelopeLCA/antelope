@@ -77,6 +77,9 @@ class Entity(EntityRef):
                   properties=dict())
         for k in entity.signature_fields():
             ent.properties[k] = entity[k]
+        if entity.entity_type == 'process':
+            ent.properties['referenceExchange'] = [ReferenceExchange.from_exchange(x) for x in
+                                                   entity['referenceExchange']]
         return ent
 
     @classmethod
