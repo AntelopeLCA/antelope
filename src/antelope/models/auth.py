@@ -15,6 +15,7 @@ class AuthModel(BaseModel):
 
 
 JWT_SCOPES = {
+    'das': 'dash',
     'bas': 'basic',
     'ind': 'index',
     'exc': 'exchange',
@@ -29,7 +30,7 @@ class AuthorizationGrant(AuthModel):
     This class stands alone as a list of authorizations granted to users. There is no requirement that the
     users exist in a database
 
-    One natural way to use this is to grant users JWTs as bearer tokensusing an oauth2 system- the bearer token
+    One natural way to use this is to grant users JWTs as bearer tokens using an oauth2 system- the bearer token
     would be created + signed by an auth server, and include the grants embedded in the token.  In the future, this
     token could list specific entities the user has a right to access (e.g. per ecoinvent). The problem is that
     entity UUIDs are 36 characters long- this would become cumbersome if the user had access to
@@ -129,5 +130,12 @@ class AuthorizationGrant(AuthModel):
                 update = 'u' in specs
 
                 grants.append(cls(user=user, issuer=issuer, origin=origin, access=access, values=values, update=update))
+
+        if jwt.add:
+            # grant_add terms show up as access strings in origin-less grants
+            # double-loop, parsing over ' ' then ':' just like above
+            for a in jwt.add.split(' '):
+                for b in a.split(':'):
+                    grants.append(cls(user=user, issuer=issuer, origin='*', access=b))
 
         return grants

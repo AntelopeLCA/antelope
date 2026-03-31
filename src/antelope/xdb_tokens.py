@@ -39,6 +39,8 @@ class GrantSpec(BaseModel):
     qdb: bool  # whether requests can be forwarded to qdb
     values: bool  # whether numerical data can be requested
     update: bool  # whether user may alter the resource
+    one_time: bool  # whether the grant is revoked after first use
+    grant_add: Optional[str] = None
     has_quota: bool  # whether user's activities are quota constrained (if true, xdb sends a receipt to auth server for every query)
 
     def serialize(self):
@@ -70,6 +72,7 @@ class JwtGrant(BaseModel):
     exp: int  # required
 
     grants: str  # specifies origins and permissions
+    add: Optional[str] = None  # space-separated list of "grant_add" strings
 
     @classmethod
     def from_grants(cls, grants: List[GrantSpec], issuer: str):
@@ -82,6 +85,7 @@ class JwtGrant(BaseModel):
 
         origins = defaultdict(set)
         users = set()
+        add = list()
         qdb = False
         dur = None
         for g in grants:
@@ -93,6 +97,8 @@ class JwtGrant(BaseModel):
                 dur = g.grant_duration
             else:
                 dur = min([dur, g.grant_duration])
+            if g.grant_add:
+                add.append(g.grant_add)
 
         if len(users) != 1:
             raise ValueError('Grants for multiple users received: %s' % users)
@@ -109,7 +115,12 @@ class JwtGrant(BaseModel):
         the_grants = ' '.join(str_grants)
         exp = datetime.now() + timedelta(seconds=dur)
 
-        return cls(iss=issuer, sub=user, exp=int(exp.timestamp()), grants=the_grants)
+        if len(add) > 0:
+            grant_add = ' '.join(add)
+        else:
+            grant_add = None
+
+        return cls(iss=issuer, sub=user, exp=int(exp.timestamp()), grants=the_grants, add=grant_add)
 
 
 class IssuerKey(BaseModel):
