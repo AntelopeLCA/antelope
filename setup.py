@@ -5,6 +5,8 @@ setup()
 
 """
 Version History:
+0.3.4  2026/03/31 - add 'dash' interface type; add 'grant_add' to XDB tokens
+
 0.3.3.1           - sanitize process reference exchange in entity model; cached basic queries
 0.3.3  2025/09/08 - Apply ordering to exchange refs; pandas-friendly output for process refs
 
