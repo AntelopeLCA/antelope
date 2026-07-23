@@ -155,7 +155,7 @@ def q_node_activity(fg):
         return fg.get_canonical('node activity')
 
 
-def enum(iterable, filt=None, invert=True):
+def e_(iterable, filt=None, invert=True):
     """
     Enumerate an iterable for interactive use. return it as a list. Optional negative filter supplied as regex.
 

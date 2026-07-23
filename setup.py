@@ -5,6 +5,7 @@ setup()
 
 """
 Version History:
+0.3.4.1           - rename 'enum' to 'e_' because that was messed up
 0.3.4  2026/03/31 - add 'dash' interface type; add 'grant_add' to XDB tokens
 
 0.3.3.1           - sanitize process reference exchange in entity model; cached basic queries
