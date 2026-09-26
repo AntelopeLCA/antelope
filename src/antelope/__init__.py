@@ -5,7 +5,7 @@ The abstract classes in this sub-package define what information is made availab
 resource of some kind.  The interfaces must be instantiated in order to be used.  In the core package
 """
 
-from .interfaces import ANTELOPE_INTERFACES
+from .interfaces import ANTELOPE_INTERFACES, ArchiveInterface, TermManagerInterface
 
 from .interfaces.ibasic import BasicInterface, EntityNotFound, NoAccessToEntity, ItemNotFound
 from .interfaces.iconfigure import ConfigureInterface
@@ -58,7 +58,7 @@ class BasicQuery(BasicInterface, IndexInterface, ExchangeInterface, QuantityInte
      - archive.source: returns the physical source (or URI) for the archive's content
 
     """
-    def __init__(self, archive, debug=False, cached=True):
+    def __init__(self, archive: ArchiveInterface, debug=False, cached=True):
         self._archive = archive
         self._dbg = debug
         self.cached = cached
@@ -88,6 +88,16 @@ class BasicQuery(BasicInterface, IndexInterface, ExchangeInterface, QuantityInte
             return entity.make_ref(self)
         else:
             return entity  # already a ref
+
+    def get(self, eid, **kwargs):
+        """
+        A query must return a ref, because the ref encapsulates the query
+        :param eid:
+        :param kwargs:
+        :return:
+        """
+        entity = self._perform_query('basic', 'get', EntityNotFound, eid, **kwargs)
+        return self.make_ref(entity)
 
     def __str__(self):
         return '%s(%s:%s:%s)' % (self.__class__.__name__, self.origin,
