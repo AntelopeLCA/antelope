@@ -5,6 +5,8 @@ setup()
 
 """
 Version History:
+0.3.5  2026/09/25 - Add ArchiveInterface. fix a bug with needy QuantityRefs.
+
 0.3.4.1           - rename 'enum' to 'e_' because that was messed up
 0.3.4  2026/03/31 - add 'dash' interface type; add 'grant_add' to XDB tokens
 
