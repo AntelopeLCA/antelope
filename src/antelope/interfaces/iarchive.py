@@ -9,10 +9,12 @@ The surface was derived by auditing every ``self._archive.*`` access across
 ``antelope_core/implementations/*.py``.
 """
 
-from abc import ABC, abstractmethod
+from abc import abstractmethod
+from typing import runtime_checkable, Protocol
 
 
-class ArchiveInterface(ABC):
+@runtime_checkable
+class ArchiveInterface(Protocol):
     """
     Minimal contract that a provider object must satisfy to work with the
     standard ``*Implementation`` classes in ``antelope_core``.
