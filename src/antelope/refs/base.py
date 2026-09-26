@@ -165,16 +165,14 @@ class BaseRef(BaseEntity):
 
     def __eq__(self, other):
         """
-        Catalog refs are equal if their external_refs are equal and their origins start with each other
+        Catalog refs are equal if their links are equal
         :param other:
         :return:
         """
         if other is None:
             return False
         try:
-            return (  # (other.entity_type == 'unknown' or self.entity_type == other.entity_type) and
-                    self.external_ref == other.external_ref and
-                    (self.origin.startswith(other.origin) or other.origin.startswith(self.origin)))
+            return self.link == other.link
         except AttributeError:
             return False
 
