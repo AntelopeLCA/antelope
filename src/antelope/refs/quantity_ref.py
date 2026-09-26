@@ -16,6 +16,7 @@ but it depends on the LciaResult implementation, which is irretrievably part of 
 """
 
 from ..flows import FlowInterface
+from ..interfaces.ibasic import ItemNotFound, EntityNotFound
 from .base import EntityRef
 from synonym_dict import LowerDict
 
@@ -160,13 +161,15 @@ class QuantityRef(EntityRef):
             yield self.uuid
         if self.origin is not None:
             yield self.link
-        if self.has_property('Synonyms'):
+        try:
             syns = self['Synonyms']
             if isinstance(syns, str):
                 yield syns
             else:
                 for syn in syns:
                     yield syn
+        except (KeyError, ItemNotFound, EntityNotFound):
+            pass
 
     """
     Interface methods
