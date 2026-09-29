@@ -390,7 +390,7 @@ class EntityRef(BaseRef):
                 if self.get(k) is not _MissingItem:
                     yield k
 
-    def get_item(self, item):
+    def get_item(self, item, _terminal=None):
         """
 
         This keeps generating recursion errors. Let's think it through.
@@ -401,7 +401,18 @@ class EntityRef(BaseRef):
            --- attempted solution with NoAccessToEntity exception in BasicImplementation
          - fine. So when do we raise a key error?
 
+         The theory of operation is this:
+         An entity ref is distinguished from a base entity by its access to a query that establishes who it is.
+         By virtue of not being the authentic entity, it may need to ask upstream for answers to information.
+         the way we accomplish that is by asking the query to give us the actual entity.
+         In the case where the entity is masquerading (origin does not match query), the true origin would be the source
+         of that information. So by asking the query for that entity, we allow it to do its job and ask upstream.
+
+         HOWEVER, that query itself should not return a further pointer (any subsequent dereferences should be
+         encapsulated in the call). So we disallow further recursion in that case, and call it off.
+
         :param item:
+        :param _terminal: don't endlessly recurse on entity disambiguation
         :return:
         """
         if item == self._ref_field:
@@ -417,15 +428,19 @@ class EntityRef(BaseRef):
             try:
                 val = self._query.get_item(self.external_ref, item)
             except NoAccessToEntity:
+                if _terminal:
+                    self._d[item] = _MissingItem
+                    raise KeyError(item)
                 try:  # this works in masquerade: the local.qdb query retrieves the authentic ref from the qdb
                     lit = self._query.get(self.link)
                 except EntityNotFound:
                     self._d[item] = _MissingItem
                     raise KeyError(item)
                 if lit is self:
-                    raise
+                    self._d[item] = _MissingItem
+                    raise KeyError(item)
                 try:
-                    val = lit.get_item(item)
+                    val = lit.get_item(item, _terminal=True)
                 except ItemNotFound:
                     self._d[item] = _MissingItem
                     raise KeyError(item)
