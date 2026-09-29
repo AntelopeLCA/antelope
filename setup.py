@@ -5,6 +5,8 @@ setup()
 
 """
 Version History:
+0.3.5.1     09/28 - get_item() recursion bomb introduced with OLCA libraries; corrected in EntityRef
+
 0.3.5  2026/09/25 - Add ArchiveInterface. fix a bug with needy QuantityRefs.
 
 0.3.4.1           - rename 'enum' to 'e_' because that was messed up
